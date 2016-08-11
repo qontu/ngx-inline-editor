@@ -1,4 +1,4 @@
-# Native UI Inline-editor Angular2 component ([demo](http://www.github.com/caballerog/ng2-inline-editor/demos/))
+# Native UI Inline-editor Angular2 component ([demo](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos))
 
 
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
@@ -45,7 +45,7 @@ If you need to support a previous version of Angular 2 for now, please see the c
 
   `npm i ng2-inline-editor --save`
 
-2. Include [Twitter Bootstrap]() and [FontAwesome]() in your project
+2. Include [Twitter Bootstrap](http://v4-alpha.getbootstrap.com/) and [FontAwesome](http://fontawesome.io/) in your project
 
 ### Configuration using systemJS (angular-cli)
 
