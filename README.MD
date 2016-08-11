@@ -5,7 +5,7 @@ Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=s
 
 ng2-inline-editor is a library of Angular2 that allows you to create editable elements.
 Such technique is also known as *click-to-edit* or *edit-in-place*.
-It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is develop in AngularJS and the Julianna Zakula's [original post](https://medium.com/front-end-hacking/inline-editing-with-angular2-58b43cc2aba).
+It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is developed in AngularJS and the Julianna Zakula's [original post](https://medium.com/front-end-hacking/inline-editing-with-angular2-58b43cc2aba).
 
 ## Dependencies
 
