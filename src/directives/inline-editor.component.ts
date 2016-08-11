@@ -50,8 +50,8 @@ const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = new Provider(
             </p>
 
             <span>
-                <button class="btn btn-xs btn-primary" (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
-            <button class="btn btn-xs btn-danger" (click)="cancel(value)"><span class="fa fa-remove"></span></button>
+                <button id="inline-editor-button-save" class="btn btn-xs btn-primary" (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
+                <button class="btn btn-xs btn-danger" (click)="cancel(value)"><span class="fa fa-remove"></span></button>
             </span>
 
         </div>
@@ -103,6 +103,9 @@ export class InlineEditComponent implements ControlValueAccessor {
     @Input() public disabled: boolean = false;
     @Input() public name: string;
     @Input() public size: number = 8;
+    @Input() public min: number = 1;
+    @Input() public max: number = Infinity;
+    @Input() public fnErrorLength = function () {alert('Error: Lenght!');}
 
 
     //textarea's attribute
@@ -112,9 +115,6 @@ export class InlineEditComponent implements ControlValueAccessor {
     //select's attribute
     @Input() public options: Array<any>; //Create Interface
     //@Output() public selected:EventEmitter<any> = new EventEmitter();
-   
-
-
 
 
     private _value: string = '';
@@ -146,10 +146,11 @@ export class InlineEditComponent implements ControlValueAccessor {
 
     public registerOnTouched(fn: () => {}): void { this.onTouched = fn; };
 
-    private optionSelected(){
+    private optionSelected() {
         return (this.options.find(
             (element) => {
-                return element.value == this.value}
+                return element.value == this.value
+            }
         )).text;
     }
     // Method to display the inline edit form and hide the <a> element
@@ -163,8 +164,12 @@ export class InlineEditComponent implements ControlValueAccessor {
 
     // Method to display the editable value as text and emit save event to host
     onSubmit(value) {
-        this.onSave.emit(value);
-        this.editing = false;
+        if (value.length < this.min || value.length > this.max) {
+            this.fnErrorLength();
+        } else {
+            this.onSave.emit(value);
+            this.editing = false;
+        }
     }
 
     // Method to reset the editable value
@@ -172,5 +177,4 @@ export class InlineEditComponent implements ControlValueAccessor {
         this._value = this.preValue;
         this.editing = false;
     }
-
 }

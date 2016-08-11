@@ -22,6 +22,9 @@ var InlineEditComponent = (function () {
         this.type = 'text';
         this.disabled = false;
         this.size = 8;
+        this.min = 1;
+        this.max = Infinity;
+        this.fnErrorLength = function () { alert('Error: Lenght!'); };
         //textarea's attribute
         this.cols = 50;
         this.rows = 4;
@@ -66,8 +69,13 @@ var InlineEditComponent = (function () {
     };
     // Method to display the editable value as text and emit save event to host
     InlineEditComponent.prototype.onSubmit = function (value) {
-        this.onSave.emit(value);
-        this.editing = false;
+        if (value.length < this.min || value.length > this.max) {
+            this.fnErrorLength();
+        }
+        else {
+            this.onSave.emit(value);
+            this.editing = false;
+        }
     };
     // Method to reset the editable value
     InlineEditComponent.prototype.cancel = function (value) {
@@ -101,6 +109,18 @@ var InlineEditComponent = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Number)
+    ], InlineEditComponent.prototype, "min", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], InlineEditComponent.prototype, "max", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], InlineEditComponent.prototype, "fnErrorLength", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
     ], InlineEditComponent.prototype, "cols", void 0);
     __decorate([
         core_1.Input(), 
@@ -115,7 +135,7 @@ var InlineEditComponent = (function () {
             moduleId: module.id,
             selector: 'inline-editor',
             providers: [INLINE_EDIT_CONTROL_VALUE_ACCESSOR],
-            template: "<div id=\"inlineEditWrapper\">\n\n    <!-- editable value -->\n    <p [ngSwitch]=\"type\">\n       <template [ngSwitchCase]=\"'password'\">\n          <a (click)=\"edit(value)\" [hidden]=\"editing\"> ****** </a>\n        </template>\n        <template [ngSwitchCase]=\"'select'\">\n          <a (click)=\"edit(value)\" [hidden]=\"editing\"> {{optionSelected()}} </a>\n        </template>\n        <template ngSwitchDefault>\n            <a (click)=\"edit(value)\" [hidden]=\"editing\">{{ value }}</a>\n        </template>\n    </p>\n    \n    <!-- inline edit form -->\n    <div class=\"inlineEditForm form-inline\" [hidden]=\"!editing\">\n        <div class=\"form-group\">\n\n            <!-- inline edit control  -->\n\n            <p [ngSwitch]=\"type\">\n                <template [ngSwitchCase]=\"'text'\">\n                    <input #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" [name]=\"name\" [size]=\"size\" />\n                </template>\n                <template [ngSwitchCase]=\"'textarea'\">\n                    <textarea [rows]=\"rows\" [cols]=\"cols\" #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" ></textarea>\n                </template>\n                <template [ngSwitchCase]=\"'select'\">\n                    <select #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\">\n                        <option *ngFor=\"let optionS of options\"  value=\"{{optionS.value}}\">{{optionS.text}}</option>\n                    </select>\n                </template>\n                <template ngSwitchDefault>\n                    <input [type]=\"type\"  #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" />\n                </template>\n            </p>\n\n            <span>\n                <button class=\"btn btn-xs btn-primary\" (click)=\"onSubmit(value)\"><span class=\"fa fa-check\"></span></button>\n            <button class=\"btn btn-xs btn-danger\" (click)=\"cancel(value)\"><span class=\"fa fa-remove\"></span></button>\n            </span>\n\n        </div>\n    </div>\n</div>",
+            template: "<div id=\"inlineEditWrapper\">\n\n    <!-- editable value -->\n    <p [ngSwitch]=\"type\">\n       <template [ngSwitchCase]=\"'password'\">\n          <a (click)=\"edit(value)\" [hidden]=\"editing\"> ****** </a>\n        </template>\n        <template [ngSwitchCase]=\"'select'\">\n          <a (click)=\"edit(value)\" [hidden]=\"editing\"> {{optionSelected()}} </a>\n        </template>\n        <template ngSwitchDefault>\n            <a (click)=\"edit(value)\" [hidden]=\"editing\">{{ value }}</a>\n        </template>\n    </p>\n    \n    <!-- inline edit form -->\n    <div class=\"inlineEditForm form-inline\" [hidden]=\"!editing\">\n        <div class=\"form-group\">\n\n            <!-- inline edit control  -->\n\n            <p [ngSwitch]=\"type\">\n                <template [ngSwitchCase]=\"'text'\">\n                    <input #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" [name]=\"name\" [size]=\"size\" />\n                </template>\n                <template [ngSwitchCase]=\"'textarea'\">\n                    <textarea [rows]=\"rows\" [cols]=\"cols\" #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" ></textarea>\n                </template>\n                <template [ngSwitchCase]=\"'select'\">\n                    <select #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\">\n                        <option *ngFor=\"let optionS of options\"  value=\"{{optionS.value}}\">{{optionS.text}}</option>\n                    </select>\n                </template>\n                <template ngSwitchDefault>\n                    <input [type]=\"type\"  #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" />\n                </template>\n            </p>\n\n            <span>\n                <button id=\"inline-editor-button-save\" class=\"btn btn-xs btn-primary\" (click)=\"onSubmit(value)\"><span class=\"fa fa-check\"></span></button>\n                <button class=\"btn btn-xs btn-danger\" (click)=\"cancel(value)\"><span class=\"fa fa-remove\"></span></button>\n            </span>\n\n        </div>\n    </div>\n</div>",
             styles: ["\n    a {\n text-decoration: none;\n color: #428bca;\n border-bottom: dashed 1px #428bca;\n cursor: pointer;\n line-height: 2;\n margin-right: 5px;\n margin-left: 5px;\n}\n.inlineEditForm{\n display: inline-block;\n white-space: nowrap;\n margin: 0;\n}\n#inlineEditWrapper{\n display: inline-block;\n}\n.inlineEditForm input, select{\n width: auto;\n display: inline;\n}\n.editInvalid{\n color: #a94442;\n margin-bottom: 0;\n}\n.error{\n border-color: #a94442;\n}\n[hidden] {\n display: none;\n}\n  "]
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])

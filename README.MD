@@ -168,7 +168,10 @@ export class MyComponent {
         (onSave)="saveEditable($event)" 
         name="editableText1" 
         size="8"
-        disabled="true"></inline-editor>
+        disabled="true"
+        min="1"
+        max="8"
+        [fnErrorLength]="myHandleError"></inline-editor>
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
@@ -177,6 +180,10 @@ The `$event` argument will be the value return of the input send.
 * **`name`** [`string`] Defines the name of an <input> element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
+* **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
+* **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
+* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max). 
+
 
 
 ##### Password 
@@ -188,7 +195,10 @@ The `$event` argument will be the value return of the input send.
         (onSave)="saveEditable($event)" 
         name="editablePassword" 
         size="8"
-        disabled="true"></inline-editor>
+        disabled="true"
+        min="1"
+        max="8"
+        [fnErrorLength]="myHandleError"></inline-editor>
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
@@ -197,6 +207,9 @@ The `$event` argument will be the value return of the input send.
 * **`name`** [`string`] Defines the name of an <input> element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
+* **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
+* **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
+* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max). 
 
 
 ##### TextArea
@@ -210,7 +223,11 @@ The `$event` argument will be the value return of the input send.
         size="8"
         disabled="true"
         cols="50"
-        rows="4"></inline-editor>
+        rows="4"
+        min="1"
+        max="8"
+        [fnErrorLength]="myHandleError"></inline-editor>
+
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
@@ -221,6 +238,9 @@ The `$event` argument will be the value return of the input send.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`cols`** [`number`] Specifies the visible width of a text area. Default is `50`.
 * **`rows`** [`number`] Specifies the visible height of a text area. Default is `4`.
+* **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
+* **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
+* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max). 
 
 
 ##### Select
@@ -242,7 +262,7 @@ The `$event` argument will be the value return of the input send.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`options`** [`Array<optionItem>`] Array of items from which to select. Should be an array of objects with `value` and `text` properties.
 
-
+Typescript code:
 ```TypeScript
   editableSelect = 2;
   editableSelectOptions =[

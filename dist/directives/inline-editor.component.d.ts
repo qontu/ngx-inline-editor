@@ -8,6 +8,9 @@ export declare class InlineEditComponent implements ControlValueAccessor {
     disabled: boolean;
     name: string;
     size: number;
+    min: number;
+    max: number;
+    fnErrorLength: () => void;
     cols: number;
     rows: number;
     options: Array<any>;
