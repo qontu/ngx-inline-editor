@@ -54,7 +54,7 @@ If you need to support a previous version of Angular 2 for now, please see the c
 ```TypeScript 
 /** Map relative paths to URLs. */
 const map: any = {
-  'ng2-inline-editor':'vendor/inline-editor/dist'
+  'ng2-inline-editor':'vendor/ng2-inline-editor/dist'
 };
 
 /** User packages configuration. */
@@ -108,8 +108,7 @@ module.exports = function(defaults) {
 
 ## Simple Example
 
-You can find a complete example [here](https://www.github.com/caballerog/ng2-inline-editor/demos/)
-
+You can find a complete example [here](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos/basic)
 ```TypeScript
 import {Component} from '@angular/core';
 import {InlineEditorDirectives} from 'ng2-inline-editor';
@@ -320,5 +319,5 @@ Thanks for understanding!
 
 ## License
 
-The MIT License (See the [LICENSE](https://github.com/caballerog/ng2-inline-editor/LICENSE) file for the full text) - [Carlos Caballero](caballerog.carlos@gmail.com)
+The MIT License (See the [LICENSE](https://github.com/Caballerog/ng2-inline-editor/blob/master/LICENSE.MD) file for the full text) - [Carlos Caballero](caballerog.carlos@gmail.com)
 
