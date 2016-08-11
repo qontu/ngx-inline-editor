@@ -8,9 +8,7 @@ Such technique is also known as *click-to-edit* or *edit-in-place*.
 It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is developed in AngularJS and the Julianna Zakula's [original post](https://medium.com/front-end-hacking/inline-editing-with-angular2-58b43cc2aba).
 
 
-
-[[ https://github.com/Caballerog/ng2-inline-editor/blob/master/demos/basic/0.1.0.gif | height = 100px ]]
-
+![Version 0.1.0](https://github.com/caballerog/ng2-inline-editor/raw/master/demos/basic/0.1.0.gif)
 ## Dependencies
 
 Basically it does not depend on any libraries except Angular2 itself.
