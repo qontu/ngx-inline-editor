@@ -1,6 +1,6 @@
 {
   "name": "ng2-inline-editor",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.5",
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "test": "tsc && karma start",
