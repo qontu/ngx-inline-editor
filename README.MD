@@ -54,12 +54,12 @@ If you need to support a previous version of Angular 2 for now, please see the c
 ```TypeScript 
 /** Map relative paths to URLs. */
 const map: any = {
-  'inline-editor':'vendor/inline-editor/dist'
+  'ng2-inline-editor':'vendor/inline-editor/dist'
 };
 
 /** User packages configuration. */
 const packages: any = {
-  'vendor/inline-editor/dist': {
+  'vendor/ng2-inline-editor/dist': {
       defaultExtension: 'js',
       main: 'index.js'
   }
@@ -79,7 +79,7 @@ const barrels: string[] = [
 
   // Thirdparty barrels.
   'rxjs',
-  'inline-editor',
+  'ng2-inline-editor',
 ];
 
 ``` 
