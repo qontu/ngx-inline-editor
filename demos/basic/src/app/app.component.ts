@@ -8,7 +8,7 @@ import { InlineEditorDirectives} from 'ng2-inline-editor';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   directives: [InlineEditorDirectives],
-  
+
   styleUrls: ['app.component.css']
 })
 export class AppComponent {
@@ -18,12 +18,27 @@ export class AppComponent {
   editablePassword = 'myPassword';
   editableTextArea = 'Text in text area';
   editableSelect = 2;
-  editableSelectOptions =[
-    {value: 1, text: 'status1'},
-    {value: 2, text: 'status2'},
-    {value: 3, text: 'status3'},
-    {value: 4, text: 'status4'}
-  ]; 
+  editableSelectOptions = [
+    { value: 1, text: 'status1' },
+    { value: 2, text: 'status2' },
+    { value: 3, text: 'status3' },
+    { value: 4, text: 'status4' }
+  ];
+
+  editableSelectOptionsConfiguration = {
+    data: [
+      { id: 1, field: 'status1' },
+      { id: 2, field: 'status2' },
+      { id: 3, field: 'status3' },
+      { id: 4, field: 'status4' }
+    ],
+    value: 'id',
+    text: 'field'
+  }
+
+  fnErrorLength = function () {
+    alert('This is a custom error!');
+  }
 
   saveEditable(value) {
     //call to http server

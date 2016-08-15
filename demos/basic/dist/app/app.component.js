@@ -23,6 +23,19 @@ var AppComponent = (function () {
             { value: 3, text: 'status3' },
             { value: 4, text: 'status4' }
         ];
+        this.editableSelectOptionsConfiguration = {
+            data: [
+                { id: 1, field: 'status1' },
+                { id: 2, field: 'status2' },
+                { id: 3, field: 'status3' },
+                { id: 4, field: 'status4' }
+            ],
+            value: 'id',
+            text: 'field'
+        };
+        this.fnErrorLength = function () {
+            alert('This is a custom error!');
+        };
     }
     AppComponent.prototype.saveEditable = function (value) {
         //call to http server

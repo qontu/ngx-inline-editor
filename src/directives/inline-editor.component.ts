@@ -1,4 +1,4 @@
-import {Component, Output, Input, Provider, forwardRef, EventEmitter, ElementRef, ViewChild, Renderer} from '@angular/core';
+import {Component, OnInit, Output, Input, Provider, forwardRef, EventEmitter, ElementRef, ViewChild, Renderer} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/common";
 
 const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = new Provider(
@@ -41,7 +41,7 @@ const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = new Provider(
                 </template>
                 <template [ngSwitchCase]="'select'">
                     <select #inlineEditControl class="form-control" [(ngModel)]="value">
-                        <option *ngFor="let optionS of options"  value="{{optionS.value}}">{{optionS.text}}</option>
+                        <option *ngFor="let optionS of options.data"  value="{{optionS[options.value]}}">{{optionS[options.text]}}</option>
                     </select>
                 </template>
                 <template ngSwitchDefault>
@@ -93,7 +93,7 @@ const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = new Provider(
     //templateUrl: 'inline-editor.component.html',
     // styleUrls: ['inline-editor.component.css']
 })
-export class InlineEditComponent implements ControlValueAccessor {
+export class InlineEditComponent implements ControlValueAccessor, OnInit {
     // inline edit form control
     @ViewChild('inlineEditControl') inlineEditControl;
     @Output() public onSave: EventEmitter<any> = new EventEmitter();
@@ -105,7 +105,7 @@ export class InlineEditComponent implements ControlValueAccessor {
     @Input() public size: number = 8;
     @Input() public min: number = 1;
     @Input() public max: number = Infinity;
-    @Input() public fnErrorLength = function () {alert('Error: Lenght!');}
+    @Input() public fnErrorLength = function () { alert('Error: Lenght!'); }
 
 
     //textarea's attribute
@@ -113,7 +113,7 @@ export class InlineEditComponent implements ControlValueAccessor {
     @Input() public rows: number = 4;
 
     //select's attribute
-    @Input() public options: Array<any>; //Create Interface
+    @Input() public options;
     //@Output() public selected:EventEmitter<any> = new EventEmitter();
 
 
@@ -134,8 +134,18 @@ export class InlineEditComponent implements ControlValueAccessor {
         }
     }
 
-    constructor(element: ElementRef, private _renderer: Renderer) {
+    constructor(element: ElementRef, private _renderer: Renderer) { }
 
+    ngOnInit() {
+        if (this.type == "select") {
+            if (this.options['data'] === undefined) {
+                let tmp = this.options;
+                this.options = {};
+                this.options['data'] = tmp;
+                this.options['value'] = 'value';
+                this.options['text'] = 'text';
+            }
+        }
     }
 
     writeValue(value: any) {
@@ -147,11 +157,23 @@ export class InlineEditComponent implements ControlValueAccessor {
     public registerOnTouched(fn: () => {}): void { this.onTouched = fn; };
 
     private optionSelected() {
-        return (this.options.find(
+
+        console.log(
+            (this.options['data'].find(
+                (element) => {
+
+                    return element[this.options['value']] == this['value']
+                }
+            ))[this.options['text']]
+        );
+
+        return (this.options['data'].find(
             (element) => {
-                return element.value == this.value
+                return element[this.options['value']] == this['value']
             }
-        )).text;
+        ))[this.options['text']];
+
+
     }
     // Method to display the inline edit form and hide the <a> element
     edit(value) {

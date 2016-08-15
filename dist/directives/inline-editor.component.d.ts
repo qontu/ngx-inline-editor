@@ -1,6 +1,6 @@
-import { EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { OnInit, EventEmitter, ElementRef, Renderer } from '@angular/core';
 import { ControlValueAccessor } from "@angular/common";
-export declare class InlineEditComponent implements ControlValueAccessor {
+export declare class InlineEditComponent implements ControlValueAccessor, OnInit {
     private _renderer;
     inlineEditControl: any;
     onSave: EventEmitter<any>;
@@ -13,7 +13,7 @@ export declare class InlineEditComponent implements ControlValueAccessor {
     fnErrorLength: () => void;
     cols: number;
     rows: number;
-    options: Array<any>;
+    options: any;
     private _value;
     private preValue;
     private editing;
@@ -21,6 +21,7 @@ export declare class InlineEditComponent implements ControlValueAccessor {
     onTouched: any;
     value: any;
     constructor(element: ElementRef, _renderer: Renderer);
+    ngOnInit(): void;
     writeValue(value: any): void;
     registerOnChange(fn: (_: any) => {}): void;
     registerOnTouched(fn: () => {}): void;

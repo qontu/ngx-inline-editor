@@ -260,7 +260,8 @@ The `$event` argument will be the value return of the input send.
 The `$event` argument will be the value return of the input send. 
 * **`name`** [`string`] Defines the name of an <input> element. Default is `undefined`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
-* **`options`** [`Array<optionItem>`] Array of items from which to select. Should be an array of objects with `value` and `text` properties.
+* **`options`** [`Array<optionItem> | Object:{ data: Array<optionItem, value:string, text: string }`] Array of items from which to select. Should be an array of objects with `value` and `text` properties. 
+Is possible to configure key-value parameters using an object that specifies these fields and data.
 
 Typescript code:
 ```TypeScript
@@ -279,7 +280,29 @@ Typescript code:
   }
 ```
 * **`editableSelect`** [`number`] Specifies the default's value of the select.
-* **`editableSelectOptions`** [`Array<optionItem>`] Specifies the array of items from which to select. Should be an array of objects with `value` and `text` properties.
+* **`editableSelectOptions`** [`Array<optionItem> | Object: { data: Array<optionItem, value:string, text: string }`] Specifies the array of items from which to select. Should be an array of objects with `value` and `text` properties.
+Is possible to configure key-value parameters using an object that specifies these fields and data.
+
+Typescript code:
+```TypeScript
+  editableSelect = 2;
+  editableSelectOptionsConfiguration = {
+    data: [
+      { id: 1, field: 'status1' },
+      { id: 2, field: 'status2' },
+      { id: 3, field: 'status3' },
+      { id: 4, field: 'status4' }
+    ],
+    value: 'id',
+    text: 'field'
+  }
+
+  saveEditable(value) {
+    //call to http server
+    console.log('http.server: ' + value);
+
+  }
+```
 
 
 # Style/Theme

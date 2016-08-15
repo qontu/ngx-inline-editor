@@ -2,7 +2,7 @@
   {{title}}
 </h1>
 <div>
-  <inline-editor type="text" [(ngModel)]="editableText" (onSave)="saveEditable($event)" name="editableText1" size="8"></inline-editor>
+  <inline-editor type="text" [(ngModel)]="editableText" (onSave)="saveEditable($event)" name="editableText1" size="8" min="3" max="5" [fnErrorLength]="fnErrorLength"></inline-editor>
 </div>
 <div>
   <inline-editor type="password" [(ngModel)]="editablePassword" (onSave)="saveEditable($event)" value="valor"></inline-editor>
@@ -13,9 +13,17 @@
 </div>
 
 <div>
-  <inline-editor type="select" [(ngModel)]="editableSelect" (onSave)="saveEditable($event)" [options]="editableSelectOptions"
-    value="valor"></inline-editor>
+  <inline-editor type="select" [(ngModel)]="editableSelect" (onSave)="saveEditable($event)" [options]="editableSelectOptions"></inline-editor>
 </div>
+
+
+<div>
+  <inline-editor type="select" 
+                [(ngModel)]="editableSelect"
+                (onSave)="saveEditable($event)" 
+                [options]="editableSelectOptionsConfiguration"></inline-editor>
+</div>
+
 
 
 <div>
