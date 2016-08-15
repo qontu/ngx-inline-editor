@@ -157,16 +157,6 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit {
     public registerOnTouched(fn: () => {}): void { this.onTouched = fn; };
 
     private optionSelected() {
-
-        console.log(
-            (this.options['data'].find(
-                (element) => {
-
-                    return element[this.options['value']] == this['value']
-                }
-            ))[this.options['text']]
-        );
-
         return (this.options['data'].find(
             (element) => {
                 return element[this.options['value']] == this['value']
