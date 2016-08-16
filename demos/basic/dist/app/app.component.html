@@ -27,6 +27,14 @@
 
 
 <div>
+  <inline-editor type="select" 
+                [(ngModel)]="editableSelectOptionsTwoLevelsDefault"
+                (onSave)="saveEditable($event)" 
+                [options]="editableSelectOptionsTwoLevelsConfiguration"></inline-editor>
+</div>
+
+
+<div>
   <h3>Disabled components</h3>
   <inline-editor type="text" [(ngModel)]="editableText" (onSave)="saveEditable($event)" disabled="true"></inline-editor>
 </div>

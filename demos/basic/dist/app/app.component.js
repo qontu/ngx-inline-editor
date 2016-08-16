@@ -33,6 +33,26 @@ var AppComponent = (function () {
             value: 'id',
             text: 'field'
         };
+        this.editableSelectOptionsTwoLevelsDefault = 1;
+        this.editableSelectOptionsTwoLevelsConfiguration = {
+            data: [
+                {
+                    id: 1, field: 'status1',
+                    children: [
+                        { id: 5, field: 'status1.1' },
+                        { id: 6, field: 'status1.2' }
+                    ]
+                },
+                { id: 2, field: 'status2' },
+                { id: 3, field: 'status3' },
+                {
+                    id: 4, field: 'status4',
+                    children: [{ id: 7, field: 'status4.1' }]
+                }
+            ],
+            value: 'id',
+            text: 'field'
+        };
         this.fnErrorLength = function () {
             alert('This is a custom error!');
         };

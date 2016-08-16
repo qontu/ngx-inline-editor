@@ -41,7 +41,14 @@ const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = new Provider(
                 </template>
                 <template [ngSwitchCase]="'select'">
                     <select #inlineEditControl class="form-control" [(ngModel)]="value">
-                        <option *ngFor="let optionS of options.data"  value="{{optionS[options.value]}}">{{optionS[options.text]}}</option>
+                    <template ngFor let-item [ngForOf]="options.data">
+                        <optgroup *ngIf="item.children" label="{{item[options.text]}}">
+                            <option *ngFor="let child of item.children" value="{{child[options.value]}}">
+                                {{child[options.text]}}
+                            </option>
+                        </optgroup>
+                     <option *ngIf="!item.children" value="{{item[options.value]}}">{{item[options.text]}}</option>
+                    </template>
                     </select>
                 </template>
                 <template ngSwitchDefault>
@@ -157,13 +164,40 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit {
     public registerOnTouched(fn: () => {}): void { this.onTouched = fn; };
 
     private optionSelected() {
+        let dataLength = this.options['data'].length;
+        let i = 0;
+        while (dataLength > i) {
+            let element = this.options['data'][i];
+            if (element[this.options['value']] == this['value']) {
+                return element[this.options['text']];
+            }
+            if (element.hasOwnProperty('children')) {
+                let childrenLength = element.children.length;
+                let j = 0;
+                while (childrenLength > j) {
+                    let children = element.children[j];
+                    if (children[this.options['value']] == this['value'])
+                        return children[this.options['text']];
+                    j++;
+                }
+            }
+            i++;
+        }
+        /*
         return (this.options['data'].find(
             (element) => {
+                    if(element.hasOwnProperty('children')){
+                        let child = element.children.find(
+                            (child) => {
+                                return child[this.options['value']] == this['value']
+                            }
+                        )
+                        if(child != undefined) return child
+                    }
                 return element[this.options['value']] == this['value']
             }
         ))[this.options['text']];
-
-
+        */
     }
     // Method to display the inline edit form and hide the <a> element
     edit(value) {

@@ -65,13 +65,40 @@ var InlineEditComponent = (function () {
     InlineEditComponent.prototype.registerOnTouched = function (fn) { this.onTouched = fn; };
     ;
     InlineEditComponent.prototype.optionSelected = function () {
-        var _this = this;
-        console.log((this.options['data'].find(function (element) {
-            return element[_this.options['value']] == _this['value'];
-        }))[this.options['text']]);
-        return (this.options['data'].find(function (element) {
-            return element[_this.options['value']] == _this['value'];
-        }))[this.options['text']];
+        var dataLength = this.options['data'].length;
+        var i = 0;
+        while (dataLength > i) {
+            var element_1 = this.options['data'][i];
+            if (element_1[this.options['value']] == this['value']) {
+                return element_1[this.options['text']];
+            }
+            if (element_1.hasOwnProperty('children')) {
+                var childrenLength = element_1.children.length;
+                var j = 0;
+                while (childrenLength > j) {
+                    var children = element_1.children[j];
+                    if (children[this.options['value']] == this['value'])
+                        return children[this.options['text']];
+                    j++;
+                }
+            }
+            i++;
+        }
+        /*
+        return (this.options['data'].find(
+            (element) => {
+                    if(element.hasOwnProperty('children')){
+                        let child = element.children.find(
+                            (child) => {
+                                return child[this.options['value']] == this['value']
+                            }
+                        )
+                        if(child != undefined) return child
+                    }
+                return element[this.options['value']] == this['value']
+            }
+        ))[this.options['text']];
+        */
     };
     // Method to display the inline edit form and hide the <a> element
     InlineEditComponent.prototype.edit = function (value) {
@@ -149,7 +176,7 @@ var InlineEditComponent = (function () {
             moduleId: module.id,
             selector: 'inline-editor',
             providers: [INLINE_EDIT_CONTROL_VALUE_ACCESSOR],
-            template: "<div id=\"inlineEditWrapper\">\n\n    <!-- editable value -->\n    <p [ngSwitch]=\"type\">\n       <template [ngSwitchCase]=\"'password'\">\n          <a (click)=\"edit(value)\" [hidden]=\"editing\"> ****** </a>\n        </template>\n        <template [ngSwitchCase]=\"'select'\">\n          <a (click)=\"edit(value)\" [hidden]=\"editing\"> {{optionSelected()}} </a>\n        </template>\n        <template ngSwitchDefault>\n            <a (click)=\"edit(value)\" [hidden]=\"editing\">{{ value }}</a>\n        </template>\n    </p>\n    \n    <!-- inline edit form -->\n    <div class=\"inlineEditForm form-inline\" [hidden]=\"!editing\">\n        <div class=\"form-group\">\n\n            <!-- inline edit control  -->\n\n            <p [ngSwitch]=\"type\">\n                <template [ngSwitchCase]=\"'text'\">\n                    <input #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" [name]=\"name\" [size]=\"size\" />\n                </template>\n                <template [ngSwitchCase]=\"'textarea'\">\n                    <textarea [rows]=\"rows\" [cols]=\"cols\" #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" ></textarea>\n                </template>\n                <template [ngSwitchCase]=\"'select'\">\n                    <select #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\">\n                        <option *ngFor=\"let optionS of options.data\"  value=\"{{optionS[options.value]}}\">{{optionS[options.text]}}</option>\n                    </select>\n                </template>\n                <template ngSwitchDefault>\n                    <input [type]=\"type\"  #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" />\n                </template>\n            </p>\n\n            <span>\n                <button id=\"inline-editor-button-save\" class=\"btn btn-xs btn-primary\" (click)=\"onSubmit(value)\"><span class=\"fa fa-check\"></span></button>\n                <button class=\"btn btn-xs btn-danger\" (click)=\"cancel(value)\"><span class=\"fa fa-remove\"></span></button>\n            </span>\n\n        </div>\n    </div>\n</div>",
+            template: "<div id=\"inlineEditWrapper\">\n\n    <!-- editable value -->\n    <p [ngSwitch]=\"type\">\n       <template [ngSwitchCase]=\"'password'\">\n          <a (click)=\"edit(value)\" [hidden]=\"editing\"> ****** </a>\n        </template>\n        <template [ngSwitchCase]=\"'select'\">\n          <a (click)=\"edit(value)\" [hidden]=\"editing\"> {{optionSelected()}} </a>\n        </template>\n        <template ngSwitchDefault>\n            <a (click)=\"edit(value)\" [hidden]=\"editing\">{{ value }}</a>\n        </template>\n    </p>\n    \n    <!-- inline edit form -->\n    <div class=\"inlineEditForm form-inline\" [hidden]=\"!editing\">\n        <div class=\"form-group\">\n\n            <!-- inline edit control  -->\n\n            <p [ngSwitch]=\"type\">\n                <template [ngSwitchCase]=\"'text'\">\n                    <input #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" [name]=\"name\" [size]=\"size\" />\n                </template>\n                <template [ngSwitchCase]=\"'textarea'\">\n                    <textarea [rows]=\"rows\" [cols]=\"cols\" #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" ></textarea>\n                </template>\n                <template [ngSwitchCase]=\"'select'\">\n                    <select #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\">\n                    <template ngFor let-item [ngForOf]=\"options.data\">\n                        <optgroup *ngIf=\"item.children\" label=\"{{item[options.text]}}\">\n                            <option *ngFor=\"let child of item.children\" value=\"{{child[options.value]}}\">\n                                {{child[options.text]}}\n                            </option>\n                        </optgroup>\n                     <option *ngIf=\"!item.children\" value=\"{{item[options.value]}}\">{{item[options.text]}}</option>\n                    </template>\n                    </select>\n                </template>\n                <template ngSwitchDefault>\n                    <input [type]=\"type\"  #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" />\n                </template>\n            </p>\n\n            <span>\n                <button id=\"inline-editor-button-save\" class=\"btn btn-xs btn-primary\" (click)=\"onSubmit(value)\"><span class=\"fa fa-check\"></span></button>\n                <button class=\"btn btn-xs btn-danger\" (click)=\"cancel(value)\"><span class=\"fa fa-remove\"></span></button>\n            </span>\n\n        </div>\n    </div>\n</div>",
             styles: ["\n    a {\n text-decoration: none;\n color: #428bca;\n border-bottom: dashed 1px #428bca;\n cursor: pointer;\n line-height: 2;\n margin-right: 5px;\n margin-left: 5px;\n}\n.inlineEditForm{\n display: inline-block;\n white-space: nowrap;\n margin: 0;\n}\n#inlineEditWrapper{\n display: inline-block;\n}\n.inlineEditForm input, select{\n width: auto;\n display: inline;\n}\n.editInvalid{\n color: #a94442;\n margin-bottom: 0;\n}\n.error{\n border-color: #a94442;\n}\n[hidden] {\n display: none;\n}\n  "]
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])

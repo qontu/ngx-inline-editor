@@ -177,7 +177,7 @@ export class MyComponent {
 * **`type`** [`string`] Specifies the type `<input>` element to display.
 * **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button. 
 The `$event` argument will be the value return of the input send. 
-* **`name`** [`string`] Defines the name of an <input> element. Default is `undefined`.
+* **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
@@ -204,7 +204,7 @@ The `$event` argument will be the value return of the input send.
 * **`type`** [`string`] Specifies the type `<input>` element to display.
 * **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button. 
 The `$event` argument will be the value return of the input send. 
-* **`name`** [`string`] Defines the name of an <input> element. Default is `undefined`.
+* **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
@@ -233,7 +233,7 @@ The `$event` argument will be the value return of the input send.
 * **`type`** [`string`] Specifies the type `<input>` element to display.
 * **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button. 
 The `$event` argument will be the value return of the input send. 
-* **`name`** [`string`] Defines the name of an <input> element. Default is `undefined`.
+* **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`cols`** [`number`] Specifies the visible width of a text area. Default is `50`.
@@ -244,6 +244,8 @@ The `$event` argument will be the value return of the input send.
 
 
 ##### Select
+
+##### Basic example
 
 ```HTML
 <inline-editor 
@@ -258,7 +260,7 @@ The `$event` argument will be the value return of the input send.
 * **`type`** [`string`] Specifies the type `<input>` element to display.
 * **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button. 
 The `$event` argument will be the value return of the input send. 
-* **`name`** [`string`] Defines the name of an <input> element. Default is `undefined`.
+* **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`options`** [`Array<optionItem> | Object:{ data: Array<optionItem, value:string, text: string }`] Array of items from which to select. Should be an array of objects with `value` and `text` properties. 
 Is possible to configure key-value parameters using an object that specifies these fields and data.
@@ -279,6 +281,9 @@ Typescript code:
 
   }
 ```
+
+##### Parameter's configuration example
+
 * **`editableSelect`** [`number`] Specifies the default's value of the select.
 * **`editableSelectOptions`** [`Array<optionItem> | Object: { data: Array<optionItem, value:string, text: string }`] Specifies the array of items from which to select. Should be an array of objects with `value` and `text` properties.
 Is possible to configure key-value parameters using an object that specifies these fields and data.
@@ -303,6 +308,38 @@ Typescript code:
 
   }
 ```
+
+##### Children example
+
+Is possible to configure sublevels/children to generate the select using an array of objects called `children`.
+
+Typescript code:
+```TypeScript
+ editableSelectOptionsTwoLevelsDefault = 1;
+  editableSelectOptionsTwoLevelsConfiguration = {
+    data: [
+      {
+        id: 1, field: 'status1',
+        children: [
+          { id: 5, field: 'status1.1' },
+          { id: 6, field: 'status1.2' }
+        ]
+      },
+      { id: 2, field: 'status2' },
+      { id: 3, field: 'status3' },
+      {
+        id: 4, field: 'status4',
+        children: [{ id: 7, field: 'status4.1' }]
+      }
+    ],
+    value: 'id',
+    text: 'field'
+  }
+```
+
+
+![Version 0.1.0-optGroup](https://github.com/caballerog/ng2-inline-editor/raw/master/demos/basic/0.1.0-optGroup.gif)
+
 
 
 # Style/Theme
