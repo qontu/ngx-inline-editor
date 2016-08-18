@@ -1,6 +1,6 @@
 {
-   "name": "ng2-inline-editor",
-  "version": "0.1.0-rc.8",
+  "name": "ng2-inline-editor",
+  "version": "0.1.0-rc.9",
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "test": "tsc && karma start",
@@ -30,13 +30,14 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@angular/core": "2.0.0-rc.3",
-    "@angular/common": "2.0.0-rc.3",
+    "@angular/core": "2.0.0-rc.5",
+    "@angular/common": "2.0.0-rc.5",
+    "@angular/compiler": "^2.0.0-rc.5",
     "codelyzer": "^0.0.20",
     "rxjs": "5.0.0-beta.6",
     "tslint": "^3.6.0",
     "typescript": "^1.8.10",
-    "typings":"^1.0.4",
+    "typings": "^1.0.4",
     "zone.js": "0.6.12"
   },
   "engines": {

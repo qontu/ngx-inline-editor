@@ -340,6 +340,30 @@ Typescript code:
 
 ![Version 0.1.0-optGroup](https://github.com/caballerog/ng2-inline-editor/raw/master/demos/basic/0.1.0-optGroup.gif)
 
+#### Empty components
+
+
+
+```HTML
+  <inline-editor 
+  type="text" 
+  ngModel 
+  empty="My custom message"
+  (onSave)="saveEditable($event)" 
+  name="editableText1" 
+  size="8" 
+  min="3"
+  max="5" [fnErrorLength]="fnErrorLength"></inline-editor>
+
+  <inline-editor type="select" 
+                [(ngModel)]="editableSelectDoesntExist"
+                (onSave)="saveEditable($event)" 
+                [options]="editableSelectOptionsConfiguration"></inline-editor>
+``` 
+
+* **`empty`** [`string`] Specifies the default message to display if there are not ngModel for the component.
+If the type is `select` then the default selected element is the first element of the `options` array.
+
 
 
 # Style/Theme
@@ -356,6 +380,17 @@ a {
  margin-right: 5px;
  margin-left: 5px;
 }
+.editable-empty, 
+.editable-empty:hover, 
+.editable-empty:focus,
+a.editable-empty, 
+a.editable-empty:hover, 
+a.editable-empty:focus {
+  font-style: italic; 
+  color: #DD1144;  
+  text-decoration: none;
+}
+
 .inlineEditForm{
  display: inline-block;
  white-space: nowrap;
