@@ -415,6 +415,14 @@ a.editable-empty:focus {
 }
 ```  
 
+
+# Integration with other ng2-libraries
+
+## angular2-data-table
+Example using [angular2-data-table](https://github.com/swimlane/angular2-data-table) ([demo](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos))
+![Version 0.1.0-angular2-data-table](https://github.com/caballerog/ng2-inline-editor/raw/master/demos/0.1.0-angular2-data-table.gif)
+
+
 # Troubleshooting
 
 Please follow this guidelines when reporting bugs and feature requests:
