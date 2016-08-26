@@ -1,18 +1,12 @@
-import { Component } from '@angular/core';
 
-import { InlineEditorDirectives} from 'ng2-inline-editor';
-
+import {Component} from '@angular/core'
 
 @Component({
-  moduleId: module.id,
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  directives: [InlineEditorDirectives],
-
-  styleUrls: ['app.component.css']
+    selector: 'app-root',
+    templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  title = 'ng2-inline-editor!';
+      title = 'ng2-inline-editor!';
 
   editableText = 'myText';
   editablePassword = 'myPassword';

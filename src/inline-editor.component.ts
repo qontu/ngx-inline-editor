@@ -1,12 +1,14 @@
-import {Component, OnInit, Output, Input, Provider, forwardRef, EventEmitter, ElementRef, ViewChild, Renderer} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/common";
+import { Component, forwardRef, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, Renderer } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
-const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {
-        useExisting: forwardRef(() => InlineEditComponent),
-        multi: true
-    });
+const noop = () => {
+};
 
+export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => InlineEditorComponent),
+    multi: true
+};
 
 // TO-DO interface hierarchy
 export interface InputConfig {
@@ -18,7 +20,7 @@ export interface InputConfig {
     size: number,
     min: number,
     max: number,
-    fnErrorLength: (any) => void,
+    fnErrorLength: (any: any) => void,
 }
 
 // TO-DO Default's value
@@ -33,9 +35,10 @@ const inputConfig: InputConfig = {
     fnErrorLength: function (x) { alert('Error: Lenght!'); }
 };
 
+
 const INLINE_EDITOR_TEMPLATE = `
 <div id="inlineEditWrapper">
-    <p [ngSwitch]="type">
+    <div [ngSwitch]="type">
        <template [ngSwitchCase]="'password'">
           <a [ngClass]="{'editable-empty': isEmpty }" (click)="edit(value)" [hidden]="editing"> ****** </a>
         </template>
@@ -45,7 +48,7 @@ const INLINE_EDITOR_TEMPLATE = `
         <template ngSwitchDefault>
             <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing">{{ value }}</a>
         </template>
-    </p>
+    </div>
     
     <!-- inline edit form -->
     <div class="inlineEditForm form-inline" [hidden]="!editing">
@@ -84,6 +87,7 @@ const INLINE_EDITOR_TEMPLATE = `
         </div>
     </div>
 </div>`;
+
 
 const INLINE_EDITOR_CSS = `
 a {
@@ -132,13 +136,13 @@ a.editable-empty:focus {
 }`
 
 @Component({
-    moduleId: module.id,
     selector: 'inline-editor',
-    providers: [INLINE_EDIT_CONTROL_VALUE_ACCESSOR],
     template: INLINE_EDITOR_TEMPLATE,
-    styles: [INLINE_EDITOR_CSS]
+    styles: [INLINE_EDITOR_CSS],
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class InlineEditComponent implements ControlValueAccessor, OnInit, InputConfig {
+export class InlineEditorComponent implements ControlValueAccessor, OnInit, InputConfig {
+
     // inline edit form control
     @ViewChild('inlineEditControl') inlineEditControl;
     @Output() public onSave: EventEmitter<any> = new EventEmitter();
@@ -289,4 +293,5 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit, InputC
         this._value = this.preValue;
         this.editing = false;
     }
+
 }

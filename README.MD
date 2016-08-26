@@ -17,8 +17,8 @@ For themes you may need to include Twitter Bootstrap CSS.
 ### Angular 2 Version
 
 Angular 2 is not yet stable, and API changes are ongoing. Therefore, if encountering errors using this
-lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular2 **2.0.0-rc.5 +**.
-If you need to support a previous version of Angular 2 for now, please see the changelog for advice on which version to use.
+lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular2 **2.0.0-rc.5+ **.
+If you need to support a previous version of Angular 2 for now, please see the [old README](https://github.com/caballerog/ng2-inline-editor/old-RC4/README.MD).
 
 
 ## Controls & Features
@@ -45,68 +45,35 @@ If you need to support a previous version of Angular 2 for now, please see the c
 
 1. A recommended way to install ***ng2-inline-editor*** is through [npm](https://www.npmjs.com/search?q=ng2-inline-editor) package manager using the following command:
 
-  `npm i ng2-inline-editor --save`
+  `npm i ng2-inline-editor2 --save`
 
-2. Include [Twitter Bootstrap](http://v4-alpha.getbootstrap.com/) and [FontAwesome](http://fontawesome.io/) in your project
+2. Include [Twitter Bootstrap](http://v4-alpha.getbootstrap.com/) and [FontAwesome](http://fontawesome.io/) in your project.
 
-### Configuration using systemJS (angular-cli)
 
-1. Edit your system-config.ts
+Usage
+-----
 
-```TypeScript 
-/** Map relative paths to URLs. */
-const map: any = {
-  'ng2-inline-editor':'vendor/ng2-inline-editor/dist'
-};
+## Angular RC 5 and later
 
-/** User packages configuration. */
-const packages: any = {
-  'vendor/ng2-inline-editor/dist': {
-      defaultExtension: 'js',
-      main: 'index.js'
-  }
-};
-....
+Import `InlineEditorModule` into your app's modules:
 
-const barrels: string[] = [
-  // Angular specific barrels.
-  '@angular/core',
-  '@angular/common',
-  '@angular/compiler',
-  '@angular/forms',
-  '@angular/http',
-  '@angular/router',
-  '@angular/platform-browser',
-  '@angular/platform-browser-dynamic',
+``` typescript
+import {InlineEditorModule} from 'ng2-inline-editor';
 
-  // Thirdparty barrels.
-  'rxjs',
-  'ng2-inline-editor',
-];
-
-``` 
-
-2. Add `ng2-inline-editor/dist/**/*.js` in the `angular-cli-build.js` file.
-
+@NgModule({
+  imports: [
+    InlineEditorModule
+  ]
+})
 ```
-var Angular2App = require('angular-cli/lib/broccoli/angular2-app');
 
-module.exports = function(defaults) {
-  return new Angular2App(defaults, {
-    vendorNpmFiles: [
-      'systemjs/dist/system-polyfills.js',
-      'systemjs/dist/system.src.js',
-      'zone.js/dist/**/*.+(js|js.map)',
-      'es6-shim/es6-shim.js',
-      'reflect-metadata/**/*.+(ts|js|js.map)',
-      'rxjs/**/*.+(js|js.map)',
-      '@angular/**/*.+(js|js.map)',
-      
-      'ng2-inline-editor/dist/**/*.js'
-    ]
-  });
-};
-```
+This makes all the `ng2-inline-editor` components available for use in your app components.
+
+## Angular RC 4 and earlier
+
+Use an older version of the library, such as 0.1.0. You can find the documentation 
+[here](https://github.com/caballerog/old-RC4/).
+
 
 ## Simple Example
 
@@ -130,8 +97,7 @@ import {InlineEditorDirectives} from 'ng2-inline-editor';
     <div>
         <inline-editor type="select" [(ngModel)]="editableSelect" (onSave)="saveEditable($event)" [options]="editableSelectOptions"
         value="valor"></inline-editor>
-  </div>`,
-    directives: [InlineEditorDirectives]
+  </div>`
 })
 export class MyComponent {
   title = 'My component!';

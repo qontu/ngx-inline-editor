@@ -1,4 +1,4 @@
-export class ExampleInlineEditorPage {
+export class PruebaAngularClIRC5Page {
   navigateTo() {
     return browser.get('/');
   }

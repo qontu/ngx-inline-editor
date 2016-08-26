@@ -1,8 +1,2 @@
-import {InlineEditorDirectives} from './directives';
-
-export * from './directives';
-
-
-export default {
-  directives: [InlineEditorDirectives],
-}
+export * from './module';
+export * from './inline-editor.component';

@@ -2,10 +2,6 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-var directives_1 = require('./directives');
-__export(require('./directives'));
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    directives: [directives_1.InlineEditorDirectives],
-};
+__export(require('./module'));
+__export(require('./inline-editor.component'));
 //# sourceMappingURL=index.js.map
