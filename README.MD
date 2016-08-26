@@ -18,7 +18,7 @@ For themes you may need to include Twitter Bootstrap CSS.
 
 Angular 2 is not yet stable, and API changes are ongoing. Therefore, if encountering errors using this
 lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular2 **2.0.0-rc.5+ **.
-If you need to support a previous version of Angular 2 for now, please see the [old README](https://github.com/caballerog/ng2-inline-editor/old-RC4/README.MD).
+If you need to support a previous version of Angular 2 for now, please see the [old README](https://github.com/Caballerog/ng2-inline-editor/tree/master/old-RC4).
 
 
 ## Controls & Features
@@ -72,7 +72,7 @@ This makes all the `ng2-inline-editor` components available for use in your app 
 ## Angular RC 4 and earlier
 
 Use an older version of the library, such as 0.1.0. You can find the documentation 
-[here](https://github.com/caballerog/old-RC4/).
+[here](https://github.com/Caballerog/ng2-inline-editor/tree/master/old-RC4).
 
 
 ## Simple Example
