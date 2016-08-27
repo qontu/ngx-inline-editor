@@ -1,9 +1,6 @@
 import { Component, forwardRef, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
-const noop = () => {
-};
-
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => InlineEditorComponent),
@@ -232,7 +229,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
 
     writeValue(value: any) {
         if (value) {
-            this._value = value;
+            this.value = value;
             this.isEmpty = false;
         } else {
 
