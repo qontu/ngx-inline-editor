@@ -17,7 +17,9 @@ export interface InputConfig {
     size: number,
     min: number,
     max: number,
+    pattern: string,
     fnErrorLength: (any: any) => void,
+    fnErrorPattern: (any: any) => void
 }
 
 // TO-DO Default's value
@@ -28,8 +30,10 @@ const inputConfig: InputConfig = {
     name: '',
     size: 8,
     min: 1,
+    pattern: '',
     max: Infinity,
-    fnErrorLength: function (x) { alert('Error: Lenght!'); }
+    fnErrorLength: function (x) { alert('Error: Lenght!'); },
+    fnErrorPattern: function (x) { alert('Error: Pattern!'); }
 };
 
 
@@ -54,7 +58,7 @@ const INLINE_EDITOR_TEMPLATE = `
             <!-- inline edit control  -->
             <p [ngSwitch]="type">
                 <template [ngSwitchCase]="'text'">
-                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled" [name]="name" [size]="size" />
+                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled" [name]="name" [size]="size"/>
                 </template>
                 <template [ngSwitchCase]="'textarea'">
                     <textarea [rows]="rows" [cols]="cols" #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled" ></textarea>
@@ -72,7 +76,7 @@ const INLINE_EDITOR_TEMPLATE = `
                     </select>
                 </template>
                 <template ngSwitchDefault>
-                    <input [type]="type"  #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled" />
+                    <input [type]="type"  #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled"  [name]="name" [size]="size"/>
                 </template>
             </p>
 
@@ -155,7 +159,8 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     @Input() public min: number;
     @Input() public max: number;
     @Input() public fnErrorLength;
-
+    @Input() public pattern: string;
+    @Input() public fnErrorPattern;
 
     //textarea's attribute
     @Input() public cols: number = 50;
@@ -214,6 +219,12 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         this.fnErrorLength = typeof this.fnErrorLength !== 'undefined'
             ? this.fnErrorLength
             : inputConfig.fnErrorLength;
+        this.pattern = typeof this.pattern !== 'undefined'
+            ? this.pattern
+            : inputConfig.pattern;
+        this.fnErrorPattern = typeof this.fnErrorPattern !== 'undefined'
+            ? this.fnErrorPattern
+            : inputConfig.fnErrorPattern;
 
 
         if (this.type == "select") {
@@ -276,7 +287,11 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
 
     // Method to display the editable value as text and emit save event to host
     onSubmit(value) {
-        if (value.length < this.min || value.length > this.max) {
+        let rExp = new RegExp(this.pattern);
+        if (!rExp.test(value)) {
+            this.fnErrorPattern();
+        }
+        else if (value.length < this.min || value.length > this.max) {
             this.fnErrorLength();
         } else {
             this.onSave.emit(value);

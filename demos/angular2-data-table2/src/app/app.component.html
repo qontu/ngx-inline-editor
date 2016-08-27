@@ -3,7 +3,7 @@
 
   <datatable-column name="Name">
     <template let-row="row">
-<inline-editor type="text" [(ngModel)]="row['name']" (onSave)="saveEditable(row)"></inline-editor>
+<inline-editor type="text" [size]="7" [(ngModel)]="row['name']" (onSave)="saveEditable(row)"></inline-editor>
 
     </template>
   </datatable-column>

@@ -32,6 +32,8 @@ If you need to support a previous version of Angular 2 for now, please see the [
 - time (In progress)
 - datetime (In progress)
 - html5 inputs (In progress)
+  - pattern (Ok).
+  - number (Ok).
 - typeahead (In progress)
 - ui-select (In progress)
 - complex form (In progress)
@@ -137,6 +139,8 @@ export class MyComponent {
         disabled="true"
         min="1"
         max="8"
+        pattern="^[a-zA-Z]{1,3}"
+        [fnErrorPattern]="myHandlePatternError"
         [fnErrorLength]="myHandleError"></inline-editor>
 ```
 
@@ -149,6 +153,8 @@ The `$event` argument will be the value return of the input send.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
 * **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
 * **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max). 
+* **`pattern`** [`string`] Regular expression (RegEx) that must satisfy the value.
+* **`fnErrorPattern`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the pattern of the input is error (the value not satisfy the pattern). 
 
 
 
@@ -319,7 +325,8 @@ Typescript code:
   name="editableText1" 
   size="8" 
   min="3"
-  max="5" [fnErrorLength]="fnErrorLength"></inline-editor>
+  max="5" 
+  [fnErrorLength]="fnErrorLength"></inline-editor>
 
   <inline-editor type="select" 
                 [(ngModel)]="editableSelectDoesntExist"
