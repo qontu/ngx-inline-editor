@@ -47,7 +47,7 @@ If you need to support a previous version of Angular 2 for now, please see the [
 
 1. A recommended way to install ***ng2-inline-editor*** is through [npm](https://www.npmjs.com/search?q=ng2-inline-editor) package manager using the following command:
 
-  `npm i ng2-inline-editor2 --save`
+  `npm i ng2-inline-editor --save`
 
 2. Include [Twitter Bootstrap](http://v4-alpha.getbootstrap.com/) and [FontAwesome](http://fontawesome.io/) in your project.
 
