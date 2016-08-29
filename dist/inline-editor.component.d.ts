@@ -9,7 +9,9 @@ export interface InputConfig {
     size: number;
     min: number;
     max: number;
+    pattern: string;
     fnErrorLength: (any: any) => void;
+    fnErrorPattern: (any: any) => void;
 }
 export declare class InlineEditorComponent implements ControlValueAccessor, OnInit, InputConfig {
     private _renderer;
@@ -23,6 +25,8 @@ export declare class InlineEditorComponent implements ControlValueAccessor, OnIn
     min: number;
     max: number;
     fnErrorLength: any;
+    pattern: string;
+    fnErrorPattern: any;
     cols: number;
     rows: number;
     options: any;
