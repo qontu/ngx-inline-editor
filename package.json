@@ -1,6 +1,6 @@
 {
   "name": "ng2-inline-editor",
-  "version": "0.1.1-alpha.2",
+  "version": "0.1.1-alpha.3",
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "test": "tsc && karma start",
@@ -32,7 +32,6 @@
     "@angular/core": "2.0.0-rc.5",
     "@angular/common": "2.0.0-rc.5",
     "@angular/compiler": "2.0.0-rc.5",
-    "@angular/core": "2.0.0-rc.5",
     "@angular/forms": "0.3.0",
     "es6-shim": "0.35.1",
     "jasmine-core": "2.4.1",
