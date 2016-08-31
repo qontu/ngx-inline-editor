@@ -1,0 +1,1 @@
+{"version":3,"file":"environment.js","sourceRoot":"","sources":["../media/carlos/DATA/www/github/ng2-inline-editor/demos/basic/tmp/broccoli_type_script_compiler-input_base_path-vFPDp6Xp.tmp/0/src/app/environment.ts"],"names":[],"mappings":";AAAa,mBAAW,GAAG;IACzB,UAAU,EAAE,KAAK;CAClB,CAAC","sourcesContent":["export const environment = {\n  production: false\n};\n"]}

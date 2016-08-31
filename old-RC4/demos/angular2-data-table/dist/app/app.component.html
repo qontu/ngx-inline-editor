@@ -1,0 +1,36 @@
+<datatable class="material" [rows]="rows" [options]="options">
+
+
+  <datatable-column name="Name">
+    <template let-row="row">
+<inline-editor type="text" [(ngModel)]="row['name']" (onSave)="saveEditable(row)"></inline-editor>
+
+    </template>
+  </datatable-column>
+  <datatable-column name="Gender">
+    <template let-row="row">
+         <inline-editor type="select" 
+         [options]="editableSelectOptions" (onSave)="saveEditable(row)" [(ngModel)]="row['gender']"></inline-editor>
+  
+    </template>
+  </datatable-column>
+  <datatable-column name="Age">
+    <template let-row="row">
+      <inline-editor type="number" 
+          (onSave)="saveEditable(row)" [(ngModel)]="row['age']"></inline-editor>
+  
+    </template>
+  </datatable-column>
+
+  <datatable-column name="Company">
+    <template let-row="row">
+      <inline-editor type="textarea" 
+          (onSave)="saveEditable(row)" [(ngModel)]="row['company']"></inline-editor>
+  
+    </template>
+  </datatable-column>
+
+
+
+
+</datatable>
