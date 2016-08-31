@@ -2,3 +2,4 @@ node_modules
 /examples
 /index.html
 /demos/**/dist
+old-RC4/demos/tmp
