@@ -1,0 +1,4 @@
+node_modules
+/examples
+/index.html
+/demos/**/dist
