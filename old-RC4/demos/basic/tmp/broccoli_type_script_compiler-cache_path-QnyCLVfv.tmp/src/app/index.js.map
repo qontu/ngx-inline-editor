@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../media/carlos/DATA/www/gogs/ng2-inline-edit/demos/basic/tmp/broccoli_type_script_compiler-input_base_path-Cor1C1M3.tmp/0/src/app/index.ts"],"names":[],"mappings":";;;;AAAA,iBAAc,eAAe,CAAC,EAAA;AAC9B,iBAAc,iBAAiB,CAAC,EAAA","sourcesContent":["export * from './environment';\nexport * from './app.component';\n"]}
