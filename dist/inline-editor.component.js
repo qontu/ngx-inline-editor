@@ -99,7 +99,7 @@ var InlineEditorComponent = (function () {
         }
     };
     InlineEditorComponent.prototype.writeValue = function (value) {
-        if (value) {
+        if (value || value == 0) {
             this.value = value;
             this.isEmpty = false;
         }
