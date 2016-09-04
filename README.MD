@@ -1,4 +1,4 @@
-# Native UI Inline-editor Angular2 component ([demo](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos))
+# Native UI Inline-editor Angular2 component ([demo](demos))
 
 
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
@@ -18,7 +18,7 @@ For themes you may need to include Twitter Bootstrap CSS.
 
 Angular 2 is not yet stable, and API changes are ongoing. Therefore, if encountering errors using this
 lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular2 **2.0.0-rc.5+ **.
-If you need to support a previous version of Angular 2 for now, please see the [old README](https://github.com/Caballerog/ng2-inline-editor/tree/master/old-RC4).
+If you need to support a previous version of Angular 2 for now, please see the [old README](old-RC4).
 
 
 ## Controls & Features
@@ -74,12 +74,12 @@ This makes all the `ng2-inline-editor` components available for use in your app 
 ## Angular RC 4 and earlier
 
 Use an older version of the library, such as 0.1.0. You can find the documentation 
-[here](https://github.com/Caballerog/ng2-inline-editor/tree/master/old-RC4).
+[here](old-RC4).
 
 
 ## Simple Example
 
-You can find a complete example [here](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos/basic)
+You can find a complete example [here](demos/basic)
 ```TypeScript
 import {Component} from '@angular/core';
 import {InlineEditorDirectives} from 'ng2-inline-editor';
@@ -392,8 +392,8 @@ a.editable-empty:focus {
 # Integration with other ng2-libraries
 
 ## angular2-data-table
-Example using [angular2-data-table](https://github.com/swimlane/angular2-data-table) ([demo](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos))
-![Version 0.1.0-angular2-data-table](https://github.com/caballerog/ng2-inline-editor/raw/master/demos/0.1.0-angular2-data-table.gif)
+Example using [angular2-data-table](https://github.com/swimlane/angular2-data-table) ([demo](demos))
+![Version 0.1.0-angular2-data-table](demos/angular2-data-table/0.1.0.gif)
 
 
 # Troubleshooting
