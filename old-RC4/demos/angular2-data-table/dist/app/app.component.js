@@ -67,7 +67,7 @@ var AppComponent = (function () {
     }
     AppComponent.prototype.fetch = function (cb) {
         var req = new XMLHttpRequest();
-        req.open('GET', 'https://npmcdn.com/angular2-data-table@0.2.0/assets/data/company.json');
+        req.open('GET', 'https://unpkg.com/angular2-data-table@0.2.0/assets/data/company.json');
         req.onload = function () {
             cb(JSON.parse(req.response));
         };
