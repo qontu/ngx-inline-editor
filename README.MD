@@ -17,7 +17,7 @@ For themes you may need to include Twitter Bootstrap CSS.
 ### Angular 2 Version
 
 Angular 2 is not yet stable, and API changes are ongoing. Therefore, if encountering errors using this
-lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular2 **2.0.0-rc.5+ **.
+lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular2 **2.0.0 **.
 If you need to support a previous version of Angular 2 for now, please see the [old README](old-RC4).
 
 
