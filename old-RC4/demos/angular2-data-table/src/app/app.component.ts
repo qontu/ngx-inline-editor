@@ -31,7 +31,7 @@ export class AppComponent {
 
   fetch(cb) {
     const req = new XMLHttpRequest();
-    req.open('GET', 'https://npmcdn.com/angular2-data-table@0.2.0/assets/data/company.json');
+    req.open('GET', 'https://unpkg.com/angular2-data-table@0.2.0/assets/data/company.json');
 
     req.onload = () => {
       cb(JSON.parse(req.response));
