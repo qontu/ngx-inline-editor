@@ -66,6 +66,7 @@ const INLINE_EDITOR_TEMPLATE = `
                 <template [ngSwitchCase]="'select'">
                     <select #inlineEditControl class="form-control" [(ngModel)]="value">
                     <template ngFor let-item [ngForOf]="options.data">
+                  
                         <optgroup *ngIf="item.children" label="{{item[options.text]}}">
                             <option *ngFor="let child of item.children" value="{{child[options.value]}}">
                                 {{child[options.text]}}
@@ -244,9 +245,9 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
             this.isEmpty = false;
         } else {
 
-            if (this.type == "select") {
+            /*if (this.type == "select") {
                 this.empty = this.options.data[0][this.options.value];
-            }
+            }*/
             this._value = this.empty;
             this.isEmpty = true;
         }
@@ -261,7 +262,12 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         let i = 0;
         while (dataLength > i) {
             let element = this.options['data'][i];
+            console.log('-------')
+            console.log(element[this.options['value']])
+            console.log(this['value']);
+
             if (element[this.options['value']] == this['value']) {
+                console.log('fuera!');
                 return element[this.options['text']];
             }
             if (element.hasOwnProperty('children')) {
@@ -276,6 +282,8 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
             }
             i++;
         }
+        console.log('empty',this.empty);
+        return this.empty;
     }
     // Method to display the inline edit form and hide the <a> element
     edit(value) {
