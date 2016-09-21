@@ -119,11 +119,7 @@ var InlineEditorComponent = (function () {
         var i = 0;
         while (dataLength > i) {
             var element = this.options['data'][i];
-            console.log('-------');
-            console.log(element[this.options['value']]);
-            console.log(this['value']);
             if (element[this.options['value']] == this['value']) {
-                console.log('fuera!');
                 return element[this.options['text']];
             }
             if (element.hasOwnProperty('children')) {
@@ -138,7 +134,6 @@ var InlineEditorComponent = (function () {
             }
             i++;
         }
-        console.log('empty', this.empty);
         return this.empty;
     };
     // Method to display the inline edit form and hide the <a> element
