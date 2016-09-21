@@ -1,4 +1,6 @@
-export class PruebaAngularClIRC5Page {
+import { browser, element, by } from 'protractor/globals';
+
+export class BasicPage {
   navigateTo() {
     return browser.get('/');
   }

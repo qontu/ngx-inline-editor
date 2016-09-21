@@ -24,6 +24,12 @@
                 [options]="editableSelectOptionsConfiguration"></inline-editor>
 </div>
 
+<div>
+  <inline-editor type="select" 
+                [(ngModel)]="editableSelectIncomplete"
+                (onSave)="saveEditable($event)" 
+                [options]="editableSelectOptionsConfiguration"></inline-editor>
+</div>
 
 
 <div>

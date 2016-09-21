@@ -30,6 +30,10 @@ export class AppComponent {
     text: 'field'
   }
 
+
+
+//editableSelectIncomplete = 'empty';
+
   editableSelectOptionsTwoLevelsDefault = 1;
   editableSelectOptionsTwoLevelsConfiguration = {
     data: [

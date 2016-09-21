@@ -1,10 +1,10 @@
-import { PruebaAngularClIRC5Page } from './app.po';
+import { BasicPage } from './app.po';
 
-describe('prueba-angular-cl-irc5 App', function() {
-  let page: PruebaAngularClIRC5Page;
+describe('basic App', function() {
+  let page: BasicPage;
 
   beforeEach(() => {
-    page = new PruebaAngularClIRC5Page();
+    page = new BasicPage();
   });
 
   it('should display message saying app works', () => {
