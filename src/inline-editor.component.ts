@@ -288,7 +288,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         // Automatically focus input
         setTimeout(_ => this._renderer.invokeElementMethod(this.inlineEditControl.nativeElement, 'focus', []));
 
-        this.onEdit.emit(value);
+        this.onEdit.emit(this);
     }
 
     // Method to display the editable value as text and emit save event to host
@@ -311,7 +311,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         this._value = this.preValue;
         this.editing = false;
         
-        this.onCancel.emit(value);
+        this.onCancel.emit(this);
     }
 
 }
