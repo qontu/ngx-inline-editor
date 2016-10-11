@@ -148,6 +148,8 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     // inline edit form control
     @ViewChild('inlineEditControl') inlineEditControl;
     @Output() public onSave: EventEmitter<any> = new EventEmitter();
+    @Output() public onEdit: EventEmitter<any> = new EventEmitter();
+    @Output() public onCancel: EventEmitter<any> = new EventEmitter();
 
     //Configuration attribute 
     @Input() empty: string;
@@ -285,6 +287,8 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         this.editing = true;
         // Automatically focus input
         setTimeout(_ => this._renderer.invokeElementMethod(this.inlineEditControl.nativeElement, 'focus', []));
+
+        this.onEdit.emit(this);
     }
 
     // Method to display the editable value as text and emit save event to host
@@ -306,6 +310,8 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     cancel(value: any) {
         this._value = this.preValue;
         this.editing = false;
+        
+        this.onCancel.emit(this);
     }
 
 }
