@@ -5,6 +5,10 @@
   <inline-editor type="text" [(ngModel)]="editableText" (onSave)="saveEditable($event)" name="editableText1" size="8" min="3" max="5" [fnErrorLength]="fnErrorLength"></inline-editor>
 </div>
 <div>
+  <inline-editor type="text" [(ngModel)]="editableText2" (onSave)="saveEditable($event)" empty="Empty string" placeholder="my placeholder" name="editableText1" size="8" min="3" max="5" [fnErrorLength]="fnErrorLength"></inline-editor>
+</div>
+
+<div>
   <inline-editor type="password" [(ngModel)]="editablePassword" (onSave)="saveEditable($event)" value="valor"></inline-editor>
 </div>
 
@@ -24,12 +28,6 @@
                 [options]="editableSelectOptionsConfiguration"></inline-editor>
 </div>
 
-<div>
-  <inline-editor type="select" 
-                [(ngModel)]="editableSelectIncomplete"
-                (onSave)="saveEditable($event)" 
-                [options]="editableSelectOptionsConfiguration"></inline-editor>
-</div>
 
 
 <div>
