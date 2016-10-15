@@ -11,6 +11,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 export interface InputConfig {
     //input's attribute
     empty: string,
+    placeholder: string,
     type: string,
     disabled: boolean,
     name: string,
@@ -25,6 +26,7 @@ export interface InputConfig {
 // TO-DO Default's value
 const inputConfig: InputConfig = {
     empty: 'empty',
+    placeholder: '',
     type: 'text',
     disabled: false,
     name: '',
@@ -47,7 +49,7 @@ const INLINE_EDITOR_TEMPLATE = `
           <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing"> {{optionSelected()}} </a>
         </template>
         <template ngSwitchDefault>
-            <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing">{{ value }}</a>
+            <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing">{{ showText() }}</a>
         </template>
     </div>
     
@@ -58,10 +60,10 @@ const INLINE_EDITOR_TEMPLATE = `
             <!-- inline edit control  -->
             <p [ngSwitch]="type">
                 <template [ngSwitchCase]="'text'">
-                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled" [name]="name" [size]="size"/>
+                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled" [name]="name" [placeholder]="placeholder" [size]="size"/>
                 </template>
                 <template [ngSwitchCase]="'textarea'">
-                    <textarea [rows]="rows" [cols]="cols" #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled" ></textarea>
+                    <textarea [rows]="rows" [cols]="cols" #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [placeholder]="placeholder" [disabled]="disabled" ></textarea>
                 </template>
                 <template [ngSwitchCase]="'select'">
                     <select #inlineEditControl class="form-control" [(ngModel)]="value">
@@ -77,7 +79,7 @@ const INLINE_EDITOR_TEMPLATE = `
                     </select>
                 </template>
                 <template ngSwitchDefault>
-                    <input [type]="type"  #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled"  [name]="name" [size]="size"/>
+                    <input [type]="type"  #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [placeholder]="placeholder" [disabled]="disabled"  [name]="name" [size]="size"/>
                 </template>
             </p>
 
@@ -157,6 +159,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     //input's attribute
     @Input() public type: string;
     @Input() public disabled: boolean;
+    @Input() public placeholder: string;
     @Input() public name: string;
     @Input() public size: number;
     @Input() public min: number;
@@ -177,7 +180,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     private _value: string = '';
     private preValue: string = '';
     private editing: boolean = false;
-    private isEmpty: boolean = false; //isEmpty the value?
+    private isEmpty: boolean = false;
 
     public onChange: any = Function.prototype;
     public onTouched: any = Function.prototype;
@@ -185,7 +188,6 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     get value(): any { return this._value; };
 
     set value(v: any) {
-
         if (v !== this._value) {
             this._value = v;
             this.onChange(v);
@@ -195,40 +197,17 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     constructor(element: ElementRef, private _renderer: Renderer) { }
 
     ngOnInit() {
-        this.type = typeof this.type !== 'undefined'
-            ? this.type
-            : inputConfig.type;
-
-        this.disabled = typeof this.disabled !== 'undefined'
-            ? this.disabled
-            : inputConfig.disabled;
-        this.empty = typeof this.empty !== 'undefined'
-            ? this.empty
-            : inputConfig.empty;
-
-        this.name = typeof this.name !== 'undefined'
-            ? this.name
-            : inputConfig.name;
-
-        this.size = typeof this.size !== 'undefined'
-            ? this.size
-            : inputConfig.size;
-        this.min = typeof this.min !== 'undefined'
-            ? this.min
-            : inputConfig.min;
-        this.max = typeof this.max !== 'undefined'
-            ? this.max
-            : inputConfig.max;
-        this.fnErrorLength = typeof this.fnErrorLength !== 'undefined'
-            ? this.fnErrorLength
-            : inputConfig.fnErrorLength;
-        this.pattern = typeof this.pattern !== 'undefined'
-            ? this.pattern
-            : inputConfig.pattern;
-        this.fnErrorPattern = typeof this.fnErrorPattern !== 'undefined'
-            ? this.fnErrorPattern
-            : inputConfig.fnErrorPattern;
-
+        this.initProperty('type');
+        this.initProperty('disabled');
+        this.initProperty('placeholder');
+        this.initProperty('empty');
+        this.initProperty('name');
+        this.initProperty('size');
+        this.initProperty('min');
+        this.initProperty('max');
+        this.initProperty('pattern');
+        this.initProperty('fnErrorLength');
+        this.initProperty('fnErrorPattern');
 
         if (this.type == "select") {
             if (this.options['data'] === undefined) {
@@ -240,6 +219,11 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
             }
         }
     }
+    private initProperty(property: string): void {
+        this[property] = typeof this[property] !== 'undefined'
+            ? this[property]
+            : inputConfig[property];
+    }
 
     writeValue(value: any) {
         if (value || value == 0) {
@@ -250,7 +234,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
             /*if (this.type == "select") {
                 this.empty = this.options.data[0][this.options.value];
             }*/
-            this._value = this.empty;
+            //this._value = this.empty;
             this.isEmpty = true;
         }
     }
@@ -259,6 +243,9 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
 
     public registerOnTouched(fn: () => {}): void { this.onTouched = fn; };
 
+    private showText() {
+        return (this.isEmpty) ? this.empty : this.value;
+    }
     private optionSelected() {
         let dataLength = this.options['data'].length;
         let i = 0;
@@ -310,8 +297,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     cancel(value: any) {
         this._value = this.preValue;
         this.editing = false;
-        
+
         this.onCancel.emit(this);
     }
-
 }
