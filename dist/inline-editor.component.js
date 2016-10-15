@@ -18,6 +18,7 @@ exports.CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 // TO-DO Default's value
 var inputConfig = {
     empty: 'empty',
+    placeholder: '',
     type: 'text',
     disabled: false,
     name: '',
@@ -28,12 +29,14 @@ var inputConfig = {
     fnErrorLength: function (x) { alert('Error: Lenght!'); },
     fnErrorPattern: function (x) { alert('Error: Pattern!'); }
 };
-var INLINE_EDITOR_TEMPLATE = "\n<div id=\"inlineEditWrapper\">\n    <div [ngSwitch]=\"type\">\n       <template [ngSwitchCase]=\"'password'\">\n          <a [ngClass]=\"{'editable-empty': isEmpty }\" (click)=\"edit(value)\" [hidden]=\"editing\"> ****** </a>\n        </template>\n        <template [ngSwitchCase]=\"'select'\">\n          <a [ngClass]=\"{'editable-empty': isEmpty }\"  (click)=\"edit(value)\" [hidden]=\"editing\"> {{optionSelected()}} </a>\n        </template>\n        <template ngSwitchDefault>\n            <a [ngClass]=\"{'editable-empty': isEmpty }\"  (click)=\"edit(value)\" [hidden]=\"editing\">{{ value }}</a>\n        </template>\n    </div>\n    \n    <!-- inline edit form -->\n    <div class=\"inlineEditForm form-inline\" [hidden]=\"!editing\">\n        <div class=\"form-group\">\n\n            <!-- inline edit control  -->\n            <p [ngSwitch]=\"type\">\n                <template [ngSwitchCase]=\"'text'\">\n                    <input #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" [name]=\"name\" [size]=\"size\"/>\n                </template>\n                <template [ngSwitchCase]=\"'textarea'\">\n                    <textarea [rows]=\"rows\" [cols]=\"cols\" #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" ></textarea>\n                </template>\n                <template [ngSwitchCase]=\"'select'\">\n                    <select #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\">\n                    <template ngFor let-item [ngForOf]=\"options.data\">\n                  \n                        <optgroup *ngIf=\"item.children\" label=\"{{item[options.text]}}\">\n                            <option *ngFor=\"let child of item.children\" value=\"{{child[options.value]}}\">\n                                {{child[options.text]}}\n                            </option>\n                        </optgroup>\n                     <option *ngIf=\"!item.children\" value=\"{{item[options.value]}}\">{{item[options.text]}}</option>\n                    </template>\n                    </select>\n                </template>\n                <template ngSwitchDefault>\n                    <input [type]=\"type\"  #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\"  [name]=\"name\" [size]=\"size\"/>\n                </template>\n            </p>\n\n            <span>\n                <button id=\"inline-editor-button-save\" class=\"btn btn-xs btn-primary\" (click)=\"onSubmit(value)\"><span class=\"fa fa-check\"></span></button>\n                <button class=\"btn btn-xs btn-danger\" (click)=\"cancel(value)\"><span class=\"fa fa-remove\"></span></button>\n            </span>\n\n        </div>\n    </div>\n</div>";
+var INLINE_EDITOR_TEMPLATE = "\n<div id=\"inlineEditWrapper\">\n    <div [ngSwitch]=\"type\">\n       <template [ngSwitchCase]=\"'password'\">\n          <a [ngClass]=\"{'editable-empty': isEmpty }\" (click)=\"edit(value)\" [hidden]=\"editing\"> ****** </a>\n        </template>\n        <template [ngSwitchCase]=\"'select'\">\n          <a [ngClass]=\"{'editable-empty': isEmpty }\"  (click)=\"edit(value)\" [hidden]=\"editing\"> {{optionSelected()}} </a>\n        </template>\n        <template ngSwitchDefault>\n            <a [ngClass]=\"{'editable-empty': isEmpty }\"  (click)=\"edit(value)\" [hidden]=\"editing\">{{ showText() }}</a>\n        </template>\n    </div>\n    \n    <!-- inline edit form -->\n    <div class=\"inlineEditForm form-inline\" [hidden]=\"!editing\">\n        <div class=\"form-group\">\n\n            <!-- inline edit control  -->\n            <p [ngSwitch]=\"type\">\n                <template [ngSwitchCase]=\"'text'\">\n                    <input #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [disabled]=\"disabled\" [name]=\"name\" [placeholder]=\"placeholder\" [size]=\"size\"/>\n                </template>\n                <template [ngSwitchCase]=\"'textarea'\">\n                    <textarea [rows]=\"rows\" [cols]=\"cols\" #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [placeholder]=\"placeholder\" [disabled]=\"disabled\" ></textarea>\n                </template>\n                <template [ngSwitchCase]=\"'select'\">\n                    <select #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\">\n                    <template ngFor let-item [ngForOf]=\"options.data\">\n                  \n                        <optgroup *ngIf=\"item.children\" label=\"{{item[options.text]}}\">\n                            <option *ngFor=\"let child of item.children\" value=\"{{child[options.value]}}\">\n                                {{child[options.text]}}\n                            </option>\n                        </optgroup>\n                     <option *ngIf=\"!item.children\" value=\"{{item[options.value]}}\">{{item[options.text]}}</option>\n                    </template>\n                    </select>\n                </template>\n                <template ngSwitchDefault>\n                    <input [type]=\"type\"  #inlineEditControl class=\"form-control\" [(ngModel)]=\"value\" [required]=\"required\" [placeholder]=\"placeholder\" [disabled]=\"disabled\"  [name]=\"name\" [size]=\"size\"/>\n                </template>\n            </p>\n\n            <span>\n                <button id=\"inline-editor-button-save\" class=\"btn btn-xs btn-primary\" (click)=\"onSubmit(value)\"><span class=\"fa fa-check\"></span></button>\n                <button class=\"btn btn-xs btn-danger\" (click)=\"cancel(value)\"><span class=\"fa fa-remove\"></span></button>\n            </span>\n\n        </div>\n    </div>\n</div>";
 var INLINE_EDITOR_CSS = "\na {\n text-decoration: none;\n color: #428bca;\n border-bottom: dashed 1px #428bca;\n cursor: pointer;\n line-height: 2;\n margin-right: 5px;\n margin-left: 5px;\n}\n\n/* editable-empty */\n.editable-empty, \n.editable-empty:hover, \n.editable-empty:focus,\na.editable-empty, \na.editable-empty:hover, \na.editable-empty:focus {\n  font-style: italic; \n  color: #DD1144;  \n  text-decoration: none;\n}\n\n.inlineEditForm{\n display: inline-block;\n white-space: nowrap;\n margin: 0;\n}\n#inlineEditWrapper{\n display: inline-block;\n}\n.inlineEditForm input, select{\n width: auto;\n display: inline;\n}\n.editInvalid{\n color: #a94442;\n margin-bottom: 0;\n}\n.error{\n border-color: #a94442;\n}\n[hidden] {\n display: none;\n}";
 var InlineEditorComponent = (function () {
     function InlineEditorComponent(element, _renderer) {
         this._renderer = _renderer;
         this.onSave = new core_1.EventEmitter();
+        this.onEdit = new core_1.EventEmitter();
+        this.onCancel = new core_1.EventEmitter();
         //textarea's attribute
         this.cols = 50;
         this.rows = 4;
@@ -41,7 +44,7 @@ var InlineEditorComponent = (function () {
         this._value = '';
         this.preValue = '';
         this.editing = false;
-        this.isEmpty = false; //isEmpty the value?
+        this.isEmpty = false;
         this.onChange = Function.prototype;
         this.onTouched = Function.prototype;
     }
@@ -58,36 +61,17 @@ var InlineEditorComponent = (function () {
     });
     ;
     InlineEditorComponent.prototype.ngOnInit = function () {
-        this.type = typeof this.type !== 'undefined'
-            ? this.type
-            : inputConfig.type;
-        this.disabled = typeof this.disabled !== 'undefined'
-            ? this.disabled
-            : inputConfig.disabled;
-        this.empty = typeof this.empty !== 'undefined'
-            ? this.empty
-            : inputConfig.empty;
-        this.name = typeof this.name !== 'undefined'
-            ? this.name
-            : inputConfig.name;
-        this.size = typeof this.size !== 'undefined'
-            ? this.size
-            : inputConfig.size;
-        this.min = typeof this.min !== 'undefined'
-            ? this.min
-            : inputConfig.min;
-        this.max = typeof this.max !== 'undefined'
-            ? this.max
-            : inputConfig.max;
-        this.fnErrorLength = typeof this.fnErrorLength !== 'undefined'
-            ? this.fnErrorLength
-            : inputConfig.fnErrorLength;
-        this.pattern = typeof this.pattern !== 'undefined'
-            ? this.pattern
-            : inputConfig.pattern;
-        this.fnErrorPattern = typeof this.fnErrorPattern !== 'undefined'
-            ? this.fnErrorPattern
-            : inputConfig.fnErrorPattern;
+        this.initProperty('type');
+        this.initProperty('disabled');
+        this.initProperty('placeholder');
+        this.initProperty('empty');
+        this.initProperty('name');
+        this.initProperty('size');
+        this.initProperty('min');
+        this.initProperty('max');
+        this.initProperty('pattern');
+        this.initProperty('fnErrorLength');
+        this.initProperty('fnErrorPattern');
         if (this.type == "select") {
             if (this.options['data'] === undefined) {
                 var tmp = this.options;
@@ -98,6 +82,11 @@ var InlineEditorComponent = (function () {
             }
         }
     };
+    InlineEditorComponent.prototype.initProperty = function (property) {
+        this[property] = typeof this[property] !== 'undefined'
+            ? this[property]
+            : inputConfig[property];
+    };
     InlineEditorComponent.prototype.writeValue = function (value) {
         if (value || value == 0) {
             this.value = value;
@@ -107,13 +96,16 @@ var InlineEditorComponent = (function () {
             /*if (this.type == "select") {
                 this.empty = this.options.data[0][this.options.value];
             }*/
-            this._value = this.empty;
+            //this._value = this.empty;
             this.isEmpty = true;
         }
     };
     InlineEditorComponent.prototype.registerOnChange = function (fn) { this.onChange = fn; };
     InlineEditorComponent.prototype.registerOnTouched = function (fn) { this.onTouched = fn; };
     ;
+    InlineEditorComponent.prototype.showText = function () {
+        return (this.isEmpty) ? this.empty : this.value;
+    };
     InlineEditorComponent.prototype.optionSelected = function () {
         var dataLength = this.options['data'].length;
         var i = 0;
@@ -143,6 +135,7 @@ var InlineEditorComponent = (function () {
         this.editing = true;
         // Automatically focus input
         setTimeout(function (_) { return _this._renderer.invokeElementMethod(_this.inlineEditControl.nativeElement, 'focus', []); });
+        this.onEdit.emit(this);
     };
     // Method to display the editable value as text and emit save event to host
     InlineEditorComponent.prototype.onSubmit = function (value) {
@@ -163,6 +156,7 @@ var InlineEditorComponent = (function () {
     InlineEditorComponent.prototype.cancel = function (value) {
         this._value = this.preValue;
         this.editing = false;
+        this.onCancel.emit(this);
     };
     __decorate([
         core_1.ViewChild('inlineEditControl'), 
@@ -172,6 +166,14 @@ var InlineEditorComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], InlineEditorComponent.prototype, "onSave", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], InlineEditorComponent.prototype, "onEdit", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], InlineEditorComponent.prototype, "onCancel", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
@@ -184,6 +186,10 @@ var InlineEditorComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', Boolean)
     ], InlineEditorComponent.prototype, "disabled", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], InlineEditorComponent.prototype, "placeholder", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)

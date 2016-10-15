@@ -3,6 +3,7 @@ import { ControlValueAccessor } from '@angular/forms';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export interface InputConfig {
     empty: string;
+    placeholder: string;
     type: string;
     disabled: boolean;
     name: string;
@@ -17,9 +18,12 @@ export declare class InlineEditorComponent implements ControlValueAccessor, OnIn
     private _renderer;
     inlineEditControl: any;
     onSave: EventEmitter<any>;
+    onEdit: EventEmitter<any>;
+    onCancel: EventEmitter<any>;
     empty: string;
     type: string;
     disabled: boolean;
+    placeholder: string;
     name: string;
     size: number;
     min: number;
@@ -39,9 +43,11 @@ export declare class InlineEditorComponent implements ControlValueAccessor, OnIn
     value: any;
     constructor(element: ElementRef, _renderer: Renderer);
     ngOnInit(): void;
+    private initProperty(property);
     writeValue(value: any): void;
     registerOnChange(fn: (_: any) => {}): void;
     registerOnTouched(fn: () => {}): void;
+    private showText();
     private optionSelected();
     edit(value: any): void;
     onSubmit(value: any): void;
