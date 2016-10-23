@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ApplicationRef } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -17,9 +17,9 @@ import { Angular2DataTableModule } from 'angular2-data-table';
   imports: [
     BrowserModule,
     CommonModule,
-    FormsModule
-    ,InlineEditorModule
-    ,Angular2DataTableModule
+    FormsModule,
+    InlineEditorModule,
+    Angular2DataTableModule,
   ],
   providers: [],
   entryComponents: [AppComponent],

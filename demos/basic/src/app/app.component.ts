@@ -1,5 +1,5 @@
 
-import {Component} from '@angular/core'
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-root',
@@ -28,7 +28,7 @@ export class AppComponent {
     ],
     value: 'id',
     text: 'field'
-  }
+  };
 
   editableSelectOptionsTwoLevelsDefault = 1;
   editableSelectOptionsTwoLevelsConfiguration = {
@@ -49,14 +49,14 @@ export class AppComponent {
     ],
     value: 'id',
     text: 'field'
-  }
+  };
 
   fnErrorLength = function () {
     alert('This is a custom error!');
-  }
+  };
 
   saveEditable(value) {
-    //call to http server
+    // call to http server
     console.log('http.server: ' + value);
 
   }

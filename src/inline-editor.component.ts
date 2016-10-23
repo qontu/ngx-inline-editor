@@ -1,4 +1,5 @@
-import { Component, forwardRef, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, Renderer } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, Output,
+  EventEmitter, ElementRef, ViewChild, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -10,17 +11,17 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 // TO-DO interface hierarchy
 export interface InputConfig {
     //input's attribute
-    empty: string,
-    placeholder: string,
-    type: string,
-    disabled: boolean,
-    name: string,
-    size: number,
-    min: number,
-    max: number,
-    pattern: string,
-    fnErrorLength: (any: any) => void,
-    fnErrorPattern: (any: any) => void
+    empty: string;
+    placeholder: string;
+    type: string;
+    disabled: boolean;
+    name: string;
+    size: number;
+    min: number;
+    max: number;
+    pattern: string;
+    fnErrorLength: (any: any) => void;
+    fnErrorPattern: (any: any) => void;
 }
 
 // TO-DO Default's value
@@ -46,13 +47,14 @@ const INLINE_EDITOR_TEMPLATE = `
           <a [ngClass]="{'editable-empty': isEmpty }" (click)="edit(value)" [hidden]="editing"> ****** </a>
         </template>
         <template [ngSwitchCase]="'select'">
-          <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing"> {{optionSelected()}} </a>
+          <a [ngClass]="{'editable-empty': isEmpty }"
+            (click)="edit(value)" [hidden]="editing"> {{optionSelected()}} </a>
         </template>
         <template ngSwitchDefault>
             <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing">{{ showText() }}</a>
         </template>
     </div>
-    
+
     <!-- inline edit form -->
     <div class="inlineEditForm form-inline" [hidden]="!editing">
         <div class="form-group">
@@ -60,15 +62,17 @@ const INLINE_EDITOR_TEMPLATE = `
             <!-- inline edit control  -->
             <p [ngSwitch]="type">
                 <template [ngSwitchCase]="'text'">
-                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [disabled]="disabled" [name]="name" [placeholder]="placeholder" [size]="size"/>
+                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required"
+                      [disabled]="disabled" [name]="name" [placeholder]="placeholder" [size]="size"/>
                 </template>
                 <template [ngSwitchCase]="'textarea'">
-                    <textarea [rows]="rows" [cols]="cols" #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [placeholder]="placeholder" [disabled]="disabled" ></textarea>
+                    <textarea [rows]="rows" [cols]="cols" #inlineEditControl class="form-control" [(ngModel)]="value"
+                      [required]="required" [placeholder]="placeholder" [disabled]="disabled" ></textarea>
                 </template>
                 <template [ngSwitchCase]="'select'">
                     <select #inlineEditControl class="form-control" [(ngModel)]="value">
                     <template ngFor let-item [ngForOf]="options.data">
-                  
+
                         <optgroup *ngIf="item.children" label="{{item[options.text]}}">
                             <option *ngFor="let child of item.children" value="{{child[options.value]}}">
                                 {{child[options.text]}}
@@ -79,13 +83,18 @@ const INLINE_EDITOR_TEMPLATE = `
                     </select>
                 </template>
                 <template ngSwitchDefault>
-                    <input [type]="type"  #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required" [placeholder]="placeholder" [disabled]="disabled"  [name]="name" [size]="size"/>
+                    <input [type]="type"  #inlineEditControl class="form-control" [(ngModel)]="value"
+                      [required]="required" [placeholder]="placeholder" [disabled]="disabled"  [name]="name"
+                      [size]="size"/>
                 </template>
             </p>
 
             <span>
-                <button id="inline-editor-button-save" class="btn btn-xs btn-primary" (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
-                <button class="btn btn-xs btn-danger" (click)="cancel(value)"><span class="fa fa-remove"></span></button>
+                <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
+                  (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
+                <button class="btn btn-xs btn-danger" (click)="cancel(value)">
+                  <span class="fa fa-remove"></span>
+                </button>
             </span>
 
         </div>
@@ -105,14 +114,14 @@ a {
 }
 
 /* editable-empty */
-.editable-empty, 
-.editable-empty:hover, 
+.editable-empty,
+.editable-empty:hover,
 .editable-empty:focus,
-a.editable-empty, 
-a.editable-empty:hover, 
+a.editable-empty,
+a.editable-empty:hover,
 a.editable-empty:focus {
-  font-style: italic; 
-  color: #DD1144;  
+  font-style: italic;
+  color: #DD1144;
   text-decoration: none;
 }
 
@@ -137,7 +146,7 @@ a.editable-empty:focus {
 }
 [hidden] {
  display: none;
-}`
+}`;
 
 @Component({
     selector: 'inline-editor',
@@ -153,7 +162,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     @Output() public onEdit: EventEmitter<any> = new EventEmitter();
     @Output() public onCancel: EventEmitter<any> = new EventEmitter();
 
-    //Configuration attribute 
+    //Configuration attribute
     @Input() empty: string;
 
     //input's attribute
@@ -177,13 +186,13 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     //@Output() public selected:EventEmitter<any> = new EventEmitter();
 
 
+    public onChange: any = Function.prototype;
+    public onTouched: any = Function.prototype;
+
     private _value: string = '';
     private preValue: string = '';
     private editing: boolean = false;
     private isEmpty: boolean = false;
-
-    public onChange: any = Function.prototype;
-    public onTouched: any = Function.prototype;
 
     get value(): any { return this._value; };
 
@@ -209,7 +218,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         this.initProperty('fnErrorLength');
         this.initProperty('fnErrorPattern');
 
-        if (this.type == "select") {
+        if (this.type === 'select') {
             if (this.options['data'] === undefined) {
                 let tmp = this.options;
                 this.options = {};
@@ -219,19 +228,14 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
             }
         }
     }
-    private initProperty(property: string): void {
-        this[property] = typeof this[property] !== 'undefined'
-            ? this[property]
-            : inputConfig[property];
-    }
 
     writeValue(value: any) {
-        if (value || value == 0) {
+        if (value || value === 0) {
             this.value = value;
             this.isEmpty = false;
         } else {
 
-            /*if (this.type == "select") {
+            /*if (this.type === "select") {
                 this.empty = this.options.data[0][this.options.value];
             }*/
             //this._value = this.empty;
@@ -243,31 +247,6 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
 
     public registerOnTouched(fn: () => {}): void { this.onTouched = fn; };
 
-    private showText() {
-        return (this.isEmpty) ? this.empty : this.value;
-    }
-    private optionSelected() {
-        let dataLength = this.options['data'].length;
-        let i = 0;
-        while (dataLength > i) {
-            let element = this.options['data'][i];
-            if (element[this.options['value']] == this['value']) {
-                return element[this.options['text']];
-            }
-            if (element.hasOwnProperty('children')) {
-                let childrenLength = element.children.length;
-                let j = 0;
-                while (childrenLength > j) {
-                    let children = element.children[j];
-                    if (children[this.options['value']] == this['value'])
-                        return children[this.options['text']];
-                    j++;
-                }
-            }
-            i++;
-        }
-        return this.empty;
-    }
     // Method to display the inline edit form and hide the <a> element
     edit(value) {
         this.preValue = value;  // Store original value in case the form is cancelled
@@ -283,8 +262,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         let rExp = new RegExp(this.pattern);
         if (!rExp.test(value)) {
             this.fnErrorPattern();
-        }
-        else if (value.length < this.min || value.length > this.max) {
+        } else if (value.length < this.min || value.length > this.max) {
             this.fnErrorLength();
         } else {
             this.onSave.emit(value);
@@ -299,5 +277,36 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         this.editing = false;
 
         this.onCancel.emit(this);
+    }
+
+    private initProperty(property: string): void {
+        this[property] = typeof this[property] !== 'undefined'
+            ? this[property]
+            : inputConfig[property];
+    }
+    private showText() {
+        return (this.isEmpty) ? this.empty : this.value;
+    }
+    private optionSelected() {
+        let dataLength = this.options['data'].length;
+        let i = 0;
+        while (dataLength > i) {
+            let element = this.options['data'][i];
+            if (element[this.options['value']] === this['value']) {
+                return element[this.options['text']];
+            }
+            if (element.hasOwnProperty('children')) {
+                let childrenLength = element.children.length;
+                let j = 0;
+                while (childrenLength > j) {
+                    let children = element.children[j];
+                    if (children[this.options['value']] === this['value'])
+                        return children[this.options['text']];
+                    j++;
+                }
+            }
+            i++;
+        }
+        return this.empty;
     }
 }
