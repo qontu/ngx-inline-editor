@@ -23,24 +23,24 @@ If you need to support a previous version of Angular 2 for now, please see the [
 
 ## Controls & Features
 
-- text
-- textarea
-- select
-- checkbox (In progress)
-- radio (In progress)
-- date (In progress)
-- time (In progress)
-- datetime (In progress)
-- html5 inputs (In progress)
-  - pattern (Ok).
-  - number (Ok).
-- typeahead (In progress)
-- ui-select (In progress)
-- complex form (In progress)
-- editable row (In progress)
-- editable column (In progress)
-- editable table (In progress)
-- themes (In progress)
+* [x] text
+* [x] textarea
+* [x] select
+* [ ] checkbox
+* [ ] radio
+* [ ] date
+* [ ] time
+* [ ] datetime
+* [ ] html5 inputs
+  * [x] pattern
+  * [x] number
+* [ ] typeahead
+* [ ] ui-select
+* [ ] complex form
+* [ ] editable row
+* [ ] editable column
+* [ ] editable table
+* [ ] themes
 
 
 ## Quick start
@@ -73,7 +73,7 @@ This makes all the `ng2-inline-editor` components available for use in your app 
 
 ## Angular RC 4 and earlier
 
-Use an older version of the library, such as 0.1.0. You can find the documentation 
+Use an older version of the library, such as 0.1.0. You can find the documentation
 [here](old-RC4).
 
 
@@ -113,7 +113,7 @@ export class MyComponent {
     {value: 2, text: 'status2'},
     {value: 3, text: 'status3'},
     {value: 4, text: 'status4'}
-  ]; 
+  ];
 
   saveEditable(value) {
     //call to http service
@@ -126,15 +126,15 @@ export class MyComponent {
 
 ### InlineEditorDirectives
 
-##### Text 
+##### Text
 
 
 ```HTML
- <inline-editor 
-        type="text" 
-        [(ngModel)]="editableText" 
-        (onSave)="saveEditable($event)" 
-        name="editableText1" 
+ <inline-editor
+        type="text"
+        [(ngModel)]="editableText"
+        (onSave)="saveEditable($event)"
+        name="editableText1"
         size="8"
         disabled="true"
         min="1"
@@ -145,27 +145,27 @@ export class MyComponent {
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
-* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button. 
-The `$event` argument will be the value return of the input send. 
+* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
+The `$event` argument will be the value return of the input send.
 * **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
 * **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max). 
+* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max).
 * **`pattern`** [`string`] Regular expression (RegEx) that must satisfy the value.
-* **`fnErrorPattern`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the pattern of the input is error (the value not satisfy the pattern). 
+* **`fnErrorPattern`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the pattern of the input is error (the value not satisfy the pattern).
 
 
 
-##### Password 
+##### Password
 
 ```HTML
- <inline-editor 
-        type="password" 
-        [(ngModel)]="editablePassword" 
-        (onSave)="saveEditable($event)" 
-        name="editablePassword" 
+ <inline-editor
+        type="password"
+        [(ngModel)]="editablePassword"
+        (onSave)="saveEditable($event)"
+        name="editablePassword"
         size="8"
         disabled="true"
         min="1"
@@ -174,24 +174,24 @@ The `$event` argument will be the value return of the input send.
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
-* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button. 
-The `$event` argument will be the value return of the input send. 
+* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
+The `$event` argument will be the value return of the input send.
 * **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
 * **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max). 
+* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max).
 
 
 ##### TextArea
 
 ```HTML
- <inline-editor 
-        type="textArea" 
-        [(ngModel)]="editableTextArea" 
-        (onSave)="saveEditable($event)" 
-        name="editableTextArea" 
+ <inline-editor
+        type="textArea"
+        [(ngModel)]="editableTextArea"
+        (onSave)="saveEditable($event)"
+        name="editableTextArea"
         size="8"
         disabled="true"
         cols="50"
@@ -203,8 +203,8 @@ The `$event` argument will be the value return of the input send.
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
-* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button. 
-The `$event` argument will be the value return of the input send. 
+* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
+The `$event` argument will be the value return of the input send.
 * **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
@@ -212,7 +212,7 @@ The `$event` argument will be the value return of the input send.
 * **`rows`** [`number`] Specifies the visible height of a text area. Default is `4`.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
 * **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max). 
+* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max).
 
 
 ##### Select
@@ -220,21 +220,21 @@ The `$event` argument will be the value return of the input send.
 ##### Basic example
 
 ```HTML
-<inline-editor 
-        type="select" 
-        [(ngModel)]="editableSelect" 
-        (onSave)="saveEditable($event)" 
+<inline-editor
+        type="select"
+        [(ngModel)]="editableSelect"
+        (onSave)="saveEditable($event)"
         name="editableSelect"
         disabled="false"
         [options]="editableSelectOptions"></inline-editor>
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
-* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button. 
-The `$event` argument will be the value return of the input send. 
+* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
+The `$event` argument will be the value return of the input send.
 * **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
-* **`options`** [`Array<optionItem> | Object:{ data: Array<optionItem, value:string, text: string }`] Array of items from which to select. Should be an array of objects with `value` and `text` properties. 
+* **`options`** [`Array<optionItem> | Object:{ data: Array<optionItem, value:string, text: string }`] Array of items from which to select. Should be an array of objects with `value` and `text` properties.
 Is possible to configure key-value parameters using an object that specifies these fields and data.
 
 Typescript code:
@@ -245,7 +245,7 @@ Typescript code:
     {value: 2, text: 'status2'},
     {value: 3, text: 'status3'},
     {value: 4, text: 'status4'}
-  ]; 
+  ];
 
   saveEditable(value) {
     //call to http server
@@ -317,22 +317,22 @@ Typescript code:
 
 
 ```HTML
-  <inline-editor 
-  type="text" 
-  ngModel 
+  <inline-editor
+  type="text"
+  ngModel
   empty="My custom message"
-  (onSave)="saveEditable($event)" 
-  name="editableText1" 
-  size="8" 
+  (onSave)="saveEditable($event)"
+  name="editableText1"
+  size="8"
   min="3"
-  max="5" 
+  max="5"
   [fnErrorLength]="fnErrorLength"></inline-editor>
 
-  <inline-editor type="select" 
+  <inline-editor type="select"
                 [(ngModel)]="editableSelectDoesntExist"
-                (onSave)="saveEditable($event)" 
+                (onSave)="saveEditable($event)"
                 [options]="editableSelectOptionsConfiguration"></inline-editor>
-``` 
+```
 
 * **`empty`** [`string`] Specifies the default message to display if there are not ngModel for the component.
 If the type is `select` then the default selected element is the first element of the `options` array.
@@ -341,7 +341,7 @@ If the type is `select` then the default selected element is the first element o
 
 # Style/Theme
 
-The `inline-editor` has the following CSS: 
+The `inline-editor` has the following CSS:
 
 ```CSS
 a {
@@ -353,14 +353,14 @@ a {
  margin-right: 5px;
  margin-left: 5px;
 }
-.editable-empty, 
-.editable-empty:hover, 
+.editable-empty,
+.editable-empty:hover,
 .editable-empty:focus,
-a.editable-empty, 
-a.editable-empty:hover, 
+a.editable-empty,
+a.editable-empty:hover,
 a.editable-empty:focus {
-  font-style: italic; 
-  color: #DD1144;  
+  font-style: italic;
+  color: #DD1144;
   text-decoration: none;
 }
 
@@ -386,7 +386,7 @@ a.editable-empty:focus {
 [hidden] {
  display: none;
 }
-```  
+```
 
 
 # Integration with other ng2-libraries
