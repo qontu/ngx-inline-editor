@@ -1,8 +1,7 @@
 
-import {Component} from '@angular/core'
+import {Component} from '@angular/core';
 import {
   TableOptions,
-  TableColumn,
   ColumnMode
 } from 'angular2-data-table';
 
@@ -11,8 +10,19 @@ import {
     templateUrl: 'app.component.html'
 })
 export class AppComponent {
- title = 'angular2-data-table + ng2-inline-editor';
-  rows = []
+  title = 'angular2-data-table + ng2-inline-editor';
+  rows = [];
+  options = new TableOptions({
+    columnMode: ColumnMode.force,
+    headerHeight: 50,
+    footerHeight: 50,
+    rowHeight: 'auto'
+  });
+  editableSelectOptions = [
+    { value: 'male', text: 'male' },
+    { value: 'female', text: 'female' }
+  ];
+
   constructor() {
     this.fetch((data) => {
       this.rows.push(...data);
@@ -32,22 +42,8 @@ export class AppComponent {
     req.send();
   }
 
-  options = new TableOptions({
-    columnMode: ColumnMode.force,
-    headerHeight: 50,
-    footerHeight: 50,
-    rowHeight: 'auto'
-  });
-
-  editableSelectOptions = [
-    { value: 'male', text: 'male' },
-    { value: 'female', text: 'female' }
-  ]
-
-
-
   saveEditable(value) {
-    //call to http server
+    // call to http server
     console.log('http.server: ' + value);
 
   }

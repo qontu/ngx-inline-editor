@@ -7,7 +7,7 @@ import { InlineEditorComponent} from './inline-editor.component';
 const INLINE_EDITOR_COMPONENTS = [InlineEditorComponent];
 
 @NgModule({
-  imports:[CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   declarations: INLINE_EDITOR_COMPONENTS,
   exports: INLINE_EDITOR_COMPONENTS
 })
