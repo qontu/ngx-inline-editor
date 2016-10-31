@@ -34,6 +34,7 @@ If you need to support a previous version of Angular 2 for now, please see the [
 * [ ] html5 inputs
   * [x] pattern
   * [x] number
+  * [x] range
 * [ ] typeahead
 * [ ] ui-select
 * [ ] complex form

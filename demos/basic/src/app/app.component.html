@@ -13,6 +13,14 @@
 </div>
 
 <div>
+  <inline-editor type="number" [(ngModel)]="editableNumber" (onSave)="saveEditable($event)"></inline-editor>
+</div>
+
+<div>
+  <inline-editor type="range" [(ngModel)]="editableRange" (onSave)="saveEditable($event)" [max]="editableRangeOptions.max" [min]="editableRangeOptions.min"></inline-editor>
+</div>
+
+<div>
   <inline-editor type="textarea" [(ngModel)]="editableTextArea" (onSave)="saveEditable($event)" value="valor"> </inline-editor>
 </div>
 
@@ -22,18 +30,18 @@
 
 
 <div>
-  <inline-editor type="select" 
+  <inline-editor type="select"
                 [(ngModel)]="editableSelect"
-                (onSave)="saveEditable($event)" 
+                (onSave)="saveEditable($event)"
                 [options]="editableSelectOptionsConfiguration"></inline-editor>
 </div>
 
 
 
 <div>
-  <inline-editor type="select" 
+  <inline-editor type="select"
                 [(ngModel)]="editableSelectOptionsTwoLevelsDefault"
-                (onSave)="saveEditable($event)" 
+                (onSave)="saveEditable($event)"
                 [options]="editableSelectOptionsTwoLevelsConfiguration"></inline-editor>
 </div>
 

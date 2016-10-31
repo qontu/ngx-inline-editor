@@ -69,6 +69,10 @@ const INLINE_EDITOR_TEMPLATE = `
                     <textarea [rows]="rows" [cols]="cols" #inlineEditControl class="form-control" [(ngModel)]="value"
                       [required]="required" [placeholder]="placeholder" [disabled]="disabled" ></textarea>
                 </template>
+                <template [ngSwitchCase]="'range'">
+                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required"
+                      type="range" [disabled]="disabled" [max]="max" [min]="min" [name]="name"/>
+                </template>
                 <template [ngSwitchCase]="'select'">
                     <select #inlineEditControl class="form-control" [(ngModel)]="value">
                     <template ngFor let-item [ngForOf]="options.data">
@@ -147,6 +151,8 @@ a.editable-empty:focus {
 [hidden] {
  display: none;
 }`;
+
+const NUMERIC_TYPES: string[] = ['range', 'number'];
 
 @Component({
     selector: 'inline-editor',
@@ -259,16 +265,20 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
 
     // Method to display the editable value as text and emit save event to host
     onSubmit(value) {
-        let rExp = new RegExp(this.pattern);
+        const rExp = new RegExp(this.pattern);
         if (!rExp.test(value)) {
-            this.fnErrorPattern();
-        } else if (value.length < this.min || value.length > this.max) {
-            this.fnErrorLength();
-        } else {
-            this.onSave.emit(value);
-            this.editing = false;
-            this.isEmpty = false;
+            return this.fnErrorPattern();
         }
+
+        const length = (NUMERIC_TYPES.indexOf(this.type) !== -1) ? Number(value) : value.length;
+
+        if (length < this.min || length > this.max) {
+            return this.fnErrorLength();
+        }
+
+        this.onSave.emit(value);
+        this.editing = false;
+        this.isEmpty = false;
     }
 
     // Method to reset the editable value

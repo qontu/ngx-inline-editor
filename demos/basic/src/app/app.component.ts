@@ -6,12 +6,18 @@ import {Component} from '@angular/core';
     templateUrl: 'app.component.html'
 })
 export class AppComponent {
-      title = 'ng2-inline-editor!';
+  title = 'ng2-inline-editor!';
 
   editableText = 'myText';
   editablePassword = 'myPassword';
   editableTextArea = 'Text in text area';
   editableSelect = 2;
+  editableNumber = 0;
+  editableRange = 20;
+  editableRangeOptions = {
+    min: 10,
+    max: 30,
+  };
   editableSelectOptions = [
     { value: 1, text: 'status1' },
     { value: 2, text: 'status2' },
@@ -26,6 +32,8 @@ export class AppComponent {
       { id: 3, field: 'status3' },
       { id: 4, field: 'status4' }
     ],
+
+
     value: 'id',
     text: 'field'
   };
