@@ -283,7 +283,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
 
     // Method to reset the editable value
     cancel(value: any) {
-        this._value = this.preValue;
+        this.value = this.preValue;
         this.editing = false;
 
         this.onCancel.emit(this);
