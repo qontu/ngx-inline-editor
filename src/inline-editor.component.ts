@@ -187,9 +187,21 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     @Input() public cols: number = 50;
     @Input() public rows: number = 4;
 
-    //select's attribute
-    @Input() public options;
-    //@Output() public selected:EventEmitter<any> = new EventEmitter();
+    // select's attribute
+    @Input()
+    set options(options) {
+        if (options['data'] === undefined) {
+            this._options = {};
+            this._options['data'] = options;
+            this._options['value'] = 'value';
+            this._options['text'] = 'text';
+        } else {
+            this._options = options;
+        }
+    }
+
+    get options() { return this._options; }
+    // @Output() public selected:EventEmitter<any> = new EventEmitter();
 
 
     public onChange: any = Function.prototype;
@@ -199,6 +211,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     private preValue: string = '';
     private editing: boolean = false;
     private isEmpty: boolean = false;
+    private _options;
 
     get value(): any { return this._value; };
 
@@ -223,16 +236,6 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         this.initProperty('pattern');
         this.initProperty('fnErrorLength');
         this.initProperty('fnErrorPattern');
-
-        if (this.type === 'select') {
-            if (this.options['data'] === undefined) {
-                let tmp = this.options;
-                this.options = {};
-                this.options['data'] = tmp;
-                this.options['value'] = 'value';
-                this.options['text'] = 'text';
-            }
-        }
     }
 
     writeValue(value: any) {
@@ -298,20 +301,21 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         return (this.isEmpty) ? this.empty : this.value;
     }
     private optionSelected() {
-        let dataLength = this.options['data'].length;
+        let dataLength = this._options['data'].length;
         let i = 0;
         while (dataLength > i) {
-            let element = this.options['data'][i];
-            if (element[this.options['value']] === this['value']) {
-                return element[this.options['text']];
+            let element = this._options['data'][i];
+            if (element[this._options['value']] === this['value']) {
+                return element[this._options['text']];
             }
             if (element.hasOwnProperty('children')) {
                 let childrenLength = element.children.length;
                 let j = 0;
                 while (childrenLength > j) {
                     let children = element.children[j];
-                    if (children[this.options['value']] === this['value'])
-                        return children[this.options['text']];
+                    if (children[this._options['value']] === this['value']) {
+                        return children[this._options['text']];
+                    }
                     j++;
                 }
             }
