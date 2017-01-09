@@ -91,15 +91,15 @@ const INLINE_EDITOR_TEMPLATE = `
                       [required]="required" [placeholder]="placeholder" [disabled]="disabled"  [name]="name"
                       [size]="size"/>
                 </template>
+                         
+                <span class="inline-editor-button-group">
+                    <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
+                          (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
+                    <button class="btn btn-xs btn-danger" (click)="cancel(value)"><span class="fa fa-remove"></span> </button>
+                  </span>
             </p>
 
-            <span>
-                <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
-                  (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
-                <button class="btn btn-xs btn-danger" (click)="cancel(value)">
-                  <span class="fa fa-remove"></span>
-                </button>
-            </span>
+   
 
         </div>
     </div>
@@ -140,6 +140,9 @@ a.editable-empty:focus {
 .inlineEditForm input, select{
  width: auto;
  display: inline;
+}
+.inline-editor-button-group{
+    display:inline-block;
 }
 .editInvalid{
  color: #a94442;
