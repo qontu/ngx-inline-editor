@@ -4,3 +4,9 @@ node_modules
 /index.html
 /demos/**/dist
 old-RC4/demos/tmp
+old-RC4/demos/**/dist
+old-RC4/**/typings
+/typings
+/out/chrome
+aot
+/demos/basic_2.4

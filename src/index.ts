@@ -1,2 +1,2 @@
-export * from './module';
-export * from './inline-editor.component';
+export { InlineEditorModule } from './module';
+export { InlineEditorComponent } from './inline-editor.component';
