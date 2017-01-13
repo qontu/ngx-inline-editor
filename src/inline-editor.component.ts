@@ -1,28 +1,28 @@
-import { Component, forwardRef, Input, OnInit, Output,
-  EventEmitter, ElementRef, ViewChild, Renderer } from '@angular/core';
+import {
+    Component, forwardRef, Input, OnInit, Output,
+    EventEmitter, ElementRef, ViewChild, Renderer,
+    ComponentRef, ComponentFactoryResolver, ViewContainerRef,
+    OnChanges, SimpleChanges
+} from '@angular/core';
+
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { InputConfig, InputType, SelectOptions } from "./input-config";
+import { InputTextComponent } from "./inputs/input-text.component";
+import { InputNumberComponent } from "./inputs/input-number.component";
+import { InputBase } from "./inputs/input-base";
+import { InputPasswordComponent } from "./inputs/input-password.component";
+import { InputRangeComponent } from "./inputs/input-range.component";
+import { InputTextareaComponent } from "./inputs/input-textarea.component";
+import { InputSelectComponent } from "./inputs/input-select.component";
 
-export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => InlineEditorComponent),
-    multi: true
-};
-
-// TO-DO interface hierarchy
-export interface InputConfig {
-    //input's attribute
-    empty: string;
-    placeholder: string;
-    type: string;
-    disabled: boolean;
-    name: string;
-    size: number;
-    min: number;
-    max: number;
-    pattern: string;
-    fnErrorLength: (any: any) => void;
-    fnErrorPattern: (any: any) => void;
-}
+export const InputComponets = [
+    InputTextComponent,
+    InputNumberComponent,
+    InputPasswordComponent,
+    InputRangeComponent,
+    InputTextareaComponent,
+    InputSelectComponent,
+];
 
 // TO-DO Default's value
 const inputConfig: InputConfig = {
@@ -39,179 +39,192 @@ const inputConfig: InputConfig = {
     fnErrorPattern: function (x) { alert('Error: Pattern!'); }
 };
 
+const NUMERIC_TYPES: InputType[] = ['range', 'number'];
 
-const INLINE_EDITOR_TEMPLATE = `
-<div id="inlineEditWrapper">
-    <div [ngSwitch]="type">
-       <template [ngSwitchCase]="'password'">
-          <a [ngClass]="{'editable-empty': isEmpty }" (click)="edit(value)" [hidden]="editing"> ****** </a>
-        </template>
-        <template [ngSwitchCase]="'select'">
-          <a [ngClass]="{'editable-empty': isEmpty }"
-            (click)="edit(value)" [hidden]="editing"> {{optionSelected()}} </a>
-        </template>
-        <template ngSwitchDefault>
-            <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing">{{ showText() }}</a>
-        </template>
-    </div>
+@Component({
+    selector: 'inline-editor',
+    template: `<div>
+                <div id="inlineEditWrapper">
+                    <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing && !disabled">{{ showText() }}</a>
+                    <div class="inlineEditForm form-inline" [hidden]="!editing || disabled">
+                        <div class="form-group">
+                            <div #container></div>
+                            <span>
+                                <button id="inline-editor-button-save" class="btn btn-xs btn-primary" (click)="onSubmit(value)">
+                                    <span class="fa fa-check"></span>
+                                </button>
+                                <button class="btn btn-xs btn-danger" (click)="cancel(value)">
+                                    <span class="fa fa-remove"></span>
+                                </button>
+                            </span>
 
-    <!-- inline edit form -->
-    <div class="inlineEditForm form-inline" [hidden]="!editing">
-        <div class="form-group">
-
-            <!-- inline edit control  -->
-            <p [ngSwitch]="type">
-                <template [ngSwitchCase]="'text'">
-                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required"
-                      [disabled]="disabled" [name]="name" [placeholder]="placeholder" [size]="size"/>
-                </template>
-                <template [ngSwitchCase]="'textarea'">
-                    <textarea [rows]="rows" [cols]="cols" #inlineEditControl class="form-control" [(ngModel)]="value"
-                      [required]="required" [placeholder]="placeholder" [disabled]="disabled" ></textarea>
-                </template>
-                <template [ngSwitchCase]="'range'">
-                    <input #inlineEditControl class="form-control" [(ngModel)]="value" [required]="required"
-                      type="range" [disabled]="disabled" [max]="max" [min]="min" [name]="name"/>
-                </template>
-                <template [ngSwitchCase]="'select'">
-                    <select #inlineEditControl class="form-control" [(ngModel)]="value">
-                    <template ngFor let-item [ngForOf]="options.data">
-
-                        <optgroup *ngIf="item.children" label="{{item[options.text]}}">
-                            <option *ngFor="let child of item.children" value="{{child[options.value]}}">
-                                {{child[options.text]}}
-                            </option>
-                        </optgroup>
-                     <option *ngIf="!item.children" value="{{item[options.value]}}">{{item[options.text]}}</option>
-                    </template>
-                    </select>
-                </template>
-                <template ngSwitchDefault>
-                    <input [type]="type"  #inlineEditControl class="form-control" [(ngModel)]="value"
-                      [required]="required" [placeholder]="placeholder" [disabled]="disabled"  [name]="name"
-                      [size]="size"/>
-                </template>
-            </p>
-
-            <span>
-                <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
-                  (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
-                <button class="btn btn-xs btn-danger" (click)="cancel(value)">
-                  <span class="fa fa-remove"></span>
-                </button>
-            </span>
-
-        </div>
-    </div>
-</div>`;
-
-
-const INLINE_EDITOR_CSS = `
-a {
- text-decoration: none;
- color: #428bca;
- border-bottom: dashed 1px #428bca;
- cursor: pointer;
- line-height: 2;
- margin-right: 5px;
- margin-left: 5px;
+                            </div>
+                        </div>
+                    </div>
+               </div>`,
+    styles: [`a {
+    text-decoration: none;
+    color: #428bca;
+    border-bottom: dashed 1px #428bca;
+    cursor: pointer;
+    line-height: 2;
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
+
 /* editable-empty */
+
 .editable-empty,
 .editable-empty:hover,
 .editable-empty:focus,
 a.editable-empty,
 a.editable-empty:hover,
 a.editable-empty:focus {
-  font-style: italic;
-  color: #DD1144;
-  text-decoration: none;
+    font-style: italic;
+    color: #DD1144;
+    text-decoration: none;
 }
 
-.inlineEditForm{
- display: inline-block;
- white-space: nowrap;
- margin: 0;
+.inlineEditForm {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0;
 }
-#inlineEditWrapper{
- display: inline-block;
+
+#inlineEditWrapper {
+    display: inline-block;
 }
-.inlineEditForm input, select{
- width: auto;
- display: inline;
+
+.inlineEditForm input,
+select {
+    width: auto;
+    display: inline;
 }
-.editInvalid{
- color: #a94442;
- margin-bottom: 0;
+
+.editInvalid {
+    color: #a94442;
+    margin-bottom: 0;
 }
-.error{
- border-color: #a94442;
+
+.error {
+    border-color: #a94442;
 }
+
 [hidden] {
- display: none;
-}`;
-
-const NUMERIC_TYPES: string[] = ['range', 'number'];
-
-@Component({
-    selector: 'inline-editor',
-    template: INLINE_EDITOR_TEMPLATE,
-    styles: [INLINE_EDITOR_CSS],
-    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+    display: none;
+}`],
+    providers: [{
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => InlineEditorComponent),
+        multi: true,
+    }],
+    entryComponents: InputComponets,
 })
-export class InlineEditorComponent implements ControlValueAccessor, OnInit, InputConfig {
+export class InlineEditorComponent implements OnInit, OnChanges, ControlValueAccessor {
 
-    // inline edit form control
-    @ViewChild('inlineEditControl') inlineEditControl;
+    // Inputs implemented
+    private components: { [key: string]: any } = {
+        text: InputTextComponent,
+        number: InputNumberComponent,
+        password: InputPasswordComponent,
+        range: InputRangeComponent,
+        textarea: InputTextareaComponent,
+        select: InputSelectComponent,
+    };
+
+    ngOnChanges(changes: SimpleChanges) {
+        const type = changes['type'];
+        if (type) {
+            this.generateComponent(type.currentValue);
+        }
+    }
+
+    private getComponentType(typeName: InputType): any {
+        const type = this.components[typeName];
+
+        if (!type) {
+            throw new Error('That type does not exist or it is not implemented yet!');
+        }
+
+        return type;
+    }
+
+    @Input() public type: InputType;
+
     @Output() public onSave: EventEmitter<any> = new EventEmitter();
     @Output() public onEdit: EventEmitter<any> = new EventEmitter();
     @Output() public onCancel: EventEmitter<any> = new EventEmitter();
 
-    //Configuration attribute
-    @Input() empty: string;
 
-    //input's attribute
-    @Input() public type: string;
+    // input's attribute
+    @Input() public empty: string;
     @Input() public disabled: boolean;
+    @Input() public required: boolean;
     @Input() public placeholder: string;
     @Input() public name: string;
     @Input() public size: number;
     @Input() public min: number;
     @Input() public max: number;
-    @Input() public fnErrorLength;
     @Input() public pattern: string;
+    // TO DO: This must be outputs events emitter
+    @Input() public fnErrorLength;
     @Input() public fnErrorPattern;
+
 
     //textarea's attribute
     @Input() public cols: number = 50;
     @Input() public rows: number = 4;
 
     //select's attribute
-    @Input() public options;
+    @Input() public options: SelectOptions;
     //@Output() public selected:EventEmitter<any> = new EventEmitter();
 
-
-    public onChange: any = Function.prototype;
-    public onTouched: any = Function.prototype;
+    public onChange: Function;
+    public onTouched: Function;
 
     private _value: string = '';
     private preValue: string = '';
-    private editing: boolean = false;
-    private isEmpty: boolean = false;
+    public editing: boolean = false;
+    public isEmpty: boolean = false;
 
-    get value(): any { return this._value; };
+    public get value(): any { return this._value; };
 
-    set value(v: any) {
-        if (v !== this._value) {
-            this._value = v;
-            this.onChange(v);
+    public set value(newValue: any) {
+        if (newValue !== this._value) {
+            this._value = newValue;
+            this.onChange(newValue);
         }
     }
 
-    constructor(element: ElementRef, private _renderer: Renderer) { }
+    constructor(public componentFactoryResolver: ComponentFactoryResolver) { }
+
+    private componentRef: ComponentRef<{}>;
+
+    @ViewChild('container', { read: ViewContainerRef })
+    private container: ViewContainerRef;
+    private inputInstance: InputBase;
 
     ngOnInit() {
+        if (this.type) {
+            this.initializeProperties();
+        }
+    }
+
+    private generateComponent(type: InputType) {
+        const componentType = this.getComponentType(type);
+        this.inputInstance = this.createInputInstance(componentType);
+        this.inputInstance.setContext(this);
+    }
+
+    private createInputInstance(componentType): InputBase {
+        const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+        this.componentRef = this.container.createComponent(factory);
+
+        return <InputBase>this.componentRef.instance;
+    }
+
+    public initializeProperties(): void {
         this.initProperty('type');
         this.initProperty('disabled');
         this.initProperty('placeholder');
@@ -224,18 +237,16 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         this.initProperty('fnErrorLength');
         this.initProperty('fnErrorPattern');
 
-        if (this.type === 'select') {
-            if (this.options['data'] === undefined) {
-                let tmp = this.options;
-                this.options = {};
-                this.options['data'] = tmp;
-                this.options['value'] = 'value';
-                this.options['text'] = 'text';
-            }
+        if (this.type === 'select' && this.options['data'] === undefined) {
+            this.options = {
+                data: this.options as any,
+                value: 'value',
+                text: 'text'
+            };
         }
     }
 
-    writeValue(value: any) {
+    writeValue(value: any): void {
         if (value || value === 0) {
             this.value = value;
             this.isEmpty = false;
@@ -249,28 +260,25 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         }
     }
 
-    public registerOnChange(fn: (_: any) => {}): void { this.onChange = fn; }
+    public registerOnChange(fn: Function): void { this.onChange = fn; }
 
-    public registerOnTouched(fn: () => {}): void { this.onTouched = fn; };
+    public registerOnTouched(fn: Function): void { this.onTouched = fn; };
 
     // Method to display the inline edit form and hide the <a> element
-    edit(value) {
+    edit(value): void {
         this.preValue = value;  // Store original value in case the form is cancelled
         this.editing = true;
-        // Automatically focus input
-        setTimeout(_ => this._renderer.invokeElementMethod(this.inlineEditControl.nativeElement, 'focus', []));
-
+        this.inputInstance.focus();
         this.onEdit.emit(this);
     }
 
     // Method to display the editable value as text and emit save event to host
-    onSubmit(value) {
-        const rExp = new RegExp(this.pattern);
-        if (!rExp.test(value)) {
+    onSubmit(value): void {
+        if (this.pattern && this.inputInstance.isRegexTestable && !new RegExp(this.pattern).test(value)) {
             return this.fnErrorPattern();
         }
 
-        const length = (NUMERIC_TYPES.indexOf(this.type) !== -1) ? Number(value) : value.length;
+        const length = this.inputInstance.isNumeric ? Number(value) : value.length;
 
         if (length < this.min || length > this.max) {
             return this.fnErrorLength();
@@ -282,7 +290,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     }
 
     // Method to reset the editable value
-    cancel(value: any) {
+    cancel(value: any): void {
         this._value = this.preValue;
         this.editing = false;
 
@@ -294,29 +302,8 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
             ? this[property]
             : inputConfig[property];
     }
-    private showText() {
-        return (this.isEmpty) ? this.empty : this.value;
-    }
-    private optionSelected() {
-        let dataLength = this.options['data'].length;
-        let i = 0;
-        while (dataLength > i) {
-            let element = this.options['data'][i];
-            if (element[this.options['value']] === this['value']) {
-                return element[this.options['text']];
-            }
-            if (element.hasOwnProperty('children')) {
-                let childrenLength = element.children.length;
-                let j = 0;
-                while (childrenLength > j) {
-                    let children = element.children[j];
-                    if (children[this.options['value']] === this['value'])
-                        return children[this.options['text']];
-                    j++;
-                }
-            }
-            i++;
-        }
-        return this.empty;
+
+    public showText(): any {
+        return this.inputInstance.getPlaceholder();
     }
 }
