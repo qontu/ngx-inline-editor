@@ -49,13 +49,10 @@ const NUMERIC_TYPES: InputType[] = ['range', 'number'];
                     <div class="inlineEditForm form-inline" [hidden]="!editing || disabled">
                         <div class="form-group">
                             <div #container></div>
-                            <span>
-                                <button id="inline-editor-button-save" class="btn btn-xs btn-primary" (click)="onSubmit(value)">
-                                    <span class="fa fa-check"></span>
-                                </button>
-                                <button class="btn btn-xs btn-danger" (click)="cancel(value)">
-                                    <span class="fa fa-remove"></span>
-                                </button>
+                            <span class="inline-editor-button-group">
+                                <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
+                                    (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
+                                <button class="btn btn-xs btn-danger" (click)="cancel(value)"><span class="fa fa-remove"></span> </button>
                             </span>
 
                             </div>
@@ -102,9 +99,12 @@ select {
     display: inline;
 }
 
-.editInvalid {
-    color: #a94442;
-    margin-bottom: 0;
+.inline-editor-button-group{
+    display:inline-block;
+}
+.editInvalid{
+ color: #a94442;
+ margin-bottom: 0;
 }
 
 .error {
@@ -176,17 +176,30 @@ export class InlineEditorComponent implements OnInit, OnChanges, ControlValueAcc
     @Input() public cols: number = 50;
     @Input() public rows: number = 4;
 
-    //select's attribute
-    @Input() public options: SelectOptions;
-    //@Output() public selected:EventEmitter<any> = new EventEmitter();
+    // select's attribute
+    @Input()
+    set options(options) {
+        if (options['data'] === undefined) {
+            this._options = {};
+            this._options['data'] = options;
+            this._options['value'] = 'value';
+            this._options['text'] = 'text';
+        } else {
+            this._options = options;
+        }
+    }
+
+    get options() { return this._options; }
+    // @Output() public selected:EventEmitter<any> = new EventEmitter();
 
     public onChange: Function;
     public onTouched: Function;
 
     private _value: string = '';
     private preValue: string = '';
-    public editing: boolean = false;
+    private editing: boolean = false;
     public isEmpty: boolean = false;
+    private _options;
 
     public get value(): any { return this._value; };
 
@@ -236,14 +249,6 @@ export class InlineEditorComponent implements OnInit, OnChanges, ControlValueAcc
         this.initProperty('pattern');
         this.initProperty('fnErrorLength');
         this.initProperty('fnErrorPattern');
-
-        if (this.type === 'select' && this.options['data'] === undefined) {
-            this.options = {
-                data: this.options as any,
-                value: 'value',
-                text: 'text'
-            };
-        }
     }
 
     writeValue(value: any): void {
@@ -291,7 +296,7 @@ export class InlineEditorComponent implements OnInit, OnChanges, ControlValueAcc
 
     // Method to reset the editable value
     cancel(value: any): void {
-        this._value = this.preValue;
+        this.value = this.preValue;
         this.editing = false;
 
         this.onCancel.emit(this);
