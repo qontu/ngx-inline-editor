@@ -242,7 +242,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
     }
 
     writeValue(value: any) {
-        if (value || value === 0) {
+        if (value || value == 0) {
             this.value = value;
             this.isEmpty = false;
         } else {
