@@ -308,7 +308,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
         let i = 0;
         while (dataLength > i) {
             let element = this._options['data'][i];
-            if (element[this._options['value']] === this['value']) {
+            if (element[this._options['value']] == this['value']) {
                 return element[this._options['text']];
             }
             if (element.hasOwnProperty('children')) {
@@ -316,7 +316,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, Inpu
                 let j = 0;
                 while (childrenLength > j) {
                     let children = element.children[j];
-                    if (children[this._options['value']] === this['value']) {
+                    if (children[this._options['value']] == this['value']) {
                         return children[this._options['text']];
                     }
                     j++;
