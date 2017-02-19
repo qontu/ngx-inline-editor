@@ -50,6 +50,9 @@ const INLINE_EDITOR_TEMPLATE = `
           <a [ngClass]="{'editable-empty': isEmpty }"
             (click)="edit(value)" [hidden]="editing"> {{optionSelected()}} </a>
         </template>
+        <template [ngSwitchCase]="'custom'">
+            <a [ngClass]="{'editable-empty': isEmpty }" (click)="edit(value)" [hidden]="editing" [innerHTML]="showText()"></a>
+        </template>
         <template ngSwitchDefault>
             <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing">{{ showText() }}</a>
         </template>
@@ -85,6 +88,9 @@ const INLINE_EDITOR_TEMPLATE = `
                      <option *ngIf="!item.children" value="{{item[options.value]}}">{{item[options.text]}}</option>
                     </template>
                     </select>
+                </template>
+                <template [ngSwitchCase]="'custom'">
+                    <ng-content #inlineEditControl class="form-control" select="div"></ng-content>
                 </template>
                 <template ngSwitchDefault>
                     <input [type]="type"  #inlineEditControl class="form-control" [(ngModel)]="value"
