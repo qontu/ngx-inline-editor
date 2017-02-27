@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "test": "karma start",
-    "build": "./node_modules/.bin/ngc -p tsconfig.json"
+    "build": "echo 'Building...' && ./node_modules/.bin/ngc -p tsconfig.json"
   },
   "maintainers": [{
     "name": "Carlos Caballero",

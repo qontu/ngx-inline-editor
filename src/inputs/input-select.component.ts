@@ -83,7 +83,7 @@ export class InputSelectComponent extends InputBase implements OnInit {
         const {text, value} = options;
 
         let optionSelectedText = this.getElementText(options);
-        if (text !== null) {
+        if (optionSelectedText === null) {
             const childrens = Object.keys(options.data).reduce((childrens, objectKey) => {
                 if (options.data[objectKey].hasOwnProperty('children')) {
                     childrens.push(options.data[objectKey].children);
@@ -92,13 +92,13 @@ export class InputSelectComponent extends InputBase implements OnInit {
                 return childrens;
             }, []);
             let i = 0;
-            while (i < childrens.length && text !== null) {
+            while (i < childrens.length && optionSelectedText === null) {
                 optionSelectedText = this.getElementText({ data: childrens[i], text, value });
                 i++;
             }
         }
 
-        return (text !== null ? text : this.context.empty);
+        return (optionSelectedText !== null ? optionSelectedText : this.context.empty);
     }
 
     private getElementText(options: SelectOptions): string | null {

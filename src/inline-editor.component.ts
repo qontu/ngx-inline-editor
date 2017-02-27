@@ -121,7 +121,7 @@ select {
     }],
     entryComponents: InputComponets,
 })
-export class InlineEditorComponent implements OnInit, OnChanges, ControlValueAccessor {
+export class InlineEditorComponent implements OnInit, ControlValueAccessor {
 
     // Inputs implemented
     private components: { [key: string]: any } = {
@@ -132,13 +132,6 @@ export class InlineEditorComponent implements OnInit, OnChanges, ControlValueAcc
         textarea: InputTextareaComponent,
         select: InputSelectComponent,
     };
-
-    ngOnChanges(changes: SimpleChanges) {
-        const type = changes['type'];
-        if (type) {
-            this.generateComponent(type.currentValue);
-        }
-    }
 
     private getComponentType(typeName: InputType): any {
         const type = this.components[typeName];
@@ -221,6 +214,7 @@ export class InlineEditorComponent implements OnInit, OnChanges, ControlValueAcc
     ngOnInit() {
         if (this.type) {
             this.initializeProperties();
+            this.generateComponent(this.type);
         }
     }
 
@@ -309,6 +303,6 @@ export class InlineEditorComponent implements OnInit, OnChanges, ControlValueAcc
     }
 
     public showText(): any {
-        return this.inputInstance.getPlaceholder();
+        return this.inputInstance ? this.inputInstance.getPlaceholder() : "Loading...";
     }
 }
