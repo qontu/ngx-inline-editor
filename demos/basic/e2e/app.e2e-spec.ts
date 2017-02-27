@@ -1,10 +1,10 @@
-import { BasicPage } from './app.po';
+import { Basic2Page } from './app.po';
 
-describe('basic App', function() {
-  let page: BasicPage;
+describe('basic2 App', () => {
+  let page: Basic2Page;
 
   beforeEach(() => {
-    page = new BasicPage();
+    page = new Basic2Page();
   });
 
   it('should display message saying app works', () => {
