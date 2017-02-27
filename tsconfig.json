@@ -1,18 +1,29 @@
 {
-  "version": "1.8.10",
   "compilerOptions": {
-    "noImplicitAny": false,
-    "module": "commonjs",
-    "target": "es5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "removeComments": true,
     "sourceMap": true,
-    "declaration": true
+    "declaration": true,
+    "outDir": "dist",
+    "lib": [
+      "es2015",
+      "dom"
+    ]
   },
+  "angularCompilerOptions": {
+    "genDir": "aot",
+    "skipMetadataEmit": false
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
   "files": [
-    "typings/index.d.ts",
-    "src/inline-editor.component.ts",
-    "src/module.ts",
     "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

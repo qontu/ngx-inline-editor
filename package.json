@@ -1,14 +1,20 @@
 {
   "name": "ng2-inline-editor",
   "version": "0.1.1-alpha.10",
+  "license": "MIT",
+  "main": "./dist/index.js",
   "scripts": {
     "lint": "tslint src/**/*.ts",
-    "test": "tsc && karma start",
-    "postinstall": "typings install",
-    "prepublish": "tsc --outDir dist",
-    "tsc": "tsc -w --outDir dist",
-    "typings": "typings"
+    "test": "karma start",
+    "build": "echo 'Building...' && ./node_modules/.bin/ngc -p tsconfig.json"
   },
+  "maintainers": [{
+    "name": "Carlos Caballero",
+    "email": "caballerog.carlos@gmail.com"
+  }, {
+    "name": "Toni Villena",
+    "email": "tonivj5@gmail.com"
+  }],
   "repository": {
     "type": "git",
     "url": "https://github.com/caballerog/ng2-inline-editor"
@@ -21,34 +27,39 @@
     "angular",
     "angular2"
   ],
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/caballerog/ng2-inline-editor/issues"
   },
-  "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
-  "dependencies": {},
+  "dependencies": {
+    "@angular/common": "2.4.2",
+    "@angular/core": "2.4.2",
+    "@angular/forms": "2.4.2",
+    "webpack": "1.14.0",
+    "rxjs": "5.0.3",
+    "zone.js": "0.7.4"
+  },
+  "peerDependencies": {
+    "@angular/common": "^2.0.0",
+    "@angular/core": "^2.0.0",
+    "@angular/forms": "^2.0.0"
+  },
   "devDependencies": {
-    "@angular/common": "2.1.0",
-    "@angular/core": "2.1.0",
-    "@angular/forms": "2.1.0",
-    "es6-shim": "0.35.1",
-    "jasmine-core": "2.4.1",
-    "karma": "1.1.0",
-    "karma-jasmine": "1.0.2",
-    "karma-phantomjs-launcher": "1.0.1",
-    "karma-sourcemap-loader": "0.3.7",
-    "karma-webpack": "1.7.0",
-    "phantomjs-prebuilt": "2.1.7",
-    "reflect-metadata": "0.1.3",
-    "rxjs": "5.0.0-beta.12",
-    "ts-loader": "0.8.2",
-    "tslint": "3.13.0",
-    "typescript": "1.8.10",
-    "typings": "1.3.1",
-    "webpack": "1.13.1",
-    "zone.js": "^0.6.23"
-  }, 
+    "@angular/compiler": "2.4.2",
+    "@angular/compiler-cli": "2.4.2",
+    "@types/jasmine": "2.5.40",
+    "jasmine-core": "~2.5.2",
+    "karma": "~1.3.0",
+    "karma-jasmine": "~1.1.0",
+    "karma-phantomjs-launcher": "~1.0.2",
+    "karma-sourcemap-loader": "~0.3.7",
+    "karma-webpack": "~1.8.1",
+    "phantomjs-prebuilt": "~2.1.14",
+    "reflect-metadata": "~0.1.9",
+    "ts-loader": "1.3.3",
+    "tslint": "4.3.1",
+    "typescript": "~2.1.4"
+  },
   "engines": {
     "node": ">=0.8.0"
   }
