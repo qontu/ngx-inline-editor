@@ -245,8 +245,8 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
         this.initProperty('fnErrorPattern');
     }
 
-    writeValue(value: any): void {
-        if (value || value === 0) {
+    writeValue(value: any) {
+        if (value || value == 0) {
             this.value = value;
             this.isEmpty = false;
         } else {
