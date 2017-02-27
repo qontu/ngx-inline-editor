@@ -10,3 +10,5 @@ old-RC4/**/typings
 /out/chrome
 aot
 /demos/basic_2.4
+/demos/basic-latest
+**/.vscode
