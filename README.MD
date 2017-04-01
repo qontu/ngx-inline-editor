@@ -1,9 +1,9 @@
-# Native UI Inline-editor Angular2 component ([demo](demos))
+# Native UI Inline-editor Angular (version 2.0+ or 4) component ([demo](demos))
 
 
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
 
-ng2-inline-editor is a library of Angular2 that allows you to create editable elements.
+ng2-inline-editor is a library of Angular (version 2.0+ or 4) that allows you to create editable elements.
 Such technique is also known as *click-to-edit* or *edit-in-place*.
 It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is developed in AngularJS and the Julianna Zakula's [original post](https://medium.com/front-end-hacking/inline-editing-with-angular2-58b43cc2aba).
 
@@ -54,7 +54,7 @@ lib, ensure your version of Angular is compatible. The current version used to d
 Usage
 -----
 
-## Angular RC 5 and later
+## Angular (2.0+) and later
 
 Import `InlineEditorModule` into your app's modules:
 
@@ -69,11 +69,6 @@ import {InlineEditorModule} from 'ng2-inline-editor';
 ```
 
 This makes all the `ng2-inline-editor` components available for use in your app components.
-
-## Angular RC 4 and earlier
-
-Use an older version of the library, such as 0.1.0. You can find the documentation
-[here](old-RC4).
 
 
 ## Simple Example
