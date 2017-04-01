@@ -57,14 +57,14 @@ select {
     display: none;
 }`],
     template: `<select #inputRef class="form-control" [(ngModel)]="context.value">
-                <template ngFor let-item [ngForOf]="context.options.data">
+                <ng-template ngFor let-item [ngForOf]="context.options.data">
                     <optgroup *ngIf="item.children" [label]="item[context.options.text]">
                         <option *ngFor="let child of item.children" [value]="child[context.options.value]">
                             {{child[context.options.text]}}
                         </option>
                     </optgroup>
                     <option *ngIf="!item.children" [value]="item[context.options.value]">{{item[context.options.text]}}</option>
-                </template>
+                </ng-template>
                 </select>`
 })
 export class InputSelectComponent extends InputBase implements OnInit {
@@ -80,7 +80,7 @@ export class InputSelectComponent extends InputBase implements OnInit {
 
     private optionSelected(): any {
         const options = this.context.options;
-        const {text, value} = options;
+        const { text, value } = options;
 
         let optionSelectedText = this.getElementText(options);
         if (optionSelectedText === null) {
@@ -102,7 +102,7 @@ export class InputSelectComponent extends InputBase implements OnInit {
     }
 
     private getElementText(options: SelectOptions): string | null {
-        const {value, text} = options;
+        const { value, text } = options;
 
         const dataLength = options.data.length;
         let i = 0;

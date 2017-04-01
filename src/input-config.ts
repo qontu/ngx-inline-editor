@@ -10,6 +10,8 @@ export interface InputConfig {
     value?: string;
     isEmpty?: boolean;
     options?: SelectOptions;
+    rows?: number;
+    cols?: number;
     required?: boolean;
     // Value on empty state
     empty: string;

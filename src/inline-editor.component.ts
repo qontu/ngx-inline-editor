@@ -190,7 +190,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
 
     private _value: string = '';
     private preValue: string = '';
-    private editing: boolean = false;
+    public editing: boolean = false;
     public isEmpty: boolean = false;
     private _options;
 
