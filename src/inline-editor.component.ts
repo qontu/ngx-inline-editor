@@ -14,6 +14,9 @@ import { InputPasswordComponent } from "./inputs/input-password.component";
 import { InputRangeComponent } from "./inputs/input-range.component";
 import { InputTextareaComponent } from "./inputs/input-textarea.component";
 import { InputSelectComponent } from "./inputs/input-select.component";
+import { InputDateComponent } from "./inputs/input-date.component"
+import { InputTimeComponent } from "./inputs/input-time.component"
+import { InputDateTimeComponent } from "./inputs/input-date-time.component"
 
 export const InputComponets = [
     InputTextComponent,
@@ -22,6 +25,9 @@ export const InputComponets = [
     InputRangeComponent,
     InputTextareaComponent,
     InputSelectComponent,
+    InputDateComponent,
+    InputTimeComponent,
+    InputDateTimeComponent,
 ];
 
 // TO-DO Default's value
@@ -131,6 +137,9 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
         range: InputRangeComponent,
         textarea: InputTextareaComponent,
         select: InputSelectComponent,
+        date: InputDateComponent,
+        time: InputTimeComponent,
+        datetime: InputDateTimeComponent,
     };
 
     private getComponentType(typeName: InputType): any {
