@@ -1,4 +1,4 @@
-export type InputType = 'text' | 'number' | 'select' | 'range' | 'textarea';
+export type InputType = 'text' | 'number' | 'select' | 'range' | 'textarea' | 'date' | 'time' | 'datetime';
 
 export interface SelectOptions {
     data: { value: string, text: string, children?: SelectOptions }[],
