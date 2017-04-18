@@ -1,11 +1,10 @@
 import {
     Component, forwardRef, Input, OnInit, Output,
-    EventEmitter, ElementRef, ViewChild, Renderer,
+    EventEmitter, ViewChild,
     ComponentRef, ComponentFactoryResolver, ViewContainerRef,
-    OnChanges, SimpleChanges
-} from '@angular/core';
+} from "@angular/core";
 
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { InputConfig, InputType, SelectOptions } from "./input-config";
 import { InputTextComponent } from "./inputs/input-text.component";
 import { InputNumberComponent } from "./inputs/input-number.component";
@@ -14,9 +13,9 @@ import { InputPasswordComponent } from "./inputs/input-password.component";
 import { InputRangeComponent } from "./inputs/input-range.component";
 import { InputTextareaComponent } from "./inputs/input-textarea.component";
 import { InputSelectComponent } from "./inputs/input-select.component";
-import { InputDateComponent } from "./inputs/input-date.component"
-import { InputTimeComponent } from "./inputs/input-time.component"
-import { InputDateTimeComponent } from "./inputs/input-date-time.component"
+import { InputDateComponent } from "./inputs/input-date.component";
+import { InputTimeComponent } from "./inputs/input-time.component";
+import { InputDateTimeComponent } from "./inputs/input-date-time.component";
 
 export const InputComponets = [
     InputTextComponent,
@@ -32,28 +31,33 @@ export const InputComponets = [
 
 // TO-DO Default's value
 const inputConfig: InputConfig = {
-    empty: 'empty',
-    placeholder: '',
-    type: 'text',
+    options: {
+        data: [],
+        text: "text",
+        value: "value",
+    },
+    empty: "empty",
+    placeholder: "",
+    type: "text",
     disabled: false,
-    name: '',
+    name: "",
     size: 8,
     min: 1,
-    pattern: '',
+    pattern: "",
     max: Infinity,
-    fnErrorLength: function (x) { alert('Error: Lenght!'); },
-    fnErrorPattern: function (x) { alert('Error: Pattern!'); }
+    fnErrorLength: function (x) { alert("Error: Lenght!"); },
+    fnErrorPattern: function (x) { alert("Error: Pattern!"); },
 };
 
-const NUMERIC_TYPES: InputType[] = ['range', 'number'];
+const NUMERIC_TYPES: InputType[] = ["range", "number"];
 
 @Component({
-    selector: 'inline-editor',
+    selector: "inline-editor",
     template: `<div>
                 <div id="inlineEditWrapper">
                     <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing && !disabled">{{ showText() }}</a>
                     <div class="inlineEditForm form-inline" [hidden]="!editing || disabled">
-                        <div class="form-group">
+                        <div class="form-group">                          
                             <div #container></div>
                             <span class="inline-editor-button-group">
                                 <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
@@ -146,7 +150,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
         const type = this.components[typeName];
 
         if (!type) {
-            throw new Error('That type does not exist or it is not implemented yet!');
+            throw new Error("That type does not exist or it is not implemented yet!");
         }
 
         return type;
@@ -174,34 +178,22 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     @Input() public fnErrorPattern;
 
 
-    //textarea's attribute
-    @Input() public cols: number = 50;
-    @Input() public rows: number = 4;
+    // textarea's attribute
+    @Input() public cols = 50;
+    @Input() public rows = 4;
+    @Input() public options: SelectOptions;
 
     // select's attribute
-    @Input()
-    set options(options) {
-        if (options['data'] === undefined) {
-            this._options = {};
-            this._options['data'] = options;
-            this._options['value'] = 'value';
-            this._options['text'] = 'text';
-        } else {
-            this._options = options;
-        }
-    }
 
-    get options() { return this._options; }
     // @Output() public selected:EventEmitter<any> = new EventEmitter();
 
     public onChange: Function;
     public onTouched: Function;
 
-    private _value: string = '';
-    private preValue: string = '';
-    public editing: boolean = false;
-    public isEmpty: boolean = false;
-    private _options;
+    private _value = "";
+    private preValue = "";
+    public editing = false;
+    public isEmpty = false;
 
     public get value(): any { return this._value; };
 
@@ -216,7 +208,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
 
     private componentRef: ComponentRef<{}>;
 
-    @ViewChild('container', { read: ViewContainerRef })
+    @ViewChild("container", { read: ViewContainerRef })
     private container: ViewContainerRef;
     private inputInstance: InputBase;
 
@@ -241,21 +233,22 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     }
 
     public initializeProperties(): void {
-        this.initProperty('type');
-        this.initProperty('disabled');
-        this.initProperty('placeholder');
-        this.initProperty('empty');
-        this.initProperty('name');
-        this.initProperty('size');
-        this.initProperty('min');
-        this.initProperty('max');
-        this.initProperty('pattern');
-        this.initProperty('fnErrorLength');
-        this.initProperty('fnErrorPattern');
+        this.initProperty("type");
+        this.initProperty("disabled");
+        this.initProperty("placeholder");
+        this.initProperty("empty");
+        this.initProperty("name");
+        this.initProperty("size");
+        this.initProperty("min");
+        this.initProperty("max");
+        this.initProperty("pattern");
+        this.initProperty("options");
+        this.initProperty("fnErrorLength");
+        this.initProperty("fnErrorPattern");
     }
 
     writeValue(value: any) {
-        if (value || value == 0) {
+        if (value || value === 0) {
             this.value = value;
             this.isEmpty = false;
         } else {
@@ -263,7 +256,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
             /*if (this.type === "select") {
                 this.empty = this.options.data[0][this.options.value];
             }*/
-            //this._value = this.empty;
+            // this._value = this.empty;
             this.isEmpty = true;
         }
     }
@@ -306,7 +299,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     }
 
     private initProperty(property: string): void {
-        this[property] = typeof this[property] !== 'undefined'
+        this[property] = typeof this[property] !== "undefined"
             ? this[property]
             : inputConfig[property];
     }

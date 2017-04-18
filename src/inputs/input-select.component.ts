@@ -1,9 +1,9 @@
 import { Component, ViewChild, ElementRef, Renderer, OnInit } from "@angular/core";
 import { InputBase } from "./input-base";
-import { SelectOptions } from "../input-config";
+import { SelectOptionWithChildren } from "../input-config";
 
 @Component({
-    selector: 'inline-editor-select',
+    selector: "inline-editor-select",
     styles: [`a {
     text-decoration: none;
     color: #428bca;
@@ -56,67 +56,65 @@ select {
 [hidden] {
     display: none;
 }`],
-    template: `<select #inputRef class="form-control" [(ngModel)]="context.value">
-                <ng-template ngFor let-item [ngForOf]="context.options.data">
-                    <optgroup *ngIf="item.children" [label]="item[context.options.text]">
-                        <option *ngFor="let child of item.children" [value]="child[context.options.value]">
-                            {{child[context.options.text]}}
-                        </option>
-                    </optgroup>
-                    <option *ngIf="!item.children" [value]="item[context.options.value]">{{item[context.options.text]}}</option>
-                </ng-template>
-                </select>`
+    template: `
+    <select #inputRef class="form-control" [(ngModel)]="context.value">
+        <ng-template ngFor let-option [ngForOf]="context.options.data">
+            <optgroup *ngIf="option.children" [label]="option[context.options.text]">
+                <option *ngFor="let child of option.children" [value]="child[context.options.value]">
+                    {{child[context.options.text]}}
+                </option>
+            </optgroup>
+            <option *ngIf="!option.children" [value]="option[context.options.value]">{{option[context.options.text]}}</option>
+        </ng-template>    
+    </select>
+            `,
 })
 export class InputSelectComponent extends InputBase implements OnInit {
-    @ViewChild('inputRef') public inputRef: ElementRef;
+    @ViewChild("inputRef") public inputRef: ElementRef;
 
     constructor(renderer: Renderer) {
         super(renderer);
     }
 
-    public getPlaceholder(): any {
+    public getPlaceholder(): string {
         return this.optionSelected();
     }
 
-    private optionSelected(): any {
+    private optionSelected(): string {
+        let selectedOptionText: string | undefined;
         const options = this.context.options;
-        const { text, value } = options;
 
-        let optionSelectedText = this.getElementText(options);
-        if (optionSelectedText === null) {
-            const childrens = Object.keys(options.data).reduce((childrens, objectKey) => {
-                if (options.data[objectKey].hasOwnProperty('children')) {
-                    childrens.push(options.data[objectKey].children);
+        if (options && options.data) {
+            for (const option of options.data) {
+                selectedOptionText = this.getTextOfSelectedOption(option);
+                if (selectedOptionText) {
+                    break;
                 }
-
-                return childrens;
-            }, []);
-            let i = 0;
-            while (i < childrens.length && optionSelectedText === null) {
-                optionSelectedText = this.getElementText({ data: childrens[i], text, value });
-                i++;
             }
+
         }
 
-        return (optionSelectedText !== null ? optionSelectedText : this.context.empty);
+        return selectedOptionText ? selectedOptionText : this.context.empty;
     }
 
-    private getElementText(options: SelectOptions): string | null {
-        const { value, text } = options;
+    private getTextOfSelectedOption(options: SelectOptionWithChildren): string | undefined {
+        let textOfSelectedOption: string | undefined;
+        const { text, value } = this.context.options!;
 
-        const dataLength = options.data.length;
-        let i = 0;
-        while (i < dataLength) {
-            const element = options['data'][i];
-
-            if (element[value] == this.context.value) {
-                return element[text];
+        if (options.children) {
+            for (const child of options.children) {
+                textOfSelectedOption = this.getTextOfSelectedOption(child);
+                if (textOfSelectedOption) {
+                    break;
+                }
             }
-
-            i++;
+        } else {
+            if (options[value] === this.context.value) {
+                textOfSelectedOption = options[text];
+            }
         }
 
-        return null;
+        return textOfSelectedOption;
     }
 
     ngOnInit() {
