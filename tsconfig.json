@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "emitDecoratorMetadata": true,
+    "strictNullChecks": true,
     "experimentalDecorators": true,
     "target": "es5",
     "module": "commonjs",

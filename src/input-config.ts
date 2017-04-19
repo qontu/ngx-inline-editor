@@ -1,15 +1,22 @@
-export type InputType = 'text' | 'number' | 'select' | 'range' | 'textarea' | 'date' | 'time' | 'datetime';
+export type InputType = "text" | "number" | "select" | "range" | "textarea" | "date" | "time" | "datetime";
 
-export interface SelectOptions {
-    data: { value: string, text: string, children?: SelectOptions }[],
+
+export interface SelectOption {
     value: string;
     text: string;
+}
+export interface SelectOptionWithChildren extends SelectOption {
+    children?: SelectOption[];
+}
+
+export interface SelectOptions extends SelectOption {
+    data: SelectOptionWithChildren[];
 }
 
 export interface InputConfig {
     value?: string;
     isEmpty?: boolean;
-    options?: SelectOptions;
+    options: SelectOptions;
     rows?: number;
     cols?: number;
     required?: boolean;
@@ -18,7 +25,7 @@ export interface InputConfig {
     // Placeholder on empty state
     placeholder: string;
     // Type of input
-    type: InputType
+    type: InputType;
     // Is disabled input?
     disabled: boolean;
     // Input name
