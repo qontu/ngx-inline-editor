@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
     "strictNullChecks": true,
     "experimentalDecorators": true,
     "target": "es5",
