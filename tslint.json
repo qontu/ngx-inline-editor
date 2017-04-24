@@ -1,4 +1,7 @@
 {
+  "rulesDirectory": [
+    "node_modules/codelyzer"
+  ],
   "rules": {
     "callable-types": true,
     "class-name": true,
@@ -76,9 +79,6 @@
       true
     ],
     "prefer-const": true,
-
-    "no-duplicate-key": true,
-    "no-unreachable": true,
     "one-line": [
       true,
       "check-open-brace",

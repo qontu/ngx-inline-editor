@@ -1,7 +1,39 @@
-node_modules
+# Our
 demos
-examples
-/index.html
-#src
-old-RC4
-aot
+typings
+
+# Node
+node_modules/*
+npm-debug.log
+
+# yarn
+yarn.lock
+
+# DO NOT IGNORE TYPESCRIPT FILES FOR NPM
+# TypeScript
+# *.js
+# *.map
+# *.d.ts
+typings
+typings.json
+
+# JetBrains
+.idea
+.project
+.settings
+.idea/*
+*.iml
+
+# VS Code
+.vscode/*
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+**/.DS_Store
+
+# Temp
+.tmp
