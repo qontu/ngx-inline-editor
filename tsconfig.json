@@ -1,31 +1,36 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es2016",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "declaration": false,
     "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es2016"],
     "sourceMap": true,
-    "declaration": true,
-    "outDir": "dist",
-    "lib": [
-      "es2015",
-      "dom"
+    "pretty": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules"
+    ],
+    "types": [
+      "node"
     ]
   },
-  "angularCompilerOptions": {
-    "genDir": "aot",
-    "skipMetadataEmit": false
-  },
-  "compileOnSave": false,
-  "buildOnSave": false,
   "files": [
-    "src/index.ts"
+    "./*.ts",
+    "./**/*.ts"
   ],
   "exclude": [
-    "node_modules"
-  ]
+    "node_modules",
+    "dist",
+    "src"
+  ],
+  "compileOnSave": false
 }

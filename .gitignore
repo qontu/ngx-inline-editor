@@ -1,14 +1,41 @@
-/dist
-node_modules
-/examples
-/index.html
-/demos/**/dist
-old-RC4/demos/tmp
-old-RC4/demos/**/dist
-old-RC4/**/typings
-/typings
-/out/chrome
-aot
-/demos/basic_2.4
-/demos/basic-latest
-**/.vscode
+# Node
+node_modules/*
+npm-debug.log
+
+# TypeScript
+src/*.js
+src/*.map
+src/*.d.ts
+typings
+typings.json
+
+# yarn
+yarn.lock
+
+# VS Code
+.vscode/*
+
+# JetBrains
+.idea
+.project
+.settings
+.idea/*
+*.iml
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+**/.DS_Store
+
+# Ngc generated files
+**/*.ngfactory.ts
+
+# Build files
+dist/*
+.tmp
+
+# Debug chrome
+out/chrome
