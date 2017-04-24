@@ -1,13 +1,88 @@
 {
   "name": "ng2-inline-editor",
   "version": "0.1.1-alpha.15",
+  "keywords": [
+    "angular",
+    "angular4"
+  ],
+  "bugs": {
+    "url": "https://github.com/caballerog/ng2-inline-editor/issues"
+  },
   "license": "MIT",
-  "main": "./dist/index.js",
+  "author": {
+    "name": "Carlos Caballero",
+    "email": "caballerog.carlos@gmail.com"
+  },
+  "main": "./index.js",
+  "typings": "ng2-inline-editor.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caballerog/ng2-inline-editor"
+  },
   "scripts": {
-    "lint": "tslint src/*/.ts",
-    "test": "karma start",
-    "build": "echo 'Building...' && ./node_modules/.bin/ngc -p tsconfig.json",
-    "clean": "echo 'Cleaning...' && rm -rf ./aot ./dist"
+    "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
+    "build:watch": "node_modules/.bin/gulp",
+    "clean": "node_modules/.bin/gulp clean",
+    "commit": "git-cz",
+    "lint": "node_modules/.bin/tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
+    "publish": "cd dist && npm publish",
+    "test": "node_modules/.bin/tsc && node_modules/.bin/karma start"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@angular/common": "^4.0.2",
+    "@angular/compiler": "^4.0.2",
+    "@angular/compiler-cli": "^4.0.2",
+    "@angular/core": "^4.0.2",
+    "@angular/forms": "^4.0.2",
+    "@types/del": "^2.2.32",
+    "@types/gulp": "^3.8.32",
+    "@types/jasmine": "^2.5.47",
+    "@types/node": "~7.0.13",
+    "@types/run-sequence": "^0.0.28",
+    "codelyzer": "^3.0.0",
+    "commitizen": "^2.9.6",
+    "conventional-changelog-lint": "^1.1.9",
+    "core-js": "^2.4.1",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-inline-ng2-template": "^4.0.0",
+    "gulp-rollup": "^2.11.0",
+    "jasmine-core": "^2.5.2",
+    "jasmine-spec-reporter": "~3.2.0",
+    "karma": "^1.6.0",
+    "karma-chrome-launcher": "~2.0.0",
+    "karma-cli": "~1.0.1",
+    "karma-coverage-istanbul-reporter": "^0.2.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-sourcemap-loader": "^0.3.7",
+    "node-watch": "^0.5.2",
+    "phantomjs-prebuilt": "~2.1.14",
+    "protractor": "~5.1.0",
+    "reflect-metadata": "~0.1.10",
+    "rollup": "^0.41.6",
+    "run-sequence": "^1.2.2",
+    "rxjs": "^5.3.0",
+    "ts-loader": "^2.0.3",
+    "ts-node": "~2.0.0",
+    "tslint": "^5.1.0",
+    "typescript": "~2.2.2",
+    "zone.js": "^0.8.5"
+  },
+  "peerDependencies": {
+    "@angular/common": "^4.0.2",
+    "@angular/core": "^4.0.2",
+    "@angular/forms": "^4.0.2"
+  },
+  "engines": {
+    "node": ">=6.0.0"
   },
   "maintainers": [{
       "name": "Carlos Caballero",
@@ -18,52 +93,5 @@
       "email": "tonivj5@gmail.com"
     }
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/caballerog/ng2-inline-editor"
-  },
-  "author": {
-    "name": "Carlos Caballero",
-    "email": "caballerog.carlos@gmail.com"
-  },
-  "keywords": [
-    "angular",
-    "angular2"
-  ],
-  "bugs": {
-    "url": "https://github.com/caballerog/ng2-inline-editor/issues"
-  },
-  "typings": "./dist/index.d.ts",
-  "dependencies": {
-    "@angular/common": "^4.0.2",
-    "@angular/core": "^4.0.2",
-    "@angular/forms": "^4.0.2",
-    "webpack": "^2.4.1",
-    "rxjs": "^5.3.0",
-    "zone.js": "^0.8.5"
-  },
-  "peerDependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0"
-  },
-  "devDependencies": {
-    "@angular/compiler": "^4.0.2",
-    "@angular/compiler-cli": "^4.0.2",
-    "@types/jasmine": "^2.5.47",
-    "jasmine-core": "^2.5.2",
-    "karma": "^1.6.0",
-    "karma-jasmine": "^1.1.0",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.3",
-    "phantomjs-prebuilt": "~2.1.14",
-    "reflect-metadata": "~0.1.10",
-    "ts-loader": "^2.0.3",
-    "tslint": "^5.1.0",
-    "typescript": "~2.2.2"
-  },
-  "engines": {
-    "node": ">=0.8.0"
-  }
+  "module": "ng2-inline-editor.js"
 }

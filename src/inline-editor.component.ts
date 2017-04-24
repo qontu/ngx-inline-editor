@@ -6,9 +6,9 @@ import {
 
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { InputConfig, InputType, SelectOptions } from "./input-config";
-import { InputTextComponent } from "./inputs/input-text.component";
 import { InputNumberComponent } from "./inputs/input-number.component";
 import { InputBase } from "./inputs/input-base";
+import { InputTextComponent } from "./inputs/input-text.component";
 import { InputPasswordComponent } from "./inputs/input-password.component";
 import { InputRangeComponent } from "./inputs/input-range.component";
 import { InputTextareaComponent } from "./inputs/input-textarea.component";
@@ -53,77 +53,8 @@ const NUMERIC_TYPES: InputType[] = ["range", "number"];
 
 @Component({
     selector: "inline-editor",
-    template: `<div>
-                <div id="inlineEditWrapper">
-                    <a [ngClass]="{'editable-empty': isEmpty }"  (click)="edit(value)" [hidden]="editing && !disabled">{{ showText() }}</a>
-                    <div class="inlineEditForm form-inline" [hidden]="!editing || disabled">
-                        <div class="form-group">                          
-                            <div #container></div>
-                            <span class="inline-editor-button-group">
-                                <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
-                                    (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
-                                <button class="btn btn-xs btn-danger" (click)="cancel(value)"><span class="fa fa-remove"></span> </button>
-                            </span>
-
-                            </div>
-                        </div>
-                    </div>
-               </div>`,
-    styles: [`a {
-    text-decoration: none;
-    color: #428bca;
-    border-bottom: dashed 1px #428bca;
-    cursor: pointer;
-    line-height: 2;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-
-/* editable-empty */
-
-.editable-empty,
-.editable-empty:hover,
-.editable-empty:focus,
-a.editable-empty,
-a.editable-empty:hover,
-a.editable-empty:focus {
-    font-style: italic;
-    color: #DD1144;
-    text-decoration: none;
-}
-
-.inlineEditForm {
-    display: inline-block;
-    white-space: nowrap;
-    margin: 0;
-}
-
-#inlineEditWrapper {
-    display: inline-block;
-}
-
-.inlineEditForm input,
-select {
-    width: auto;
-    display: inline;
-}
-
-.inline-editor-button-group{
-    display:inline-block;
-}
-.editInvalid{
- color: #a94442;
- margin-bottom: 0;
-}
-
-.error {
-    border-color: #a94442;
-}
-
-[hidden] {
-    display: none;
-}`],
+    templateUrl: "./inline-editor.component.html",
+    styleUrls: ["./inline-editor.component.css"],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => InlineEditorComponent),
