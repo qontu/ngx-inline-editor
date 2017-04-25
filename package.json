@@ -1,6 +1,6 @@
 {
   "name": "ng2-inline-editor",
-  "version": "0.1.1-alpha.15",
+  "version": "0.1.1-alpha.16",
   "keywords": [
     "angular",
     "angular4"
@@ -23,7 +23,7 @@
     "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
     "build:watch": "node_modules/.bin/gulp",
     "clean": "node_modules/.bin/gulp clean",
-    "commit": "git-cz",
+    "commit": "node_modules/.bin/git-cz",
     "lint": "node_modules/.bin/tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
     "publish": "cd dist && npm publish",
     "test": "node_modules/.bin/tsc && node_modules/.bin/karma start"
