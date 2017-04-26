@@ -45,11 +45,11 @@ const inputConfig: InputConfig = {
     min: 1,
     pattern: "",
     max: Infinity,
-    fnErrorLength: function (x) { alert("Error: Lenght!"); },
-    fnErrorPattern: function (x) { alert("Error: Pattern!"); },
+    fnErrorLength() { alert("Error: Lenght!"); },
+    fnErrorPattern() { alert("Error: Pattern!"); },
 };
 
-const NUMERIC_TYPES: InputType[] = ["range", "number"];
+// const NUMERIC_TYPES: InputType[] = ["range", "number"];
 
 @Component({
     selector: "inline-editor",
@@ -222,7 +222,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     }
 
     // Method to reset the editable value
-    cancel(value: any): void {
+    cancel(): void {
         this.value = this.preValue;
         this.editing = false;
 

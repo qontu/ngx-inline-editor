@@ -1,16 +1,16 @@
 <div>
-    <div id="inlineEditWrapper">
-        <a [ngClass]="{'editable-empty': isEmpty }" (click)="edit(value)" [hidden]="editing && !disabled">{{ showText() }}</a>
-        <div class="inlineEditForm form-inline" [hidden]="!editing || disabled">
-            <div class="form-group">
-                <div #container></div>
-                <span class="inline-editor-button-group">
-                                <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
-                                    (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
-                <button class="btn btn-xs btn-danger" (click)="cancel(value)"><span class="fa fa-remove"></span> </button>
-                </span>
+  <div id="inlineEditWrapper">
+    <a [ngClass]="{'editable-empty': isEmpty }" (click)="edit(value)" [hidden]="editing && !disabled">{{ showText() }}</a>
+    <div class="inlineEditForm form-inline" [hidden]="!editing || disabled">
+      <div class="form-group">
+        <div #container></div>
+        <span class="inline-editor-button-group"> 
+        <button id="inline-editor-button-save" class="btn btn-xs btn-primary"
+            (click)="onSubmit(value)"><span class="fa fa-check"></span></button>
+        <button class="btn btn-xs btn-danger" (click)="cancel()"><span class="fa fa-remove"></span> </button>
+        </span>
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
