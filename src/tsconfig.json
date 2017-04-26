@@ -1,15 +1,10 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "declaration": true,
     "module": "es2015",
-    "target": "es5",
-    //"baseUrl": ".",
+    "target": "es2015",
     "stripInternal": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "moduleResolution": "node",
     "outDir": "../build",
     "rootDir": ".",
     "lib": [
@@ -28,6 +23,6 @@
     "flatModuleId": "ng2-inline-editor"
   },
   "files": [
-    "./index.ts"
+    "./inline-editor.module.ts"
   ]
 }

@@ -32,6 +32,14 @@
     ],
     "no-arg": true,
     "no-bitwise": true,
+    "templates-use-public": true,
+    "invoke-injectable": true,
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-host-property-decorator": true,
+    "no-input-rename": true,
+    "no-output-rename": true,
+    "radix": true,
     "no-console": [
       true,
       "debug",
@@ -53,7 +61,6 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
-    "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "object-literal-shorthand": true,
@@ -75,9 +82,10 @@
       "multiline": "always",
       "singleline": "never"
     }],
-    "no-unused-variable": [
-      true
-    ],
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "directive-selector": [true, "attribute", "inline-editor", "camelCase"],
+    "component-selector": [true, "element", "inline-editor", "kebab-case"],
     "prefer-const": true,
     "one-line": [
       true,
