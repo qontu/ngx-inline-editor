@@ -1,32 +1,53 @@
 {
   "name": "ng2-inline-editor",
-  "version": "0.1.1-alpha.17",
-  "keywords": [
-    "angular",
-    "angular4"
-  ],
-  "bugs": {
-    "url": "https://github.com/caballerog/ng2-inline-editor/issues"
-  },
-  "license": "MIT",
+  "version": "0.1.1-alpha.18",
   "author": {
     "name": "Carlos Caballero",
     "email": "caballerog.carlos@gmail.com"
   },
-  "main": "./index.js",
-  "typings": "ng2-inline-editor.d.ts",
+  "maintainers": [{
+      "name": "Carlos Caballero",
+      "email": "caballerog.carlos@gmail.com"
+    },
+    {
+      "name": "Toni Villena",
+      "email": "tonivj5@gmail.com"
+    }
+  ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/caballerog/ng2-inline-editor"
   },
-  "scripts": {
-    "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
+  "bugs": {
+    "url": "https://github.com/caballerog/ng2-inline-editor/issues"
+  },
+  "keywords": [
+    "angular",
+    "angular4"
+  ],
+  "main": "ng2-inline-editor.umd.js",
+  "module": "ng2-inline-editor.es5.js",
+  "es2015": "ng2-inline-editor.es2015.js",
+  "typings": "ng2-inline-editor.d.ts",
+  "scripts": { <<
+    << << < HEAD "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
     "build:watch": "node_modules/.bin/gulp",
     "clean": "node_modules/.bin/gulp clean",
     "commit": "node_modules/.bin/git-cz",
     "lint": "node_modules/.bin/tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
-    "publish": "cd dist && npm publish",
-    "test": "node_modules/.bin/tsc && node_modules/.bin/karma start"
+    ===
+    === =
+    "build": "gulp build && echo 'To publish a new version of library, please use npm run publish'",
+    "build:watch": "gulp",
+    "clean": "gulp clean",
+    "commit": "git-cz",
+    "gulp": "gulp",
+    "lint": "tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
+    >>>
+    >>> > chore(tools): New packages,
+    tslint rules and better tsconfig "publish": "cd dist && npm publish",
+    "test": "tsc && karma start"
   },
   "config": {
     "commitizen": {
@@ -34,6 +55,11 @@
     }
   },
   "dependencies": {},
+  "peerDependencies": {
+    "@angular/common": "^4.0.2",
+    "@angular/core": "^4.0.2",
+    "@angular/forms": "^4.0.2"
+  },
   "devDependencies": {
     "@angular/common": "^4.0.2",
     "@angular/compiler": "^4.0.2",
@@ -42,7 +68,9 @@
     "@angular/forms": "^4.0.2",
     "@types/del": "^2.2.32",
     "@types/gulp": "^3.8.32",
+    "@types/gulp-rename": "^0.0.32",
     "@types/jasmine": "^2.5.47",
+    "@types/merge2": "^0.3.30",
     "@types/node": "~7.0.13",
     "@types/run-sequence": "^0.0.28",
     "codelyzer": "^3.0.0",
@@ -52,7 +80,10 @@
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-inline-ng2-template": "^4.0.0",
+    "gulp-ngc": "^0.3.0",
+    "gulp-rename": "^1.2.2",
     "gulp-rollup": "^2.11.0",
+    "gulp-typescript": "^3.1.6",
     "jasmine-core": "^2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "^1.6.0",
@@ -63,6 +94,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.7",
+    "merge2": "^1.0.3",
     "node-watch": "^0.5.2",
     "phantomjs-prebuilt": "~2.1.14",
     "protractor": "~5.1.0",
@@ -76,22 +108,7 @@
     "typescript": "~2.2.2",
     "zone.js": "^0.8.5"
   },
-  "peerDependencies": {
-    "@angular/common": "^4.0.2",
-    "@angular/core": "^4.0.2",
-    "@angular/forms": "^4.0.2"
-  },
   "engines": {
     "node": ">=6.0.0"
-  },
-  "maintainers": [{
-      "name": "Carlos Caballero",
-      "email": "caballerog.carlos@gmail.com"
-    },
-    {
-      "name": "Toni Villena",
-      "email": "tonivj5@gmail.com"
-    }
-  ],
-  "module": "ng2-inline-editor.js"
+  }
 }

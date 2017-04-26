@@ -1,20 +1,14 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
     "declaration": false,
     "removeComments": true,
+    "noUnusedLocals": false,
     "noLib": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "lib": ["es2016"],
     "sourceMap": true,
-    "pretty": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "noImplicitReturns": true,
-    "noImplicitUseStrict": false,
-    "noFallthroughCasesInSwitch": true,
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules"
@@ -23,10 +17,6 @@
       "node"
     ]
   },
-  "files": [
-    "./*.ts",
-    "./**/*.ts"
-  ],
   "exclude": [
     "node_modules",
     "dist",
