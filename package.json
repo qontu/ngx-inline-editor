@@ -30,23 +30,14 @@
   "module": "ng2-inline-editor.es5.js",
   "es2015": "ng2-inline-editor.es2015.js",
   "typings": "ng2-inline-editor.d.ts",
-  "scripts": { <<
-    << << < HEAD "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
-    "build:watch": "node_modules/.bin/gulp",
-    "clean": "node_modules/.bin/gulp clean",
-    "commit": "node_modules/.bin/git-cz",
-    "lint": "node_modules/.bin/tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
-    ===
-    === =
+  "scripts": {
     "build": "gulp build && echo 'To publish a new version of library, please use npm run publish'",
     "build:watch": "gulp",
     "clean": "gulp clean",
     "commit": "git-cz",
     "gulp": "gulp",
     "lint": "tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
-    >>>
-    >>> > chore(tools): New packages,
-    tslint rules and better tsconfig "publish": "cd dist && npm publish",
+    "publish": "cd dist && npm publish",
     "test": "tsc && karma start"
   },
   "config": {
