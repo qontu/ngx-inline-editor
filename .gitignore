@@ -34,8 +34,9 @@ Desktop.ini
 **/*.ngfactory.ts
 
 # Build files
-dist/*
+dist
 .tmp
+build
 
 # Debug chrome
 out/chrome
