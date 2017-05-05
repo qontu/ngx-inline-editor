@@ -63,29 +63,7 @@ const inputConfig: InputConfig = {
     entryComponents: InputComponets,
 })
 export class InlineEditorComponent implements OnInit, ControlValueAccessor {
-
-    // Inputs implemented
-    private components: { [key: string]: any } = {
-        text: InputTextComponent,
-        number: InputNumberComponent,
-        password: InputPasswordComponent,
-        range: InputRangeComponent,
-        textarea: InputTextareaComponent,
-        select: InputSelectComponent,
-        date: InputDateComponent,
-        time: InputTimeComponent,
-        datetime: InputDateTimeComponent,
-    };
-
-    private getComponentType(typeName: InputType): any {
-        const type = this.components[typeName];
-
-        if (!type) {
-            throw new Error("That type does not exist or it is not implemented yet!");
-        }
-
-        return type;
-    }
+    constructor(public componentFactoryResolver: ComponentFactoryResolver) { }
 
     @Input() public type: InputType;
 
@@ -112,7 +90,18 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     // textarea's attribute
     @Input() public cols = 50;
     @Input() public rows = 4;
-    @Input() public options: SelectOptions;
+
+    @Input()
+    set options(options: SelectOptions) {
+        this._options = options instanceof Array ?
+            {
+                data: options,
+                value: "value",
+                text: "text",
+            } : options;
+    }
+
+    get options() { return this._options; }
 
     // select's attribute
 
@@ -121,10 +110,11 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     public onChange: Function;
     public onTouched: Function;
 
-    private _value = "";
-    private preValue = "";
     public editing = false;
     public isEmpty = false;
+    private _options: SelectOptions;
+    private _value = "";
+    private preValue = "";
 
     public get value(): any { return this._value; };
 
@@ -135,7 +125,6 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
         }
     }
 
-    constructor(public componentFactoryResolver: ComponentFactoryResolver) { }
 
     private componentRef: ComponentRef<{}>;
 
@@ -143,6 +132,29 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     private container: ViewContainerRef;
     private inputInstance: InputBase;
 
+
+
+    // Inputs implemented
+    private components: { [key: string]: any } = {
+        text: InputTextComponent,
+        number: InputNumberComponent,
+        password: InputPasswordComponent,
+        range: InputRangeComponent,
+        textarea: InputTextareaComponent,
+        select: InputSelectComponent,
+        date: InputDateComponent,
+        time: InputTimeComponent,
+        datetime: InputDateTimeComponent,
+    };
+    private getComponentType(typeName: InputType): any {
+        const type = this.components[typeName];
+
+        if (!type) {
+            throw new Error("That type does not exist or it is not implemented yet!");
+        }
+
+        return type;
+    }
     ngOnInit() {
         if (this.type) {
             this.initializeProperties();
@@ -179,16 +191,11 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     }
 
     writeValue(value: any) {
-        if (value || value === 0) {
+        if (value == null) {
+            this.isEmpty = true;
+        } else {
             this.value = value;
             this.isEmpty = false;
-        } else {
-
-            /*if (this.type === "select") {
-                this.empty = this.options.data[0][this.options.value];
-            }*/
-            // this._value = this.empty;
-            this.isEmpty = true;
         }
     }
 

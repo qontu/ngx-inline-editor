@@ -20,10 +20,10 @@ import { SelectOptionWithChildren } from "../input-config";
 })
 export class InputSelectComponent extends InputBase implements OnInit {
     @ViewChild("inputRef") public inputRef: ElementRef;
-
     constructor(renderer: Renderer) {
         super(renderer);
     }
+
 
     public getPlaceholder(): string {
         return this.optionSelected();
@@ -58,7 +58,8 @@ export class InputSelectComponent extends InputBase implements OnInit {
                 }
             }
         } else {
-            if (options[value] === this.context.value) {
+            // tslint:disable-next-line:triple-equals
+            if (options[value] == this.context.value) {
                 textOfSelectedOption = options[text];
             }
         }
