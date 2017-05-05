@@ -27,8 +27,22 @@
     "member-access": false,
     "member-ordering": [
       true,
-      "static-before-instance",
-      "variables-before-functions"
+      {
+        "order": [
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "public-instance-field",
+          "protected-instance-field",
+          "private-instance-field",
+          "public-static-field",
+          "protected-static-field",
+          "public-instance-method",
+          "protected-instance-method",
+          "public-static-method",
+          "protected-static-method"
+        ]
+      }
     ],
     "no-arg": true,
     "no-bitwise": true,
