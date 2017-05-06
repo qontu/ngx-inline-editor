@@ -5,13 +5,13 @@ Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=s
 
 ng2-inline-editor is a library of Angular (version 4+) that allows you to create editable elements.
 Such technique is also known as *click-to-edit* or *edit-in-place*.
-It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is developed in AngularJS and the Julianna Zakula's [original post](https://medium.com/front-end-hacking/inline-editing-with-angular2-58b43cc2aba).
+It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is developed in AngularJS.
 
 
 ![Version 0.1.0](https://github.com/caballerog/ng2-inline-editor/raw/master/demos/basic/0.1.0.gif)
 ## Dependencies
 
-Basically it does not depend on any libraries except Angular2 itself.
+Basically it does not depend on any libraries except Angular4 itself.
 For themes you may need to include Twitter Bootstrap CSS.
 
 ### Angular 4+ Version
@@ -28,7 +28,7 @@ lib, ensure your version of Angular is compatible. The current version used to d
 * [ ] radio
 * [ ] date
 * [ ] time
-* [ ] datetime
+* [x] datetime
 * [ ] html5 inputs
   * [x] pattern
   * [x] number
@@ -39,7 +39,7 @@ lib, ensure your version of Angular is compatible. The current version used to d
 * [ ] editable row
 * [ ] editable column
 * [ ] editable table
-* [ ] themes
+* [x] themes
 
 
 ## Quick start
@@ -48,7 +48,11 @@ lib, ensure your version of Angular is compatible. The current version used to d
 
   `npm i ng2-inline-editor --save`
 
-2. Include [Twitter Bootstrap](http://v4-alpha.getbootstrap.com/) and [FontAwesome](http://fontawesome.io/) in your project.
+2. Include the basic theme or configure your own styles which are in the following path:
+
+`dist/themes/bootstrap.css`
+
+3. Include [Twitter Bootstrap](http://v4-alpha.getbootstrap.com/) and [FontAwesome](http://fontawesome.io/) in your project.
 
 
 Usage
@@ -76,7 +80,6 @@ This makes all the `ng2-inline-editor` components available for use in your app 
 You can find a complete example [here](demos/basic)
 ```TypeScript
 import {Component} from '@angular/core';
-import {InlineEditorDirectives} from 'ng2-inline-editor';
 
 @Component({
     selector: 'my-component',
@@ -335,57 +338,67 @@ If the type is `select` then the default selected element is the first element o
 
 # Style/Theme
 
-The `inline-editor` has the following CSS:
+The `inline-editor` has the following basic theme which you can find in `dist/themes/bootstrap.css`:
 
 ```CSS
-a {
- text-decoration: none;
- color: #428bca;
- border-bottom: dashed 1px #428bca;
- cursor: pointer;
- line-height: 2;
- margin-right: 5px;
- margin-left: 5px;
+a.c-inline-editor {
+  text-decoration: none;
+  color: #428bca;
+  border-bottom: dashed 1px #428bca;
+  cursor: pointer;
+  line-height: 2;
+  margin-right: 5px;
+  margin-left: 5px;
 }
-.editable-empty,
-.editable-empty:hover,
-.editable-empty:focus,
-a.editable-empty,
-a.editable-empty:hover,
-a.editable-empty:focus {
+.c-inline-editor.editable-empty,
+.c-inline-editor.editable-empty:hover,
+.c-inline-editor.editable-empty:focus,
+.c-inline-editor.a.editable-empty,
+.c-inline-editor.a.editable-empty:hover,
+.c-inline-editor.a.editable-empty:focus {
   font-style: italic;
   color: #DD1144;
   text-decoration: none;
 }
 
-.inlineEditForm{
- display: inline-block;
- white-space: nowrap;
- margin: 0;
+.c-inline-editor.inlineEditForm {
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0;
 }
-#inlineEditWrapper{
- display: inline-block;
+
+#inlineEditWrapper {
+  display: inline-block;
 }
-.inlineEditForm input, select{
- width: auto;
- display: inline;
+
+.c-inline-editor.inlineEditForm input,
+.c-inline-editor.select {
+  width: auto;
+  display: inline;
 }
-.editInvalid{
- color: #a94442;
- margin-bottom: 0;
+
+.c-inline-editor.inline-editor-button-group {
+  display: inline-block;
 }
-.error{
- border-color: #a94442;
+
+.c-inline-editor.editInvalid {
+  color: #a94442;
+  margin-bottom: 0;
 }
-[hidden] {
- display: none;
+
+.c-inline-editor.error {
+  border-color: #a94442;
+}
+
+[hidden].c-inline-editor {
+  display: none;
 }
 ```
 
 
-# Integration with other ng2-libraries
+# Integration with other ngx-libraries
 
-## angular2-data-table
+## ngx-data-table
 Example using [angular2-data-table](https://github.com/swimlane/angular2-data-table) ([demo](demos))
 ![Version 0.1.0-angular2-data-table](demos/angular2-data-table/0.1.0.gif)
 
@@ -403,13 +416,17 @@ Thanks for understanding!
 
 1. To generate all `*.js`, `*.js.map` and `*.d.ts` files:
 
-    `npm run tsc`
+    `npm run build`
 
-2. To lint all `*.ts` files:
+2. To debug :
 
-    `npm run lint`
+    `npm run build:watch`
 
+## Authors
+Carlos Caballero - [https://github.com/caballerog](hhttps://github.com/caballerog)
+
+Antonio Villena - [https://github.com/xxxtonixxx](https://github.com/xxxtonixxx)
 ## License
 
-The MIT License (See the [LICENSE](https://github.com/Caballerog/ng2-inline-editor/blob/master/LICENSE.MD) file for the full text) - [Carlos Caballero](caballerog.carlos@gmail.com)
+The MIT License (See the [LICENSE](https://github.com/Caballerog/ng2-inline-editor/blob/master/LICENSE.MD) file for the full text) - 
 
