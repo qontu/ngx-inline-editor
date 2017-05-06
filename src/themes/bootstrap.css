@@ -1,4 +1,4 @@
-a {
+a.c-inline-editor {
   text-decoration: none;
   color: #428bca;
   border-bottom: dashed 1px #428bca;
@@ -7,22 +7,18 @@ a {
   margin-right: 5px;
   margin-left: 5px;
 }
-
-
-/* editable-empty */
-
-.editable-empty,
-.editable-empty:hover,
-.editable-empty:focus,
-a.editable-empty,
-a.editable-empty:hover,
-a.editable-empty:focus {
+.c-inline-editor.editable-empty,
+.c-inline-editor.editable-empty:hover,
+.c-inline-editor.editable-empty:focus,
+.c-inline-editor.a.editable-empty,
+.c-inline-editor.a.editable-empty:hover,
+.c-inline-editor.a.editable-empty:focus {
   font-style: italic;
   color: #DD1144;
   text-decoration: none;
 }
 
-.inlineEditForm {
+.c-inline-editor.inlineEditForm {
   display: inline-block;
   white-space: nowrap;
   margin: 0;
@@ -32,25 +28,25 @@ a.editable-empty:focus {
   display: inline-block;
 }
 
-.inlineEditForm input,
-select {
+.c-inline-editor.inlineEditForm input,
+.c-inline-editor.select {
   width: auto;
   display: inline;
 }
 
-.inline-editor-button-group {
+.c-inline-editor.inline-editor-button-group {
   display: inline-block;
 }
 
-.editInvalid {
+.c-inline-editor.editInvalid {
   color: #a94442;
   margin-bottom: 0;
 }
 
-.error {
+.c-inline-editor.error {
   border-color: #a94442;
 }
 
-[hidden] {
+[hidden].c-inline-editor {
   display: none;
 }

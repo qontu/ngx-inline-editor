@@ -54,7 +54,6 @@ const inputConfig: InputConfig = {
 @Component({
     selector: "inline-editor",
     templateUrl: "./inline-editor.component.html",
-    styleUrls: ["./inline-editor.component.css"],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => InlineEditorComponent),

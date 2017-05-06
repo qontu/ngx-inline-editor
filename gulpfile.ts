@@ -146,13 +146,22 @@ task("rollup:umd", () => src(`${tmpBundlesFolder}/${bundleNameES5}`)
  * 5. Copy all the files from /build to /dist, except .js files. We ignore all .js from /build
  *    because with don't need individual modules anymore, just the Flat ES module generated
  *    on step 4.
+ *    Copy themes from .tmp/themes to /dist
  */
-task("copy:build", () => src(
+task("copy:build", () => runSequence("copy:buildTS", "copy:buildCSS"));
+
+task("copy:buildTS", () => src(
     [
         `${buildFolder}/**/*`,
         `!${buildFolder}/**/*.js`,
     ])
     .pipe(dest(distFolder)),
+);
+task("copy:buildCSS", () => src(
+    [
+        `${srcFolder}/themes/**/*`,
+    ])
+    .pipe(dest(`${distFolder}/themes`)),
 );
 
 /**
@@ -182,7 +191,8 @@ task("compile", () => runSequence(
     "ngc",
     "rollup",
     "clean:dist",
-    "copy:build",
+    "copy:buildTS",
+    "copy:buildCSS",
     "copy:bundles",
     "copy:manifest",
     "clean:build",
