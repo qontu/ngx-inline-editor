@@ -8,12 +8,14 @@ import { InputBase } from "./input-base";
                       [disabled]="context.disabled" [name]="context.name" [placeholder]="context.placeholder" [size]="context.size"/>`,
 })
 export class InputTextComponent extends InputBase implements OnInit {
-    @ViewChild("inputRef") public inputRef: ElementRef;
 
     constructor(renderer: Renderer) {
         super(renderer);
         this.isRegexTestable = true;
     }
+
+    @ViewChild("inputRef") public inputRef: ElementRef;
+
 
     ngOnInit() {
         this.inputElement = this.inputRef.nativeElement;

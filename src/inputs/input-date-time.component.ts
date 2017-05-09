@@ -9,12 +9,13 @@ import { InputBase } from "./input-base";
                       [min]="context.min" [max]="context.max"/>`,
 })
 export class InputDateTimeComponent extends InputBase implements OnInit {
-    @ViewChild("inputRef") public inputRef: ElementRef;
 
     constructor(renderer: Renderer) {
         super(renderer);
         this.isRegexTestable = true;
     }
+
+    @ViewChild("inputRef") public inputRef: ElementRef;
 
     ngOnInit() {
         this.inputElement = this.inputRef.nativeElement;
