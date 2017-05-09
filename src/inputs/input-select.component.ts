@@ -19,10 +19,12 @@ import { SelectOptionWithChildren } from "../input-config";
             `,
 })
 export class InputSelectComponent extends InputBase implements OnInit {
-    @ViewChild("inputRef") public inputRef: ElementRef;
+
     constructor(renderer: Renderer) {
         super(renderer);
     }
+
+    @ViewChild("inputRef") public inputRef: ElementRef;
 
 
     public getPlaceholder(): string {

@@ -115,7 +115,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     private _value = "";
     private preValue = "";
 
-    public get value(): any { return this._value; };
+    public get value(): any { return this._value; }
 
     public set value(newValue: any) {
         if (newValue !== this._value) {
@@ -200,7 +200,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
 
     public registerOnChange(fn: Function): void { this.onChange = fn; }
 
-    public registerOnTouched(fn: Function): void { this.onTouched = fn; };
+    public registerOnTouched(fn: Function): void { this.onTouched = fn; }
 
     // Method to display the inline edit form and hide the <a> element
     edit(value): void {
