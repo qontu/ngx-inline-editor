@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Renderer } from "@angular/core";
+import { Component, ViewChild, ElementRef, Renderer, OnInit } from "@angular/core";
 import { InputBase } from "./input-base";
 
 @Component({
@@ -8,13 +8,15 @@ import { InputBase } from "./input-base";
                       [rows]="context.rows" [cols]="context.cols" [disabled]="context.disabled" [name]="context.name"
                       [placeholder]="context.placeholder"></textarea>`,
 })
-export class InputTextareaComponent extends InputBase {
-    @ViewChild("inputRef") public inputRef: ElementRef;
+export class InputTextareaComponent extends InputBase implements OnInit {
 
     constructor(renderer: Renderer) {
         super(renderer);
         this.isRegexTestable = true;
     }
+
+    @ViewChild("inputRef") public inputRef: ElementRef;
+
 
     ngOnInit() {
         this.inputElement = this.inputRef.nativeElement;
