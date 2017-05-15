@@ -1,43 +1,61 @@
-export type InputType = "text" | "number" | "select" | "range" | "textarea" | "date" | "time" | "datetime";
+import { InputLengthTestable, InputRegexTestable, InputSelectable } from "./types/generic-inputs.interface";
+import { SelectOptions } from "./types/select-options.interface";
+import { InputType } from "./types/input-type.type";
 
 
-export interface SelectOption {
-    value: string;
-    text: string;
-}
-export interface SelectOptionWithChildren extends SelectOption {
-    children?: SelectOption[];
-}
-
-export interface SelectOptions extends SelectOption {
-    data: SelectOptionWithChildren[];
+export interface InlineActionsOnEvents {
+    saveOnBlur?: boolean;
+    saveOnEnter?: boolean;
+    cancelOnEscape?: boolean;
+    editOnClick?: boolean;
 }
 
-export interface InputConfig {
-    value?: string;
-    isEmpty?: boolean;
-    options: SelectOptions;
+export interface InlineGlobalConfig extends InlineActionsOnEvents {
+    type?: InputType;
+    name?: string;
+    size?: number;
+    placeholder?: string;
+    empty?: string;
+    options?: SelectOptions;
+    pattern?: string | RegExp;
+    min?: number;
+    max?: number;
     rows?: number;
     cols?: number;
+    hideButtons?: boolean;
     required?: boolean;
-    // Value on empty state
-    empty: string;
-    // Placeholder on empty state
-    placeholder: string;
-    // Type of input
+    disabled?: boolean;
+}
+
+export interface InlineBaseConfig extends InlineActionsOnEvents {
     type: InputType;
-    // Is disabled input?
-    disabled: boolean;
-    // Input name
-    name: string;
-    // Input size
+    name?: string;
     size: number;
-    // Min length of value
-    min: number;
-    // Max length of value
-    max: number;
-    // Pattern to test against value (input text only)
-    pattern: string;
-    fnErrorLength: (any: any) => void;
-    fnErrorPattern: (any: any) => void;
+    placeholder: string;
+    empty: string;
+    hideButtons?: boolean;
+    required?: boolean;
+    disabled?: boolean;
+}
+
+export interface InlineTextConfig extends InlineBaseConfig, InputRegexTestable { }
+
+export interface InlineSelectConfig extends InlineBaseConfig, InputSelectable { }
+
+export interface InlineNumberConfig extends InlineBaseConfig, InputLengthTestable { }
+
+export interface InlineTextareaConfig extends InlineBaseConfig, InputRegexTestable {
+    rows?: number;
+    cols?: number;
+}
+
+export interface InlineConfig extends InlineTextConfig, InlineTextareaConfig,
+    InlineSelectConfig, InlineNumberConfig {
+    hideButtons: boolean;
+    required: boolean;
+    disabled: boolean;
+    saveOnBlur: boolean;
+    saveOnEnter: boolean;
+    cancelOnEscape: boolean;
+    editOnClick: boolean;
 }

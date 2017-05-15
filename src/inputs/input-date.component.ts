@@ -1,24 +1,23 @@
-import { Component, ViewChild, ElementRef, OnInit, Renderer } from "@angular/core";
+import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
+import { InlineConfig } from "../input-config";
 
 @Component({
     selector: "inline-editor-date",
     styleUrls: ["./input.component.css"],
-    template: `<input #inputRef type="date" class="form-control" [(ngModel)]="context.value" [required]="context.required"
-                      [disabled]="context.disabled" [name]="context.name" [placeholder]="context.placeholder" [size]="context.size"
-                      [min]="context.min" [max]="context.max"/>`,
+    template: `<input #inputRef type="date" class="form-control" (keyup.enter)="onEnter($event)"
+                (keyup.escape)="onEscape($event)" (focus)="onFocus($event)" (blur)="onBlur($event)"
+                (keypress)="onKeyPress($event)" [(ngModel)]="value" [required]="config.required"
+                [disabled]="state.isDisabled()" [name]="config.name" [placeholder]="config.placeholder"
+                [size]="config.size" [min]="config.min" [max]="config.max"/>`,
 })
 export class InputDateComponent extends InputBase implements OnInit {
 
-    constructor(renderer: Renderer) {
-        super(renderer);
+    constructor(injector: Injector) {
+        super(injector);
         this.isRegexTestable = true;
     }
 
-    @ViewChild("inputRef") public inputRef: ElementRef;
+    public config: InlineConfig;
 
-
-    ngOnInit() {
-        this.inputElement = this.inputRef.nativeElement;
-    }
 }

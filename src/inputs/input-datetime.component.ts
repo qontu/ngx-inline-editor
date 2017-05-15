@@ -1,22 +1,22 @@
 import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
-import { InlineNumberConfig } from "../input-config";
+import { InlineConfig } from "../input-config";
 
 @Component({
-    selector: "inline-editor-number",
+    selector: "inline-editor-datetime",
     styleUrls: ["./input.component.css"],
-    template: `<input #inputRef type="number" class="form-control" (keyup.enter)="onEnter($event)"
+    template: `<input #inputRef type="datetime-local" class="form-control" (keyup.enter)="onEnter($event)"
                 (keyup.escape)="onEscape($event)" (focus)="onFocus($event)" (blur)="onBlur($event)"
                 (keypress)="onKeyPress($event)" [(ngModel)]="value" [required]="config.required"
                 [disabled]="state.isDisabled()" [name]="config.name" [placeholder]="config.placeholder"
-                [size]="config.size"/>`,
+                [size]="config.size" [min]="config.min" [max]="config.max"/>`,
 })
-export class InputNumberComponent extends InputBase implements OnInit {
+export class InputDatetimeComponent extends InputBase implements OnInit {
 
     constructor(injector: Injector) {
         super(injector);
-        this.isNumeric = true;
+        this.isRegexTestable = true;
     }
+    public config: InlineConfig;
 
-    public config: InlineNumberConfig;
 }
