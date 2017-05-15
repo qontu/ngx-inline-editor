@@ -1,5 +1,6 @@
 import { task, src, dest, watch } from "gulp";
 import * as rename from "gulp-rename";
+import * as changed from "gulp-changed";
 import * as runSequence from "run-sequence";
 import * as path from "path";
 import * as del from "del";
@@ -32,13 +33,33 @@ const {
  } = require("./package.json") as { [key: string]: string };
 
 /**
+ * 0. Prepare dist to debug. This copies all files from /src to /dist
+ *    and rename inline-editor.module.ts to index.ts, so typescript import works.
+ */
+task("debug", () => merge(
+    src(
+        [
+            `!${srcFolder}/inline-editor.module.ts`,
+            `!${srcFolder}/tsconfig.json`,
+            `${srcFolder}/**/*`,
+        ])
+        .pipe(changed(distFolder))
+        .pipe(dest(distFolder)),
+
+    src([`${srcFolder}/inline-editor.module.ts`])
+        .pipe(changed(distFolder, { transformPath: () => `${distFolder}/index.ts` } as any))
+        .pipe(rename("index.ts"))
+        .pipe(dest(distFolder)),
+));
+
+/**
  * 1. Delete /dist folder
  */
 task("clean:dist", () => deleteFolders([distFolder]));
 
 /**
  * 2. Clone the /src folder into /.tmp and Inline template (.html) and style (.css) files
- *    into the the component .ts files. We do this on the /.tmp folder to avoid editing
+ *    into the component .ts files. We do this on the /.tmp folder to avoid editing
  *    the original /src files. If an npm link inside /src has been made,
  *    then it's likely that a node_modules folder exists. Ignore this folder
  *    when copying to /.tmp.
@@ -107,9 +128,9 @@ task("rollup:es5", () => {
 
     return merge([
         tsResult.js.pipe(rename(bundleNameES5)).pipe(dest(tmpBundlesFolder)),
-        // There are not .d.ts files, it can be remove or used
+        // There are not .d.ts files, it can be removed or used
         tsResult.dts.pipe(dest(tmpBundlesFolder)),
-    ])
+    ]);
 });
 
 /**
@@ -157,6 +178,7 @@ task("copy:buildTS", () => src(
     ])
     .pipe(dest(distFolder)),
 );
+
 task("copy:buildCSS", () => src(
     [
         `${srcFolder}/themes/**/*`,
@@ -207,10 +229,25 @@ task("compile", () => runSequence(
     }),
 );
 
+
+task("compile:debug", () => runSequence(
+    "clean:dist",
+    "debug",
+    (err?: any) => {
+        if (err) {
+            console.log("ERROR:", err.message);
+            deleteFolders([distFolder]);
+        } else {
+            console.log("Compilation finished succesfully");
+        }
+    }),
+);
+
 /**
  * Watch for any change in the /src folder and compile files
  */
 task("watch", ["compile"], () => watch(`${srcFolder}/**/*`, ["compile"]));
+task("watch:debug", ["compile:debug"], () => watch(`${srcFolder}/**/*`, ["debug"]));
 
 task("clean", ["clean:dist", "clean:tmp", "clean:build"]);
 
