@@ -375,6 +375,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     ngOnDestroy() {
         Object.values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
         this.currentComponent.destroy();
+        this.service.destroy();
     }
 
     writeValue(value: any) {

@@ -22,11 +22,11 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
         this.renderer = injector.get(Renderer);
         this.service = injector.get(InlineEditorService);
 
-        this.onUpdateConfigSubcription = this.service.events.internal.onUpdateConfig.subscribe(
+        this.subscriptions.onUpdateConfigSubcription = this.service.events.internal.onUpdateConfig.subscribe(
             (config: InlineConfig) => this.onUpdateConfig(config),
         );
 
-        this.onUpdateStateSubscription = this.service.events.internal.onUpdateState.subscribe(
+        this.subscriptions.onUpdateStateSubscription = this.service.events.internal.onUpdateState.subscribe(
             (state: InlineEditorState) => this.state = state,
         );
 
@@ -68,8 +68,8 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
     public isRegexTestable = false;
     public isLengthTestable = false;
     protected renderer: Renderer;
-    protected onUpdateConfigSubcription: Subscription;
-    protected onUpdateStateSubscription: Subscription;
+    protected subscriptions: { [key: string]: Subscription } = {};
+
 
     ngOnChanges() { }
 
@@ -88,8 +88,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
     ngAfterViewChecked() { }
 
     ngOnDestroy() {
-        this.onUpdateConfigSubcription.unsubscribe();
-        this.onUpdateStateSubscription.unsubscribe();
+        Object.values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
     }
 
     onUpdateConfig(newConfig: InlineBaseConfig) {

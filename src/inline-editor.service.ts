@@ -8,14 +8,14 @@ export class InlineEditorService {
         public events: Events,
         public config?: InlineConfig,
     ) {
-        this.onUpdateStateSubscription = this.events.internal.onUpdateState.subscribe(
+        this.subscriptions.onUpdateStateSubscription = this.events.internal.onUpdateState.subscribe(
             (state: InlineEditorState) => this.state = state,
         );
     }
 
-    private onUpdateStateSubscription: Subscription;
-
     private state: InlineEditorState;
+    private subscriptions: { [key: string]: Subscription } = {};
+
 
     public setConfig(config: InlineConfig) {
         this.config = config;
@@ -27,5 +27,9 @@ export class InlineEditorService {
 
     public getState(): InlineEditorState {
         return this.state.clone();
+    }
+
+    public destroy() {
+        Object.values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
     }
 }

@@ -29,8 +29,8 @@ export class InputSelectComponent extends InputBase implements OnInit, OnUpdateC
     constructor(injector: Injector) {
         super(injector);
 
-        this.onUpdateConfigSubcription.unsubscribe();
-        this.onUpdateConfigSubcription = this.service.events.internal.onUpdateConfig.subscribe(
+        this.subscriptions.onUpdateConfigSubcription.unsubscribe();
+        this.subscriptions.onUpdateConfigSubcription = this.service.events.internal.onUpdateConfig.subscribe(
             (config: InlineConfig) => this.onUpdateConfig(config),
         );
     }
