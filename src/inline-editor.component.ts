@@ -290,6 +290,8 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         datetime: InputDatetimeComponent,
     };
 
+    private refreshNGModel: (_: any) => void;
+
     ngOnInit() {
         this.config = this.generateConfig(this.config || this.createSafeConfig());
 
@@ -384,10 +386,8 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         this.events.internal.onUpdateState.emit(this.state.clone());
     }
 
-    registerOnChange(changeValue: (_: any) => void) {
-        this.onSave.subscribe(({ state }: ExternalEvent) => {
-            changeValue(state.value);
-        });
+    registerOnChange(refreshNGModel: (_: any) => void) {
+        this.refreshNGModel = refreshNGModel;
     }
     registerOnTouched() {
     }
@@ -430,6 +430,8 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             this.onError.emit(errs);
         } else {
             this.state = this.state.newState(state);
+
+            this.refreshNGModel(state.value);
 
             this.onSave.emit({
                 event,
