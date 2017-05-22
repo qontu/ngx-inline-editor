@@ -293,7 +293,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     private refreshNGModel: (_: any) => void;
 
     ngOnInit() {
-        this.config = this.generateConfig(this.config || this.createSafeConfig());
+        this.config = this.generateSafeConfig();
 
         this.state = new InlineEditorState({
             value: "",
@@ -391,10 +391,6 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         this.refreshNGModel = refreshNGModel;
     }
     registerOnTouched() {
-    }
-
-    public generateConfig(config: InlineGlobalConfig): InlineConfig {
-        return { ...defaultConfig, ...config };
     }
 
     // Method to display the inline editor form and hide the <a> element
@@ -498,41 +494,43 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         return <InputBase>this.componentRef.instance;
     }
 
-    private createSafeConfig(): InlineConfig {
-        const config = this.config || {} as InlineConfig;
+    private removeUndefinedProperties<T>(object: Object): T {
+        return JSON.parse(
+            JSON.stringify(
+                typeof object === "object" ? object : {},
+            ),
+        );
+    }
+
+    private generateSafeConfig(): InlineConfig {
+        const configFromAttrs: InlineGlobalConfig = {
+            type: this.type,
+            name: this.name,
+            size: this.size,
+            placeholder: this.placeholder,
+            empty: this.empty,
+            required: this.required,
+            disabled: this.disabled,
+            hideButtons: this.hideButtons,
+            min: this.min,
+            max: this.max,
+            cols: this.cols,
+            rows: this.rows,
+            options: this.options,
+            pattern: this.pattern,
+            saveOnEnter: this.saveOnEnter,
+            saveOnBlur: this.saveOnBlur,
+            editOnClick: this.editOnClick,
+            cancelOnEscape: this.cancelOnEscape,
+        };
+
         return {
-            type: this.type || config.type || defaultConfig.type,
-            name: this.name || config.name || defaultConfig.name,
-            size: this.size || config.size || defaultConfig.size,
-            placeholder: this.placeholder || config.placeholder || defaultConfig.placeholder,
-            empty: this.empty || config.empty || defaultConfig.empty,
-            required: typeof this.required === "boolean" ? this.required : config.required || defaultConfig.required,
-            disabled: typeof this.disabled === "boolean" ? this.disabled : config.disabled || defaultConfig.disabled,
-            hideButtons: typeof this.hideButtons === "boolean" ?
-                this.hideButtons :
-                config.hideButtons || defaultConfig.hideButtons,
-
-            min: this.min || config.min || defaultConfig.min,
-            max: this.max || config.max || defaultConfig.max,
-            cols: this.cols || config.cols || defaultConfig.cols,
-            rows: this.rows || config.rows || defaultConfig.rows,
-            options: this.options || config.options || defaultConfig.options,
-            pattern: this.pattern || config.pattern || defaultConfig.pattern,
-            saveOnEnter: typeof this.saveOnEnter === "boolean" ?
-                this.saveOnEnter :
-                config.saveOnEnter || defaultConfig.saveOnEnter,
-
-            saveOnBlur: typeof this.saveOnBlur === "boolean" ?
-                this.saveOnBlur :
-                config.saveOnBlur || defaultConfig.saveOnBlur,
-
-            editOnClick: typeof this.editOnClick === "boolean" ?
-                this.editOnClick :
-                config.editOnClick || defaultConfig.editOnClick,
-
-            cancelOnEscape: typeof this.cancelOnEscape === "boolean" ?
-                this.cancelOnEscape :
-                config.cancelOnEscape || defaultConfig.cancelOnEscape,
+            // First default config
+            ...defaultConfig,
+            // Default config is overwritten by [config] attr
+            ...this.removeUndefinedProperties<InlineGlobalConfig>(this.config),
+            // Config from attributes have preference over all others
+            ...this.removeUndefinedProperties<InlineGlobalConfig>(configFromAttrs),
         };
     }
 
