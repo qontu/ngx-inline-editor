@@ -25,6 +25,7 @@ export interface InlineGlobalConfig extends InlineActionsOnEvents {
     hideButtons?: boolean;
     required?: boolean;
     disabled?: boolean;
+    onlyValue?: boolean;
 }
 
 export interface InlineBaseConfig extends InlineActionsOnEvents {
@@ -36,6 +37,7 @@ export interface InlineBaseConfig extends InlineActionsOnEvents {
     hideButtons?: boolean;
     required?: boolean;
     disabled?: boolean;
+    onlyValue?: boolean;
 }
 
 export interface InlineTextConfig extends InlineBaseConfig, InputRegexTestable { }
@@ -58,4 +60,5 @@ export interface InlineConfig extends InlineTextConfig, InlineTextareaConfig,
     saveOnEnter: boolean;
     cancelOnEscape: boolean;
     editOnClick: boolean;
+    onlyValue: boolean;
 }

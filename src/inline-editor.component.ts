@@ -59,6 +59,7 @@ const defaultConfig: InlineConfig = {
     editOnClick: true,
     cancelOnEscape: true,
     hideButtons: false,
+    onlyValue: true,
 };
 
 @Component({
@@ -86,16 +87,16 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
     @Input() public type?: InputType;
     @Input() public config: InlineConfig;
-    @Output() public onChange: EventEmitter<ExternalEvent> = this.events.external.onChange;
-    @Output() public onSave: EventEmitter<ExternalEvent> = this.events.external.onSave;
-    @Output() public onEdit: EventEmitter<ExternalEvent> = this.events.external.onEdit;
-    @Output() public onCancel: EventEmitter<ExternalEvent> = this.events.external.onCancel;
+    @Output() public onChange: EventEmitter<ExternalEvent | any> = this.events.external.onChange;
+    @Output() public onSave: EventEmitter<ExternalEvent | any> = this.events.external.onSave;
+    @Output() public onEdit: EventEmitter<ExternalEvent | any> = this.events.external.onEdit;
+    @Output() public onCancel: EventEmitter<ExternalEvent | any> = this.events.external.onCancel;
     @Output() public onError: EventEmitter<InlineError | InlineError[]> = this.events.external.onError;
-    @Output() public onEnter: EventEmitter<ExternalEvent> = this.events.external.onEnter;
-    @Output() public onEscape: EventEmitter<ExternalEvent> = this.events.external.onEscape;
-    @Output() public onKeyPress: EventEmitter<ExternalEvent> = this.events.external.onKeyPress;
-    @Output() public onFocus: EventEmitter<ExternalEvent> = this.events.external.onFocus;
-    @Output() public onBlur: EventEmitter<ExternalEvent> = this.events.external.onBlur;
+    @Output() public onEnter: EventEmitter<ExternalEvent | any> = this.events.external.onEnter;
+    @Output() public onEscape: EventEmitter<ExternalEvent | any> = this.events.external.onEscape;
+    @Output() public onKeyPress: EventEmitter<ExternalEvent | any> = this.events.external.onKeyPress;
+    @Output() public onFocus: EventEmitter<ExternalEvent | any> = this.events.external.onFocus;
+    @Output() public onBlur: EventEmitter<ExternalEvent | any> = this.events.external.onBlur;
 
 
     // input's attribute
@@ -177,6 +178,16 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
     public get required(): boolean | undefined {
         return this._required;
+    }
+
+    private _onlyValue?: boolean;
+    @Input() public set onlyValue(onlyValue: boolean | undefined) {
+        this._onlyValue = onlyValue;
+        this.updateConfig(undefined, "onlyValue", onlyValue);
+    }
+
+    public get onlyValue(): boolean | undefined {
+        return this._onlyValue;
     }
 
     private _placeholder?: string;
@@ -316,6 +327,22 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             }),
         );
 
+
+        this.subscriptions.onChangeSubcription = this.events.internal.onChange.subscribe(
+            ({ event, state }: InternalEvent) => this.emit(this.onChange, {
+                event,
+                state: state.getState(),
+            }),
+        );
+
+        this.subscriptions.onKeyPressSubcription = this.events.internal.onKeyPress.subscribe(
+            ({ event, state }: InternalEvent) => this.emit(this.onKeyPress, {
+                event,
+                state: state.getState(),
+            }),
+        );
+
+
         this.subscriptions.onBlurSubscription = this.events.internal.onBlur.subscribe(
             ({ event, state }: InternalEvent) => {
                 if (this.config.saveOnBlur) {
@@ -325,7 +352,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
                     });
                 }
 
-                this.onBlur.emit({
+                this.emit(this.onBlur, {
                     event,
                     state: state.getState(),
                 });
@@ -343,7 +370,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
                     this.edit({ editing: false });
                 }
 
-                this.onEnter.emit({
+                this.emit(this.onEnter, {
                     event,
                     state: state.getState(),
                 });
@@ -359,7 +386,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
                     });
                 }
 
-                this.onEscape.emit({
+                this.emit(this.onEscape, {
                     event,
                     state: state.getState(),
                 });
@@ -403,7 +430,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         this.events.internal.onUpdateState.emit(this.state.clone());
 
         if (editing) {
-            this.onEdit.emit({
+            this.emit(this.onEdit, {
                 event,
                 state: this.state.getState(),
             });
@@ -422,15 +449,15 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             ...hotState,
         };
 
-        const errs = this.inputInstance.checkValue();
-        if (errs.length !== 0) {
-            this.onError.emit(errs);
+        const errors = this.inputInstance.checkValue();
+        if (errors.length !== 0) {
+            this.onError.emit(errors);
         } else {
             this.state = this.state.newState(state);
 
             this.refreshNGModel(state.value);
 
-            this.onSave.emit({
+            this.emit(this.onSave, {
                 event,
                 state,
             });
@@ -503,25 +530,26 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     }
 
     private generateSafeConfig(): InlineConfig {
-        const configFromAttrs: InlineGlobalConfig = {
-            type: this.type,
-            name: this.name,
-            size: this.size,
-            placeholder: this.placeholder,
-            empty: this.empty,
-            required: this.required,
-            disabled: this.disabled,
-            hideButtons: this.hideButtons,
-            min: this.min,
-            max: this.max,
-            cols: this.cols,
-            rows: this.rows,
-            options: this.options,
-            pattern: this.pattern,
-            saveOnEnter: this.saveOnEnter,
-            saveOnBlur: this.saveOnBlur,
-            editOnClick: this.editOnClick,
-            cancelOnEscape: this.cancelOnEscape,
+        const configFromAttrs: InlineConfig = {
+            type: this.type!,
+            name: this.name!,
+            size: this.size!,
+            placeholder: this.placeholder!,
+            empty: this.empty!,
+            required: this.required!,
+            disabled: this.disabled!,
+            hideButtons: this.hideButtons!,
+            min: this.min!,
+            max: this.max!,
+            cols: this.cols!,
+            rows: this.rows!,
+            options: this.options!,
+            pattern: this.pattern!,
+            saveOnEnter: this.saveOnEnter!,
+            saveOnBlur: this.saveOnBlur!,
+            editOnClick: this.editOnClick!,
+            cancelOnEscape: this.cancelOnEscape!,
+            onlyValue: this.onlyValue!,
         };
 
         return {
@@ -546,4 +574,8 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         }
     }
 
+
+    private emit(event: EventEmitter<ExternalEvent>, data: ExternalEvent) {
+        event.emit(this.config.onlyValue ? data.state.value : data);
+    }
 }

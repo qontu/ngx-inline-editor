@@ -50,9 +50,10 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
             value,
         });
 
-        this.service.events.external.onChange.emit({
-            state: this.state.getState(),
+        this.service.events.internal.onChange.emit({
+            state: this.state.clone(),
         });
+
         this.service.events.internal.onUpdateState.emit(this.state.clone());
     }
 
@@ -129,9 +130,9 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
     }
 
     public onKeyPress(event: Event) {
-        this.service.events.external.onKeyPress.emit({
+        this.service.events.internal.onKeyPress.emit({
             event,
-            state: this.state.getState(),
+            state: this.state,
         });
     }
 
