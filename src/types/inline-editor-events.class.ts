@@ -8,7 +8,8 @@ export interface Events {
     external: ExternalEvents;
 }
 export class InternalEvents {
-    public onUpdateState: EventEmitter<InlineEditorState> = new EventEmitter();
+    public onUpdateStateOfParent: EventEmitter<InlineEditorState> = new EventEmitter();
+    public onUpdateStateOfChild: EventEmitter<InlineEditorState> = new EventEmitter();
     public onChange: EventEmitter<InternalEvent> = new EventEmitter();
     public onFocus: EventEmitter<InternalEvent> = new EventEmitter();
     public onBlur: EventEmitter<InternalEvent> = new EventEmitter();

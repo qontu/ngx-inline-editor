@@ -11,17 +11,18 @@ export class InlineEditorState {
         value,
         disabled = false,
         editing = false,
-    }: InlineEditorStateOptions) {
+        empty = false,
+    }: InlineEditorStateOptions = { value: "" }) {
         this.value = value;
         this.disabled = disabled;
         this.editing = editing;
-        this.empty = (value == null || value === "");
+        this.empty = empty;
     }
 
-    private empty?: boolean;
+    private empty: boolean;
     private value: any;
-    private disabled?: boolean;
-    private editing?: boolean;
+    private disabled: boolean;
+    private editing: boolean;
 
     public newState(state: InlineEditorState | InlineEditorStateOptions) {
         return new InlineEditorState(state instanceof InlineEditorState ?

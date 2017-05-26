@@ -312,6 +312,9 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
         this.service = new InlineEditorService(this.events, { ...this.config });
 
+        this.subscriptions.onUpdateStateSubcription = this.events.internal.onUpdateStateOfParent.subscribe(
+            (state: InlineEditorState) => this.state = state,
+        );
 
         this.subscriptions.onSaveSubscription = this.events.internal.onSave.subscribe(
             ({ event, state }: InternalEvent) => this.save({
@@ -411,7 +414,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             value,
         });
 
-        this.events.internal.onUpdateState.emit(this.state.clone());
+        this.events.internal.onUpdateStateOfChild.emit(this.state.clone());
     }
 
     registerOnChange(refreshNGModel: (_: any) => void) {
@@ -427,7 +430,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             editing,
         });
 
-        this.events.internal.onUpdateState.emit(this.state.clone());
+        this.events.internal.onUpdateStateOfChild.emit(this.state.clone());
 
         if (editing) {
             this.emit(this.onEdit, {
@@ -497,7 +500,6 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     private generateComponent(type: InputType) {
         const componentType = this.getComponentType(type);
         this.inputInstance = this.createInputInstance(componentType);
-        this.events.internal.onUpdateConfig.emit(this.config);
     }
 
     private createInputInstance(componentType): InputBase {
@@ -575,7 +577,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     }
 
 
-    private emit(event: EventEmitter<ExternalEvent>, data: ExternalEvent) {
+    private emit(event: EventEmitter<ExternalEvent | any>, data: ExternalEvent) {
         event.emit(this.config.onlyValue ? data.state.value : data);
     }
 }

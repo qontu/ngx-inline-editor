@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
 import { InlineSelectConfig, InlineConfig } from "../input-config";
-import { SelectOptionWithChildren } from "../types/select-options.interface";
+import { SelectOptionWithChildren, SelectOption } from "../types/select-options.interface";
 import { OnUpdateConfig } from "../types/inline-live-cycles.interface";
 
 @Component({
@@ -50,44 +50,60 @@ export class InputSelectComponent extends InputBase implements OnInit, OnUpdateC
     }
 
     public showText(): string {
-        return this.optionSelected();
+        const { text: keyOfText, value: keyOfValue, data: options } = this.config.options;
+        const currentValue = this.state.getState().value;
+        const optionSelected = this.getOptionSelected(currentValue, keyOfValue, options);
+
+        return optionSelected ? optionSelected[keyOfText] : this.config.empty;
     }
 
-    private optionSelected(): string {
-        let selectedOptionText: string | undefined;
-        const options = this.config.options;
+    protected getOptionSelected(
+        currentValue: any,
+        keyOfValue: string,
+        options: (SelectOption | SelectOptionWithChildren)[],
+    ): SelectOption | undefined {
 
-        if (options && options.data) {
-            for (const option of options.data) {
-                selectedOptionText = this.getTextOfSelectedOption(option);
-                if (selectedOptionText) {
-                    break;
+        let optionSelected: SelectOption | undefined;
+
+        for (const option of options) {
+            if (this.isAnOptionWithChildren(option)) {
+                optionSelected = this.getOptionSelected(currentValue, keyOfValue, option.children!);
+            } else {
+                const typeOfValue = typeof option[keyOfValue];
+
+                /**
+                 * If the type is a number, the equal must be soft to match, ex:
+                 *      1 == "1" -> true
+                 *
+                 * If the type is other, the equiality can be hard, because,
+                 * when the currentValue is a string that contains "[object Object]"
+                 * if you test it against an object, it will be true, ex:
+                 * "[object Object]" == {} -> true
+                 * "[object Object]" === {} -> false
+                 *
+                 */
+                if (typeOfValue === "string" || typeOfValue === "number") {
+                    // tslint:disable-next-line:triple-equals
+                    optionSelected = option[keyOfValue] == currentValue ? option : undefined;
+                } else {
+                    optionSelected = option[keyOfValue] === currentValue ? option : undefined;
                 }
             }
 
-        }
-
-        return selectedOptionText ? selectedOptionText : this.config.empty;
-    }
-
-    private getTextOfSelectedOption(options: SelectOptionWithChildren): string | undefined {
-        let textOfSelectedOption: string | undefined;
-        const { text, value } = this.config.options;
-
-        if (options.children) {
-            for (const child of options.children) {
-                textOfSelectedOption = this.getTextOfSelectedOption(child);
-                if (textOfSelectedOption) {
-                    break;
-                }
-            }
-        } else {
-            if (options[value] == this.state.getState().value) {
-                textOfSelectedOption = options[text];
+            if (optionSelected) {
+                break;
             }
         }
 
-        return textOfSelectedOption;
+        return optionSelected;
     }
 
+    protected isEmpty(value: any): boolean {
+        const { value: keyOfValue, data: options } = this.config.options;
+        return this.getOptionSelected(value, keyOfValue, options) == null;
+    }
+
+    protected isAnOptionWithChildren(options: SelectOptionWithChildren): options is SelectOptionWithChildren {
+        return options.children != null && options.children instanceof Array;
+    }
 }

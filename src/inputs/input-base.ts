@@ -21,22 +21,30 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
     constructor(protected injector: Injector) {
         this.renderer = injector.get(Renderer);
         this.service = injector.get(InlineEditorService);
+        this.onUpdateConfig(this.service.getConfig()!);
+
+        this.state = new InlineEditorState({
+            value: "",
+            empty: true,
+            disabled: this.config.disabled,
+        });
+
+        this.service.onUpdateStateOfService.emit(this.state.clone());
 
         this.subscriptions.onUpdateConfigSubcription = this.service.events.internal.onUpdateConfig.subscribe(
             (config: InlineConfig) => this.onUpdateConfig(config),
         );
 
-        this.subscriptions.onUpdateStateSubscription = this.service.events.internal.onUpdateState.subscribe(
-            (state: InlineEditorState) => this.state = state,
-        );
+        this.subscriptions.onUpdateStateSubscription = this.service.events.internal.onUpdateStateOfChild.subscribe(
+            (state: InlineEditorState) => {
+                const newState = state.getState();
+                this.updateState(this.state.newState({
+                    ...newState,
+                    empty: this.isEmpty(newState.value),
+                }));
 
-        this.config = this.service.getConfig()!;
-
-        this.service.events.internal.onUpdateState.emit(new InlineEditorState({
-            value: "",
-            disabled: this.config.disabled,
-            // editing: this.config.editing,
-        }));
+                this.service.events.internal.onUpdateStateOfParent.emit(this.state.clone());
+            });
     }
 
     public state: InlineEditorState;
@@ -45,16 +53,15 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
             return;
         }
 
-        this.state = this.state.newState({
+        this.updateState(this.state.newState({
             ...this.state.getState(),
+            empty: this.isEmpty(value),
             value,
-        });
+        }));
 
         this.service.events.internal.onChange.emit({
             state: this.state.clone(),
         });
-
-        this.service.events.internal.onUpdateState.emit(this.state.clone());
     }
 
     public get value() {
@@ -178,6 +185,26 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
 
     public focus() {
         setTimeout(() => this.renderer.invokeElementMethod(this.inputElement, "focus", []));
+    }
+
+    updateState(newState: InlineEditorState) {
+        const { empty: wasEmpty, disabled: wasDisabled } = this.state.getState();
+
+        if (newState.isEmpty() && newState.isEmpty() !== wasEmpty) {
+            // onEmpty()
+        }
+
+        if (newState.isDisabled() && newState.isDisabled() !== wasDisabled) {
+            // onDisabled()
+        }
+
+        this.state = newState;
+
+        this.service.onUpdateStateOfService.emit(this.state.clone());
+    }
+
+    protected isEmpty(value: any): boolean {
+        return value == null || value === "";
     }
 
     protected canTestRegex(config: any): config is InputRegexTestable {
