@@ -9,9 +9,6 @@ src/*.d.ts
 typings
 typings.json
 
-# yarn
-yarn.lock
-
 # VS Code
 .vscode/*
 
