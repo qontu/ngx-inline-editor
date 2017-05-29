@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
-import { InlineConfig } from "../input-config";
+import { InlineConfig } from "../types/inline-configs";
 
 @Component({
     selector: "inline-editor-time",

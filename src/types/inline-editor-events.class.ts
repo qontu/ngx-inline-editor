@@ -1,12 +1,13 @@
 import { EventEmitter } from "@angular/core";
-import { InlineError } from "./inline-error.interface";
-import { InlineConfig } from "../input-config";
+import { InlineEditorError } from "./inline-editor-error.interface";
+import { InlineConfig } from "../types/inline-configs";
 import { InlineEditorState, InlineEditorStateOptions } from "./inline-editor-state.class";
 
 export interface Events {
     internal: InternalEvents;
     external: ExternalEvents;
 }
+
 export class InternalEvents {
     public onUpdateStateOfParent: EventEmitter<InlineEditorState> = new EventEmitter();
     public onUpdateStateOfChild: EventEmitter<InlineEditorState> = new EventEmitter();
@@ -23,16 +24,16 @@ export class InternalEvents {
 }
 
 export class ExternalEvents {
-    public onChange: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onSave: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onKeyPress: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onFocus: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onBlur: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onEnter: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onEscape: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onEdit: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onCancel: EventEmitter<ExternalEvent> = new EventEmitter();
-    public onError: EventEmitter<InlineError | InlineError[]> = new EventEmitter();
+    public onChange: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onSave: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onKeyPress: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onFocus: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onBlur: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onEnter: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onEscape: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onEdit: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onCancel: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onError: EventEmitter<InlineEditorError | InlineEditorError[]> = new EventEmitter();
 }
 
 export interface InternalEvent {
@@ -44,3 +45,5 @@ export interface ExternalEvent {
     event?: Event;
     state: InlineEditorStateOptions;
 }
+
+export type InlineEditorEvent = ExternalEvent;

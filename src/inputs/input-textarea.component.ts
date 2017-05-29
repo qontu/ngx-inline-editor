@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
-import { InlineTextareaConfig } from "../input-config";
+import { InlineTextareaConfig } from "../types/inline-configs";
 
 @Component({
     selector: "inline-editor-textarea",

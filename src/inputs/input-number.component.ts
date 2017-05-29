@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
-import { InlineNumberConfig } from "../input-config";
+import { InlineNumberConfig } from "../types/inline-configs";
 
 @Component({
     selector: "inline-editor-number",

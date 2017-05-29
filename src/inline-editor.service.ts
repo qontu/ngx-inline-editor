@@ -1,4 +1,4 @@
-import { InlineConfig } from "./input-config";
+import { InlineConfig } from "./types/inline-configs";
 import { Subscription } from "rxjs/Subscription";
 import { Events } from "./types/inline-editor-events.class";
 import { InlineEditorState } from "./types/inline-editor-state.class";

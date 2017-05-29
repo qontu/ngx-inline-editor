@@ -1,15 +1,15 @@
-import { InlineBaseConfig, InlineConfig } from "../input-config";
+import { InlineBaseConfig, InlineConfig } from "../types/inline-configs";
 import {
     Renderer, Component, ViewChild, ElementRef, OnInit,
     Injector, OnChanges, DoCheck, AfterContentInit,
     AfterViewInit, AfterViewChecked, AfterContentChecked, OnDestroy,
 } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
-import { InlineError } from "../types/inline-error.interface";
+import { InlineEditorError } from "../types/inline-editor-error.interface";
 import { InlineEditorState } from "../types/inline-editor-state.class";
 import { InlineEditorService } from "../inline-editor.service";
-import { OnUpdateConfig } from "../types/inline-live-cycles.interface";
-import { InputRegexTestable, InputLengthTestable } from "../types/generic-inputs.interface";
+import { OnUpdateConfig } from "../types/lifecycles.interface";
+import { InputRegexTestable, InputLengthTestable } from "../types/testable-inputs.interface";
 @Component({
     template: " ",
 })
@@ -150,8 +150,8 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
         });
     }
 
-    public checkValue(): InlineError[] {
-        const errs: InlineError[] = [];
+    public checkValue(): InlineEditorError[] {
+        const errs: InlineEditorError[] = [];
 
         const { value } = this.state.getState();
 
@@ -187,7 +187,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
         setTimeout(() => this.renderer.invokeElementMethod(this.inputElement, "focus", []));
     }
 
-    updateState(newState: InlineEditorState) {
+    protected updateState(newState: InlineEditorState) {
         const { empty: wasEmpty, disabled: wasDisabled } = this.state.getState();
 
         if (newState.isEmpty() && newState.isEmpty() !== wasEmpty) {

@@ -1,8 +1,8 @@
 import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
-import { InlineSelectConfig, InlineConfig } from "../input-config";
+import { InlineSelectConfig, InlineConfig } from "../types/inline-configs";
 import { SelectOptionWithChildren, SelectOption } from "../types/select-options.interface";
-import { OnUpdateConfig } from "../types/inline-live-cycles.interface";
+import { OnUpdateConfig } from "../types/lifecycles.interface";
 
 @Component({
     selector: "inline-editor-select",

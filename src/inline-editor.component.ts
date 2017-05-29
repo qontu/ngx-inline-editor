@@ -6,7 +6,7 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
 import { InlineEditorService } from "./inline-editor.service";
-import { InlineConfig, InlineGlobalConfig } from "./input-config";
+import { InlineConfig } from "./types/inline-configs";
 import { InputNumberComponent } from "./inputs/input-number.component";
 import { InputBase } from "./inputs/input-base";
 import { InputTextComponent } from "./inputs/input-text.component";
@@ -19,22 +19,12 @@ import { InputTimeComponent } from "./inputs/input-time.component";
 import { InputDatetimeComponent } from "./inputs/input-datetime.component";
 import { Subscription } from "rxjs/Subscription";
 import { SelectOptions } from "./types/select-options.interface";
-import { InlineError } from "./types/inline-error.interface";
-import { ExternalEvent, InternalEvent, Events, InternalEvents, ExternalEvents } from "./types/inline-editor-events.class";
+import { InlineEditorError } from "./types/inline-editor-error.interface";
+import { InlineEditorEvent, InternalEvent, Events, InternalEvents, ExternalEvents } from "./types/inline-editor-events.class";
 import { InlineEditorState, InlineEditorStateOptions } from "./types/inline-editor-state.class";
 import { EditOptions } from "./types/edit-options.interface";
 import { InputType } from "./types/input-type.type";
-export const InputComponets = [
-    InputTextComponent,
-    InputNumberComponent,
-    InputPasswordComponent,
-    InputRangeComponent,
-    InputTextareaComponent,
-    InputSelectComponent,
-    InputDateComponent,
-    InputTimeComponent,
-    InputDatetimeComponent,
-];
+import { InputConfig } from "./configs";
 
 const defaultConfig: InlineConfig = {
     name: "",
@@ -70,7 +60,17 @@ const defaultConfig: InlineConfig = {
         useExisting: forwardRef(() => InlineEditorComponent),
         multi: true,
     }],
-    entryComponents: InputComponets,
+    entryComponents: [
+        InputTextComponent,
+        InputNumberComponent,
+        InputPasswordComponent,
+        InputRangeComponent,
+        InputTextareaComponent,
+        InputSelectComponent,
+        InputDateComponent,
+        InputTimeComponent,
+        InputDatetimeComponent,
+    ],
 })
 export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestroy, ControlValueAccessor {
 
@@ -87,16 +87,16 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
     @Input() public type?: InputType;
     @Input() public config: InlineConfig;
-    @Output() public onChange: EventEmitter<ExternalEvent | any> = this.events.external.onChange;
-    @Output() public onSave: EventEmitter<ExternalEvent | any> = this.events.external.onSave;
-    @Output() public onEdit: EventEmitter<ExternalEvent | any> = this.events.external.onEdit;
-    @Output() public onCancel: EventEmitter<ExternalEvent | any> = this.events.external.onCancel;
-    @Output() public onError: EventEmitter<InlineError | InlineError[]> = this.events.external.onError;
-    @Output() public onEnter: EventEmitter<ExternalEvent | any> = this.events.external.onEnter;
-    @Output() public onEscape: EventEmitter<ExternalEvent | any> = this.events.external.onEscape;
-    @Output() public onKeyPress: EventEmitter<ExternalEvent | any> = this.events.external.onKeyPress;
-    @Output() public onFocus: EventEmitter<ExternalEvent | any> = this.events.external.onFocus;
-    @Output() public onBlur: EventEmitter<ExternalEvent | any> = this.events.external.onBlur;
+    @Output() public onChange: EventEmitter<InlineEditorEvent | any> = this.events.external.onChange;
+    @Output() public onSave: EventEmitter<InlineEditorEvent | any> = this.events.external.onSave;
+    @Output() public onEdit: EventEmitter<InlineEditorEvent | any> = this.events.external.onEdit;
+    @Output() public onCancel: EventEmitter<InlineEditorEvent | any> = this.events.external.onCancel;
+    @Output() public onError: EventEmitter<InlineEditorError | InlineEditorError[]> = this.events.external.onError;
+    @Output() public onEnter: EventEmitter<InlineEditorEvent | any> = this.events.external.onEnter;
+    @Output() public onEscape: EventEmitter<InlineEditorEvent | any> = this.events.external.onEscape;
+    @Output() public onKeyPress: EventEmitter<InlineEditorEvent | any> = this.events.external.onKeyPress;
+    @Output() public onFocus: EventEmitter<InlineEditorEvent | any> = this.events.external.onFocus;
+    @Output() public onBlur: EventEmitter<InlineEditorEvent | any> = this.events.external.onBlur;
 
 
     // input's attribute
@@ -444,7 +444,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         }
     }
 
-    public save({ event, state: hotState }: ExternalEvent) {
+    public save({ event, state: hotState }: InlineEditorEvent) {
         const prevState = this.state.getState();
 
         const state = {
@@ -467,14 +467,14 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         }
     }
 
-    public saveAndClose(outsideEvent: ExternalEvent) {
+    public saveAndClose(outsideEvent: InlineEditorEvent) {
         this.save(outsideEvent);
 
         this.edit({ editing: false });
     }
 
     // Method to reset the editable value
-    public cancel(outsideEvent: ExternalEvent) {
+    public cancel(outsideEvent: InlineEditorEvent) {
         this.edit({ editing: false });
         this.onCancel.emit(outsideEvent);
     }
@@ -558,9 +558,9 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             // First default config
             ...defaultConfig,
             // Default config is overwritten by [config] attr
-            ...this.removeUndefinedProperties<InlineGlobalConfig>(this.config),
+            ...this.removeUndefinedProperties<InputConfig>(this.config),
             // Config from attributes have preference over all others
-            ...this.removeUndefinedProperties<InlineGlobalConfig>(configFromAttrs),
+            ...this.removeUndefinedProperties<InputConfig>(configFromAttrs),
         };
     }
 
@@ -577,7 +577,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     }
 
 
-    private emit(event: EventEmitter<ExternalEvent | any>, data: ExternalEvent) {
+    private emit(event: EventEmitter<InlineEditorEvent | any>, data: InlineEditorEvent) {
         event.emit(this.config.onlyValue ? data.state.value : data);
     }
 }

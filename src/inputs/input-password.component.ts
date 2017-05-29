@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
-import { InlineTextConfig } from "../input-config";
+import { InlineTextConfig } from "../types/inline-configs";
 
 @Component({
     selector: "inline-editor-password",

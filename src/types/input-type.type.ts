@@ -1,3 +1,2 @@
-export type InputType =
-    "text" | "number" | "select" | "range"
+export type InputType = "text" | "number" | "select" | "range"
     | "textarea" | "date" | "time" | "datetime";
