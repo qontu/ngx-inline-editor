@@ -45,7 +45,7 @@ const inputConfig: InputConfig = {
     min: 1,
     pattern: "",
     max: Infinity,
-    fnErrorLength() { alert("Error: Lenght!"); },
+    fnErrorLength() { alert("Error: Length!"); },
     fnErrorPattern() { alert("Error: Pattern!"); },
 };
 
