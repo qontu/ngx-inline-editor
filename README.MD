@@ -46,7 +46,7 @@ lib, ensure your version of Angular is compatible. The current version used to d
 
 1. A recommended way to install ***ngx-inline-editor*** is through [npm](https://www.npmjs.com/search?q=ngx-inline-editor) package manager using the following command:
 
-  `npm i ngx-inline-editor --save`
+  `npm i @qontu/ngx-inline-editor --save`
 
 2. Include the basic theme or configure your own styles which are in the following path:
 
@@ -63,7 +63,7 @@ Usage
 Import `InlineEditorModule` into your app's modules:
 
 ``` typescript
-import {InlineEditorModule} from 'ngx-inline-editor';
+import {InlineEditorModule} from '@qontu/ngx-inline-editor';
 
 @NgModule({
   imports: [
@@ -72,7 +72,7 @@ import {InlineEditorModule} from 'ngx-inline-editor';
 })
 ```
 
-This makes all the `ngx-inline-editor` components available for use in your app components.
+This makes all the `@qontu/ngx-inline-editor` components available for use in your app components.
 
 
 ## Simple Example
