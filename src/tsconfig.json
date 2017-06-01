@@ -20,7 +20,7 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "skipTemplateCodegen": true,
-    "flatModuleOutFile": "@qontu/ngx-inline-editor.js",
+    "flatModuleOutFile": "ngx-inline-editor.js",
     "flatModuleId": "@qontu/ngx-inline-editor"
   },
   "files": [
