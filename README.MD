@@ -3,12 +3,12 @@
 
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
 
-ng2-inline-editor is a library of Angular (version 4+) that allows you to create editable elements.
+ngx-inline-editor is a library of Angular (version 4+) that allows you to create editable elements.
 Such technique is also known as *click-to-edit* or *edit-in-place*.
 It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is developed in AngularJS.
 
 
-![Version 0.1.0](https://github.com/caballerog/ng2-inline-editor/raw/master/demos/basic/0.1.0.gif)
+![Version 0.1.0](https://github.com/qontu/ngx-inline-editor/raw/master/demos/basic/0.1.0.gif)
 ## Dependencies
 
 Basically it does not depend on any libraries except Angular4 itself.
@@ -44,9 +44,9 @@ lib, ensure your version of Angular is compatible. The current version used to d
 
 ## Quick start
 
-1. A recommended way to install ***ng2-inline-editor*** is through [npm](https://www.npmjs.com/search?q=ng2-inline-editor) package manager using the following command:
+1. A recommended way to install ***ngx-inline-editor*** is through [npm](https://www.npmjs.com/search?q=ngx-inline-editor) package manager using the following command:
 
-  `npm i ng2-inline-editor --save`
+  `npm i ngx-inline-editor --save`
 
 2. Include the basic theme or configure your own styles which are in the following path:
 
@@ -63,7 +63,7 @@ Usage
 Import `InlineEditorModule` into your app's modules:
 
 ``` typescript
-import {InlineEditorModule} from 'ng2-inline-editor';
+import {InlineEditorModule} from 'ngx-inline-editor';
 
 @NgModule({
   imports: [
@@ -72,7 +72,7 @@ import {InlineEditorModule} from 'ng2-inline-editor';
 })
 ```
 
-This makes all the `ng2-inline-editor` components available for use in your app components.
+This makes all the `ngx-inline-editor` components available for use in your app components.
 
 
 ## Simple Example
@@ -137,22 +137,18 @@ export class MyComponent {
         min="1"
         max="8"
         pattern="^[a-zA-Z]{1,3}"
-        [fnErrorPattern]="myHandlePatternError"
-        [fnErrorLength]="myHandleError"></inline-editor>
+        (onError)="myHandleError"></inline-editor>
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
 * **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
 The `$event` argument will be the value return of the input send.
+* **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
 * **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
 * **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max).
-* **`pattern`** [`string`] Regular expression (RegEx) that must satisfy the value.
-* **`fnErrorPattern`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the pattern of the input is error (the value not satisfy the pattern).
-
 
 
 ##### Password
@@ -167,18 +163,18 @@ The `$event` argument will be the value return of the input send.
         disabled="true"
         min="1"
         max="8"
-        [fnErrorLength]="myHandleError"></inline-editor>
+        (onError)="myHandleError"></inline-editor>
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
 * **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
 The `$event` argument will be the value return of the input send.
+* **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
 * **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
 * **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max).
 
 
 ##### TextArea
@@ -195,13 +191,14 @@ The `$event` argument will be the value return of the input send.
         rows="4"
         min="1"
         max="8"
-        [fnErrorLength]="myHandleError"></inline-editor>
+        (onError)="myHandleError"></inline-editor>
 
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
 * **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
 The `$event` argument will be the value return of the input send.
+* **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
 * **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
 * **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
 * **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
@@ -209,7 +206,6 @@ The `$event` argument will be the value return of the input send.
 * **`rows`** [`number`] Specifies the visible height of a text area. Default is `4`.
 * **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
 * **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-* **`fnErrorLength`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and the length of the input is error (the value is not between min and max).
 
 
 ##### Select
@@ -307,7 +303,7 @@ Typescript code:
 ```
 
 
-![Version 0.1.0-optGroup](https://github.com/caballerog/ng2-inline-editor/raw/master/demos/basic/0.1.0-optGroup.gif)
+![Version 0.1.0-optGroup](https://github.com/qontu/ngx-inline-editor/raw/master/demos/basic/0.1.0-optGroup.gif)
 
 #### Empty components
 
@@ -319,11 +315,11 @@ Typescript code:
   ngModel
   empty="My custom message"
   (onSave)="saveEditable($event)"
+  (onError)="handleError"
   name="editableText1"
   size="8"
   min="3"
-  max="5"
-  [fnErrorLength]="fnErrorLength"></inline-editor>
+  max="5"></inline-editor>
 
   <inline-editor type="select"
                 [(ngModel)]="editableSelectDoesntExist"
@@ -407,7 +403,7 @@ Example using [angular2-data-table](https://github.com/swimlane/angular2-data-ta
 
 Please follow this guidelines when reporting bugs and feature requests:
 
-1. Use [GitHub Issues](https://github.com/caballerog/ng2-inline-editor/issues) board to report bugs and feature requests (not our email address)
+1. Use [GitHub Issues](https://github.com/qontu/ngx-inline-editor/issues) board to report bugs and feature requests (not our email address)
 2. Please **always** write steps to reproduce the error. That way we can focus on fixing the bug, not scratching our heads trying to reproduce it.
 
 Thanks for understanding!
@@ -428,5 +424,5 @@ Carlos Caballero - [https://github.com/caballerog](hhttps://github.com/caballero
 Antonio Villena - [https://github.com/xxxtonixxx](https://github.com/xxxtonixxx)
 ## License
 
-The MIT License (See the [LICENSE](https://github.com/Caballerog/ng2-inline-editor/blob/master/LICENSE.MD) file for the full text) - 
+The MIT License (See the [LICENSE](https://github.com/qontu/ngx-inline-editor/blob/master/LICENSE.MD) file for the full text) - 
 
