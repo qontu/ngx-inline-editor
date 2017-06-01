@@ -1,6 +1,6 @@
 {
-  "name": "ng2-inline-editor",
-  "version": "0.1.1-alpha.20",
+  "name": "@qontu/ngx-inline-editor",
+  "version": "0.2.0-alpha.0",
   "author": {
     "name": "Carlos Caballero",
     "email": "caballerog.carlos@gmail.com"
@@ -17,19 +17,19 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/caballerog/ng2-inline-editor"
+    "url": "https://github.com/qontu/ngx-inline-editor"
   },
   "bugs": {
-    "url": "https://github.com/caballerog/ng2-inline-editor/issues"
+    "url": "https://github.com/qontu/ngx-inline-editor/issues"
   },
   "keywords": [
     "angular",
     "angular4"
   ],
-  "main": "ng2-inline-editor.umd.js",
-  "module": "ng2-inline-editor.es5.js",
-  "es2015": "ng2-inline-editor.es2015.js",
-  "typings": "ng2-inline-editor.d.ts",
+  "main": "ngx-inline-editor.umd.js",
+  "module": "ngx-inline-editor.es5.js",
+  "es2015": "ngx-inline-editor.es2015.js",
+  "typings": "ngx-inline-editor.d.ts",
   "scripts": {
     "gulp": "node_modules/.bin/gulp",
     "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
