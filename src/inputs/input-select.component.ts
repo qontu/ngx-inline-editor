@@ -1,75 +1,109 @@
-import { Component, ViewChild, ElementRef, Renderer, OnInit } from "@angular/core";
+import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
-import { SelectOptionWithChildren } from "../input-config";
+import { InlineSelectConfig, InlineConfig } from "../types/inline-configs";
+import { SelectOptionWithChildren, SelectOption } from "../types/select-options.interface";
+import { OnUpdateConfig } from "../types/lifecycles.interface";
 
 @Component({
     selector: "inline-editor-select",
     styleUrls: ["./input.component.css"],
     template: `
-    <select #inputRef class="form-control" [(ngModel)]="context.value">
-        <ng-template ngFor let-option [ngForOf]="context.options.data">
-            <optgroup *ngIf="option.children" [label]="option[context.options.text]">
-                <option *ngFor="let child of option.children" [value]="child[context.options.value]">
-                    {{child[context.options.text]}}
+    <select #inputRef class="form-control" [(ngModel)]="value"
+    (blur)="onBlur($event)" (focus)="onFocus($event)" (keypress)="onKeyPress($event)"
+    (keypress.enter)="onEnter($event)" (keypress.escape)="onEscape($event)" [disabled]="state.isDisabled()">
+        <ng-template ngFor let-option [ngForOf]="config.options.data">
+            <optgroup *ngIf="option.children" [label]="option[config.options.text]">
+                <option *ngFor="let child of option.children" [ngValue]="child[config.options.value]">
+                    {{child[config.options.text]}}
                 </option>
             </optgroup>
-            <option *ngIf="!option.children" [value]="option[context.options.value]">{{option[context.options.text]}}</option>
+            <option *ngIf="!option.children" [ngValue]="option[config.options.value]">
+                {{option[config.options.text]}}
+            </option>
         </ng-template>
     </select>
             `,
 })
-export class InputSelectComponent extends InputBase implements OnInit {
+export class InputSelectComponent extends InputBase implements OnInit, OnUpdateConfig {
 
-    constructor(renderer: Renderer) {
-        super(renderer);
+    constructor(injector: Injector) {
+        super(injector);
+
+        this.subscriptions.onUpdateConfigSubcription.unsubscribe();
+        this.subscriptions.onUpdateConfigSubcription = this.service.events.internal.onUpdateConfig.subscribe(
+            (config: InlineConfig) => this.onUpdateConfig(config),
+        );
     }
 
-    @ViewChild("inputRef") public inputRef: ElementRef;
+    public config: InlineSelectConfig;
 
+    onUpdateConfig(config: InlineSelectConfig) {
+        super.onUpdateConfig(config);
 
-    public getPlaceholder(): string {
-        return this.optionSelected();
+        const { options } = this.config;
+        this.config.options = options instanceof Array ?
+            {
+                data: options,
+                value: "value",
+                text: "text",
+            } : options;
     }
 
-    private optionSelected(): string {
-        let selectedOptionText: string | undefined;
-        const options = this.context.options;
+    public showText(): string {
+        const { text: keyOfText, value: keyOfValue, data: options } = this.config.options;
+        const currentValue = this.state.getState().value;
+        const optionSelected = this.getOptionSelected(currentValue, keyOfValue, options);
 
-        if (options && options.data) {
-            for (const option of options.data) {
-                selectedOptionText = this.getTextOfSelectedOption(option);
-                if (selectedOptionText) {
-                    break;
+        return optionSelected ? optionSelected[keyOfText] : this.config.empty;
+    }
+
+    protected getOptionSelected(
+        currentValue: any,
+        keyOfValue: string,
+        options: (SelectOption | SelectOptionWithChildren)[],
+    ): SelectOption | undefined {
+
+        let optionSelected: SelectOption | undefined;
+
+        for (const option of options) {
+            if (this.isAnOptionWithChildren(option)) {
+                optionSelected = this.getOptionSelected(currentValue, keyOfValue, option.children!);
+            } else {
+                const typeOfValue = typeof option[keyOfValue];
+
+                /**
+                 * If the type is a number, the equal must be soft to match, ex:
+                 *      1 == "1" -> true
+                 *
+                 * If the type is other, the equiality can be hard, because,
+                 * when the currentValue is a string that contains "[object Object]"
+                 * if you test it against an object, it will be true, ex:
+                 * "[object Object]" == {} -> true
+                 * "[object Object]" === {} -> false
+                 *
+                 */
+                if (typeOfValue === "string" || typeOfValue === "number") {
+                    // tslint:disable-next-line:triple-equals
+                    optionSelected = option[keyOfValue] == currentValue ? option : undefined;
+                } else {
+                    optionSelected = option[keyOfValue] === currentValue ? option : undefined;
                 }
             }
 
-        }
-
-        return selectedOptionText ? selectedOptionText : this.context.empty;
-    }
-
-    private getTextOfSelectedOption(options: SelectOptionWithChildren): string | undefined {
-        let textOfSelectedOption: string | undefined;
-        const { text, value } = this.context.options!;
-
-        if (options.children) {
-            for (const child of options.children) {
-                textOfSelectedOption = this.getTextOfSelectedOption(child);
-                if (textOfSelectedOption) {
-                    break;
-                }
-            }
-        } else {
-            // tslint:disable-next-line:triple-equals
-            if (options[value] == this.context.value) {
-                textOfSelectedOption = options[text];
+            if (optionSelected) {
+                break;
             }
         }
 
-        return textOfSelectedOption;
+        return optionSelected;
     }
 
-    ngOnInit() {
-        this.inputElement = this.inputRef.nativeElement;
+    protected isEmpty(value: any): boolean {
+        const { value: keyOfValue, data: options } = this.config.options;
+        return this.getOptionSelected(value, keyOfValue, options) == null;
+    }
+
+    protected isAnOptionWithChildren(options: SelectOptionWithChildren): options is SelectOptionWithChildren {
+        return options.children != null && options.children instanceof Array;
     }
 }

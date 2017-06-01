@@ -1,23 +1,22 @@
-import { Component, ViewChild, ElementRef, Renderer, OnInit } from "@angular/core";
+import { Component, OnInit, Injector } from "@angular/core";
 import { InputBase } from "./input-base";
+import { InlineNumberConfig } from "../types/inline-configs";
 
 @Component({
     selector: "inline-editor-number",
     styleUrls: ["./input.component.css"],
-    template: `<input #inputRef type="number" class="form-control" [(ngModel)]="context.value" [required]="context.required"
-                      [disabled]="context.disabled" [name]="context.name" [placeholder]="context.placeholder" [size]="context.size"/>`,
+    template: `<input #inputRef type="number" class="form-control" (keyup.enter)="onEnter($event)"
+                (keyup.escape)="onEscape($event)" (focus)="onFocus($event)" (blur)="onBlur($event)"
+                (keypress)="onKeyPress($event)" [(ngModel)]="value" [required]="config.required"
+                [disabled]="state.isDisabled()" [name]="config.name" [placeholder]="config.placeholder"
+                [size]="config.size"/>`,
 })
 export class InputNumberComponent extends InputBase implements OnInit {
 
-    constructor(renderer: Renderer) {
-        super(renderer);
+    constructor(injector: Injector) {
+        super(injector);
         this.isNumeric = true;
     }
 
-    @ViewChild("inputRef") public inputRef: ElementRef;
-
-    ngOnInit() {
-        this.inputElement = this.inputRef.nativeElement;
-    }
-
+    public config: InlineNumberConfig;
 }
