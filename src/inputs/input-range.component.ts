@@ -6,7 +6,7 @@ import { InlineConfig } from "../types/inline-configs";
     selector: "inline-editor-range",
     styleUrls: ["./input.component.css"],
     template: `<input #inputRef type="range" class="form-control" (keyup.enter)="onEnter($event)"
-                (keyup.escape)="onEscape($event)" (focus)="onFocus($event)" (blur)="onBlur($event)"
+                (keyup.escape)="onEscape($event)" (focus)="onFocus($event)" (blur)="onBlur($event)" (click)="onClick($event)"
                 (keypress)="onKeyPress($event)" [(ngModel)]="value" [required]="config.required"
                 [disabled]="state.isDisabled()" [name]="config.name" [placeholder]="config.placeholder"
                 [min]="config.min" [max]="config.max"/>`,

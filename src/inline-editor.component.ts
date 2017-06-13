@@ -97,7 +97,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     @Output() public onKeyPress: EventEmitter<InlineEditorEvent | any> = this.events.external.onKeyPress;
     @Output() public onFocus: EventEmitter<InlineEditorEvent | any> = this.events.external.onFocus;
     @Output() public onBlur: EventEmitter<InlineEditorEvent | any> = this.events.external.onBlur;
-
+    @Output() public onClick: EventEmitter<InlineEditorEvent | any> = this.events.external.onClick;
 
     // input's attribute
     private _empty?: string;
@@ -360,6 +360,13 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
                     state: state.getState(),
                 });
             },
+        );
+
+        this.subscriptions.onClickSubcription = this.events.internal.onClick.subscribe(
+            ({ event, state }: InternalEvent) => this.emit(this.onClick, {
+                event,
+                state: state.getState(),
+            }),
         );
 
         this.subscriptions.onEnterSubscription = this.events.internal.onEnter.subscribe(
