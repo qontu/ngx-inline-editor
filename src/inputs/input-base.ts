@@ -187,6 +187,10 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
         setTimeout(() => this.renderer.invokeElementMethod(this.inputElement, "focus", []));
     }
 
+    public select() {
+        setTimeout(() => this.renderer.invokeElementMethod(this.inputElement, "select", []));
+    }
+
     protected updateState(newState: InlineEditorState) {
         const { empty: wasEmpty, disabled: wasDisabled } = this.state.getState();
 
