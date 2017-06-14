@@ -353,6 +353,9 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
                         event,
                         state: state.getState(),
                     });
+                    this.edit({
+                        editing:false,
+                    })
                 }
 
                 this.emit(this.onBlur, {
