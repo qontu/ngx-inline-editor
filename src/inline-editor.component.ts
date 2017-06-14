@@ -493,7 +493,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     // Method to reset the editable value
     public cancel(outsideEvent: InlineEditorEvent) {
         this.edit({ editing: false });
-        this.onCancel.emit(outsideEvent);
+        this.emit(this.onCancel, outsideEvent);
     }
 
     public getHotState(): InlineEditorStateOptions {
