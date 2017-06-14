@@ -349,13 +349,10 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         this.subscriptions.onBlurSubscription = this.events.internal.onBlur.subscribe(
             ({ event, state }: InternalEvent) => {
                 if (this.config.saveOnBlur) {
-                    this.save({
+                    this.saveAndClose({
                         event,
                         state: state.getState(),
                     });
-                    this.edit({
-                        editing:false,
-                    })
                 }
 
                 this.emit(this.onBlur, {
