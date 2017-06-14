@@ -127,18 +127,16 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         this._saveOnBlur = saveOnBlur;
         this.updateConfig(undefined, "saveOnBlur", saveOnBlur);
     }
-
-    public get saveOnChange?: boolean | undefined {
-        return this._saveOnChange;
+    public get saveOnBlur(): boolean | undefined {
+        return this._saveOnBlur;
     }
-        private _saveOnChange?: boolean;
+    private _saveOnChange?: boolean;
     @Input() public set saveOnChange(saveOnChange: boolean | undefined) {
         this._saveOnChange = saveOnChange;
         this.updateConfig(undefined, "saveOnChange", saveOnChange);
     }
-
-    public get saveOnBlur(): boolean | undefined {
-        return this._saveOnBlur;
+    public get saveOnChange(): boolean | undefined {
+        return this._saveOnChange;
     }
 
     private _editOnClick?: boolean;
@@ -353,7 +351,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
                 this.emit(this.onChange, {
                     event,
                     state: state.getState(),
-                }),
+                });
             },
         );
 
@@ -568,6 +566,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             pattern: this.pattern!,
             saveOnEnter: this.saveOnEnter!,
             saveOnBlur: this.saveOnBlur!,
+            saveOnChange: this.saveOnChange!,
             editOnClick: this.editOnClick!,
             cancelOnEscape: this.cancelOnEscape!,
             onlyValue: this.onlyValue!,

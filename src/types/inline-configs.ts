@@ -28,6 +28,7 @@ export interface InlineConfig extends InlineTextConfig, InlineTextareaConfig,
     required: boolean;
     disabled: boolean;
     saveOnBlur: boolean;
+    saveOnChange: boolean;
     saveOnEnter: boolean;
     cancelOnEscape: boolean;
     editOnClick: boolean;
