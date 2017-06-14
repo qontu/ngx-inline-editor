@@ -45,6 +45,7 @@ const defaultConfig: InlineConfig = {
     pattern: "",
     disabled: false,
     saveOnBlur: false,
+    saveOnChange: false,
     saveOnEnter: true,
     editOnClick: true,
     cancelOnEscape: true,
@@ -99,6 +100,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     @Output() public onBlur: EventEmitter<InlineEditorEvent | any> = this.events.external.onBlur;
 
 
+
     // input's attribute
     private _empty?: string;
     @Input() public set empty(empty: string | undefined) {
@@ -124,6 +126,15 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     @Input() public set saveOnBlur(saveOnBlur: boolean | undefined) {
         this._saveOnBlur = saveOnBlur;
         this.updateConfig(undefined, "saveOnBlur", saveOnBlur);
+    }
+
+    public get saveOnChange?: boolean | undefined {
+        return this._saveOnChange;
+    }
+        private _saveOnChange?: boolean;
+    @Input() public set saveOnChange(saveOnChange: boolean | undefined) {
+        this._saveOnChange = saveOnChange;
+        this.updateConfig(undefined, "saveOnChange", saveOnChange);
     }
 
     public get saveOnBlur(): boolean | undefined {
@@ -332,10 +343,18 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
 
         this.subscriptions.onChangeSubcription = this.events.internal.onChange.subscribe(
-            ({ event, state }: InternalEvent) => this.emit(this.onChange, {
-                event,
-                state: state.getState(),
-            }),
+            ({ event, state }: InternalEvent) => {
+                 if (this.config.saveOnChange) {
+                    this.saveAndClose({
+                        event,
+                        state: state.getState(),
+                    });
+                }
+                this.emit(this.onChange, {
+                    event,
+                    state: state.getState(),
+                }),
+            },
         );
 
         this.subscriptions.onKeyPressSubcription = this.events.internal.onKeyPress.subscribe(
