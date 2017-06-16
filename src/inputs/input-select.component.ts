@@ -9,7 +9,7 @@ import { OnUpdateConfig } from "../types/lifecycles.interface";
     styleUrls: ["./input.component.css"],
     template: `
     <select #inputRef class="form-control" [(ngModel)]="value"
-    (blur)="onBlur($event)" (focus)="onFocus($event)" (keypress)="onKeyPress($event)"
+    (focus)="onFocus($event)" (keypress)="onKeyPress($event)" (blur)="onBlur($event)" (click)="onClick($event)"
     (keypress.enter)="onEnter($event)" (keypress.escape)="onEscape($event)" [disabled]="state.isDisabled()">
         <ng-template ngFor let-option [ngForOf]="config.options.data">
             <optgroup *ngIf="option.children" [label]="option[config.options.text]">

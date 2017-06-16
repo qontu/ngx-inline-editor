@@ -20,6 +20,7 @@ export class InternalEvents {
     public onSave: EventEmitter<InternalEvent> = new EventEmitter();
     public onEdit: EventEmitter<InternalEvent> = new EventEmitter();
     public onCancel: EventEmitter<InternalEvent> = new EventEmitter();
+    public onClick: EventEmitter<InternalEvent> = new EventEmitter();
     public onUpdateConfig: EventEmitter<InlineConfig> = new EventEmitter();
 }
 
@@ -33,6 +34,7 @@ export class ExternalEvents {
     public onEscape: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEdit: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onCancel: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onClick: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onError: EventEmitter<InlineEditorError | InlineEditorError[]> = new EventEmitter();
 }
 

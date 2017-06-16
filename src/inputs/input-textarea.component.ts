@@ -6,7 +6,7 @@ import { InlineTextareaConfig } from "../types/inline-configs";
     selector: "inline-editor-textarea",
     styleUrls: ["./input.component.css"],
     template: `<textarea #inputRef class="form-control" (keyup.enter)="onEnter($event)"
-                (keyup.escape)="onEscape($event)" (focus)="onFocus($event)" (blur)="onBlur($event)"
+                (keyup.escape)="onEscape($event)" (focus)="onFocus($event)" (blur)="onBlur($event)" (click)="onClick($event)"
                 (keypress)="onKeyPress($event)" [(ngModel)]="value" [required]="config.required"
                 [rows]="config.rows" [cols]="config.cols" [disabled]="state.isDisabled()" [name]="config.name"
                 [placeholder]="config.placeholder"></textarea>`,
