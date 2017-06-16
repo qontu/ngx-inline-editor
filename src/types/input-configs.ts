@@ -3,6 +3,7 @@ import { SelectOptions } from "./select-options.interface";
 
 
 export interface InlineActionsOnEvents {
+    saveOnChange?: boolean;
     saveOnBlur?: boolean;
     saveOnEnter?: boolean;
     cancelOnEscape?: boolean;
