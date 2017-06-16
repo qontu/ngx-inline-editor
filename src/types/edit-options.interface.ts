@@ -1,5 +1,6 @@
 export interface EditOptions {
     editing?: boolean;
-    doFocus?: boolean;
+    focus?: boolean;
+    select?: boolean;
     event?: Event;
 }

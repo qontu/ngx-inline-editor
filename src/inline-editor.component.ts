@@ -441,7 +441,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     }
 
     // Method to display the inline editor form and hide the <a> element
-    public edit({ editing = true, doFocus = true, event }: EditOptions = {}) {
+    public edit({ editing = true, focus = true, select = false, event }: EditOptions = {}) {
         this.state = this.state.newState({
             ...this.state.getState(),
             editing,
@@ -456,9 +456,14 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             });
         }
 
-        if (editing && doFocus) {
+        if (editing && focus) {
             this.inputInstance.focus();
         }
+
+        if (editing && select) {
+            this.inputInstance.select();
+        }
+
     }
 
     public save({ event, state: hotState }: InlineEditorEvent) {
