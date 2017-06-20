@@ -27,6 +27,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
             value: "",
             empty: true,
             disabled: this.config.disabled,
+            name: this.config.name != null ? this.config.name : ""
         });
 
         this.service.onUpdateStateOfService.emit(this.state.clone());

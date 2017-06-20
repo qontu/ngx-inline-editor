@@ -317,6 +317,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
         this.state = new InlineEditorState({
             value: "",
+            name: this.name != null ? this.name : ""
         });
 
         this.service = new InlineEditorService(this.events, { ...this.config });

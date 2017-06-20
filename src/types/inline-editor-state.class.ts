@@ -3,6 +3,7 @@ export interface InlineEditorStateOptions {
     editing?: boolean;
     disabled?: boolean;
     empty?: boolean;
+    name: string;
 }
 
 export class InlineEditorState {
@@ -12,17 +13,20 @@ export class InlineEditorState {
         disabled = false,
         editing = false,
         empty = false,
-    }: InlineEditorStateOptions = { value: "" }) {
+        name
+    }: InlineEditorStateOptions = { value: "", name: "" }) {
         this.value = value;
         this.disabled = disabled;
         this.editing = editing;
         this.empty = empty;
+        this.name = name;
     }
 
     private empty: boolean;
     private value: any;
     private disabled: boolean;
     private editing: boolean;
+    private name: string;
 
     public newState(state: InlineEditorState | InlineEditorStateOptions) {
         return new InlineEditorState(state instanceof InlineEditorState ?
@@ -37,6 +41,7 @@ export class InlineEditorState {
             editing,
             disabled,
             empty,
+            name
         };
     }
 
