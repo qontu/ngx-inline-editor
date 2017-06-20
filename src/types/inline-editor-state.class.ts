@@ -34,7 +34,7 @@ export class InlineEditorState {
     }
 
     public getState(): InlineEditorStateOptions {
-        const { value, editing, disabled, empty } = this;
+        const { value, editing, disabled, empty, name } = this;
 
         return {
             value,

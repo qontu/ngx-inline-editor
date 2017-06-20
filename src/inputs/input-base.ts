@@ -42,6 +42,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
                 this.updateState(this.state.newState({
                     ...newState,
                     empty: this.isEmpty(newState.value),
+                    name: this.config.name
                 }));
 
                 this.service.events.internal.onUpdateStateOfParent.emit(this.state.clone());
