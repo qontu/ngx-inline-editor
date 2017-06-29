@@ -2,6 +2,7 @@ import { EventEmitter } from "@angular/core";
 import { InlineEditorError } from "./inline-editor-error.interface";
 import { InlineConfig } from "../types/inline-configs";
 import { InlineEditorState, InlineEditorStateOptions } from "./inline-editor-state.class";
+import { InlineEditorComponent } from "../inline-editor.component";
 
 export interface Events {
     internal: InternalEvents;
@@ -48,4 +49,6 @@ export interface ExternalEvent {
     state: InlineEditorStateOptions;
 }
 
-export type InlineEditorEvent = ExternalEvent;
+export interface InlineEditorEvent extends ExternalEvent {
+    instance: InlineEditorComponent;
+}
