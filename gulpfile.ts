@@ -53,9 +53,16 @@ task("debug", () => merge(
 ));
 
 /**
- * 1. Delete /dist folder
+ * 1. Clean /dist
+ */
+/**
+ * 1.1 Delete /dist folder
  */
 task("clean:dist", () => deleteFolders([distFolder]));
+/**
+ * 1.2 Delete /dist/* files
+ */
+task("clean:dist:files", () => deleteFolders([`${distFolder}/*`]));
 
 /**
  * 2. Clone the /src folder into /.tmp and Inline template (.html) and style (.css) files
@@ -165,7 +172,7 @@ task("rollup:umd", () => src(`${tmpBundlesFolder}/${bundleNameES5}`)
 
 /**
  * 5. Copy all the files from /build to /dist, except .js files. We ignore all .js from /build
- *    because with don't need individual modules anymore, just the Flat ES module generated
+ *    because with don't need individual modules anymore, just the modules generated
  *    on step 4.
  *    Copy themes from .tmp/themes to /dist
  */
@@ -194,9 +201,12 @@ task("copy:bundles", () => src(`${tmpBundlesFolder}/*.js`).pipe(dest(distFolder)
 
 
 /**
- * 7. Copy package.json from /src to /dist
+ * 7. Copy package.json and README.md from /src to /dist
  */
-task("copy:manifest", () => src([`${rootFolder}/package.json`]).pipe(dest(distFolder)));
+task("copy:manifest", () => src([
+    `${rootFolder}/package.json`,
+    `${rootFolder}/README.md`,
+]).pipe(dest(distFolder)));
 
 /**
  * 8. Delete /.tmp folder
@@ -212,7 +222,7 @@ task("compile", () => runSequence(
     "copy:source",
     "ngc",
     "rollup",
-    "clean:dist",
+    "clean:dist:files",
     "copy:buildTS",
     "copy:buildCSS",
     "copy:bundles",
@@ -231,7 +241,8 @@ task("compile", () => runSequence(
 
 
 task("compile:debug", () => runSequence(
-    "clean:dist",
+    "clean:dist:files",
+    "copy:manifest",
     "debug",
     (err?: any) => {
         if (err) {
