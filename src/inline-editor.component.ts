@@ -20,7 +20,14 @@ import { InputDatetimeComponent } from "./inputs/input-datetime.component";
 import { Subscription } from "rxjs/Subscription";
 import { SelectOptions } from "./types/select-options.interface";
 import { InlineEditorError } from "./types/inline-editor-error.interface";
-import { InlineEditorEvent, InternalEvent, Events, InternalEvents, ExternalEvents } from "./types/inline-editor-events.class";
+import {
+    InlineEditorEvent,
+    InternalEvent,
+    Events,
+    InternalEvents,
+    ExternalEvents,
+    ExternalEvent,
+} from "./types/inline-editor-events.class";
 import { InlineEditorState, InlineEditorStateOptions } from "./types/inline-editor-state.class";
 import { EditOptions } from "./types/edit-options.interface";
 import { InputType } from "./types/input-type.type";
@@ -342,7 +349,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
         this.subscriptions.onChangeSubcription = this.events.internal.onChange.subscribe(
             ({ event, state }: InternalEvent) => {
-                 if (this.config.saveOnChange) {
+                if (this.config.saveOnChange) {
                     this.saveAndClose({
                         event,
                         state: state.getState(),
@@ -444,8 +451,8 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     registerOnChange(refreshNGModel: (_: any) => void) {
         this.refreshNGModel = refreshNGModel;
     }
-    registerOnTouched() {
-    }
+
+    registerOnTouched() { }
 
     // Method to display the inline editor form and hide the <a> element
     public edit({ editing = true, focus = true, select = false, event }: EditOptions = {}) {
@@ -473,7 +480,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
     }
 
-    public save({ event, state: hotState }: InlineEditorEvent) {
+    public save({ event, state: hotState }: ExternalEvent) {
         const prevState = this.state.getState();
 
         const state = {
@@ -496,14 +503,14 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         }
     }
 
-    public saveAndClose(outsideEvent: InlineEditorEvent) {
+    public saveAndClose(outsideEvent: ExternalEvent) {
         this.save(outsideEvent);
 
         this.edit({ editing: false });
     }
 
     // Method to reset the editable value
-    public cancel(outsideEvent: InlineEditorEvent) {
+    public cancel(outsideEvent: ExternalEvent) {
         this.edit({ editing: false });
         this.emit(this.onCancel, outsideEvent);
     }
@@ -607,7 +614,15 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     }
 
 
-    private emit(event: EventEmitter<InlineEditorEvent | any>, data: InlineEditorEvent) {
-        event.emit(this.config.onlyValue ? data.state.value : data);
+    private emit(event: EventEmitter<InlineEditorEvent | any>, data: ExternalEvent) {
+        if (this.config.onlyValue) {
+            event.emit(data.state.value);
+        } else {
+            (event as EventEmitter<InlineEditorEvent>)
+                .emit({
+                    ...data,
+                    instance: this,
+                });
+        }
     }
 }
