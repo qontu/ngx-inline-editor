@@ -1,9 +1,9 @@
 <div id="inlineEditWrapper">
-  <a [ngClass]="{'editable-empty': state.isEmpty(), 'c-inline-editor': true }" (click)="!config.editOnClick || edit()" [hidden]="state.isEditing() && !disabled">{{ showText() }}</a>
-  <div class="c-inline-editor inlineEditForm form-inline" [hidden]="!state.isEditing() || disabled">
+  <a [ngClass]="{'editable-empty': state.isEmpty(), 'c-inline-editor': true }" (click)="!config.editOnClick || edit()" [hidden]="state.isEditing() && !config.disabled">{{ showText() }}</a>
+  <div class="c-inline-editor inlineEditForm form-inline" [hidden]="!state.isEditing() || config.disabled">
     <div class="form-group">
       <div #container></div>
-      <span *ngIf="!config.hideButtons" class="c-inline-editor inline-editor-button-group"> 
+      <span *ngIf="!config.hideButtons" class="c-inline-editor inline-editor-button-group">
       <button id="inline-editor-button-save" class="btn btn-xs btn-primary c-inline-editor"
           (click)="saveAndClose({ event: $event, state: service.getState() })">
           <span class="fa fa-check"></span>
