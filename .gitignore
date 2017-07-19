@@ -3,9 +3,9 @@ node_modules/*
 npm-debug.log
 
 # TypeScript
-src/*.js
-src/*.map
-src/*.d.ts
+/src/*.js
+/src/*.map
+/src/*.d.ts
 typings
 typings.json
 
@@ -31,9 +31,13 @@ Desktop.ini
 **/*.ngfactory.ts
 
 # Build files
-dist
-.tmp
-build
+/dist/
+/.tmp
+/build
 
 # Debug chrome
 out/chrome
+
+# Docs
+/docs/themes/qontu-doc-theme
+/docs/dist

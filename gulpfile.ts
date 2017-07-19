@@ -7,6 +7,31 @@ import * as del from "del";
 import * as ts from "gulp-typescript";
 import * as ngc from "gulp-ngc";
 import * as merge from "merge2";
+import * as cp from "child_process";
+
+function exec(
+    command: string,
+    { args = [], output = false }: {
+        args?: string[],
+        output?: boolean,
+    } = {},
+): Promise<{ stdout: string, stderr: string }> {
+    return new Promise((resolve, reject) => {
+        const cmdExecuted = cp.exec(`${command} ${args.join(" ")}`, (error, stdout, stderr) => {
+            if (error instanceof Error) {
+                reject(error);
+            } else {
+                resolve({ stdout, stderr });
+            }
+        });
+
+        if (output) {
+            cmdExecuted.stdout.pipe(process.stdout);
+            cmdExecuted.stderr.pipe(process.stderr);
+        }
+    });
+}
+
 
 const rollup = require("gulp-rollup");
 const inlineNg2Template = require("gulp-inline-ng2-template");
@@ -24,6 +49,8 @@ const tmpFolder = path.join(rootFolder, ".tmp");
 const tmpBundlesFolder = path.join(tmpFolder, ".bundles");
 const buildFolder = path.join(rootFolder, "build");
 const distFolder = path.join(rootFolder, "dist");
+const docsFolder = path.join(rootFolder, "docs");
+const docsBuildedFolder = path.join(docsFolder, "dist");
 
 const {
     name: libName,
@@ -253,6 +280,19 @@ task("compile:debug", () => runSequence(
         }
     }),
 );
+
+task("clean:docs", () => deleteFolders([docsBuildedFolder]));
+
+task("build:docs", ["clean:docs"], done => {
+    exec(`cd ${docsFolder} && hugo -d ${docsBuildedFolder}`)
+        .then(({ stdout, stderr }) => {
+            console.log(stdout);
+            console.error(stderr);
+
+            done();
+        })
+        .catch(done);
+});
 
 /**
  * Watch for any change in the /src folder and compile files

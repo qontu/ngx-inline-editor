@@ -1,0 +1,68 @@
+baseURL = "https://qontu.github.io/ngx-inline-editor/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
+enableMissingTranslationPlaceholders = true
+
+title = "Inline editor doc"
+theme = "qontu-doc-theme"
+themesdir = "./themes/"
+MetaDataFormat = "yaml"
+
+[params]
+editURL = "https://github.com/qontu/ngx-inline-editor/edit/master/docs/content/"
+noHomeIcon = false # default is false
+noSearch = false # default is false
+showVisitedLinks = true # default is false
+# themeVariant = "green" # choose theme variant "green", "gold" , "blue" (default)
+
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+#[[menu.shortcuts]]
+#name = "<i class='fa fa-bookmark'></i> Hugo Documentation"
+#identifier = "hugodoc"
+#url = "https://gohugo.io/"
+#weight = 2
+
+[languages]
+[languages.en]
+    weight = 20
+    languageName = "English"
+    languageCode = "en-us"
+    description = "Documentation of ngx-inline-editor component."
+    copyright = "All rights reserved."
+
+[[languages.en.menu.shortcuts]]
+name = "<i class='fa fa-bullhorn'></i> Authors"
+url = "/en/authors"
+weight = 3
+
+[[languages.en.menu.shortcuts]]
+pre = "<h3>More</h3>"
+name = "<i class='fa fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/qontu/ngx-inline-editor"
+weight = 1
+
+
+[languages.es]
+    weight = 10
+    languageName = "Español"
+    languageCode = "es-es"
+    description = "Documentación del componente ngx-inline-editor."
+    copyright = "Todos los derechos reservados"
+
+[[languages.es.menu.shortcuts]]
+name = "<i class='fa fa-bullhorn'></i> Autores"
+url = "/es/authors"
+weight = 3
+
+
+[[languages.es.menu.shortcuts]]
+pre = "<h3>Más</h3>"
+name = "<i class='fa fa-github'></i> Repo de Github"
+identifier = "ds"
+url = "https://github.com/qontu/ngx-inline-editor"
+weight = 1
