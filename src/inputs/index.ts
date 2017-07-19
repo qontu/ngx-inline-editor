@@ -7,4 +7,4 @@ export { InputPasswordComponent } from "./input-password.component";
 export { InputSelectComponent } from "./input-select.component";
 export { InputTextareaComponent } from "./input-textarea.component";
 export { InputTimeComponent } from "./input-time.component";
-
+export { InputCheckboxComponent } from "./input-checkbox.component";

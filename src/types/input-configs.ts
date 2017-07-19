@@ -55,9 +55,15 @@ export interface InputTextareaConfig extends InputBaseConfig, TextareaConfig, Re
     type: "textarea";
 }
 
+export interface CheckboxConfig extends InputBaseConfig {
+    checkedText?: string;
+    uncheckedText?: string;
+}
+
 export interface InputConfig extends
     InputBaseConfig,
     LengthTestable,
     LengthTestable,
     RegexTestable,
-    TextareaConfig { }
+    TextareaConfig,
+    CheckboxConfig { }

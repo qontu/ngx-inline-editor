@@ -13,6 +13,7 @@ import {
     InputSelectComponent,
     InputTextareaComponent,
     InputTextComponent,
+    InputCheckboxComponent,
 } from "./inputs/index";
 import { InputBase } from "./inputs/input-base";
 
@@ -33,7 +34,7 @@ const EXPORTS = [
     InputDateComponent,
     InputTimeComponent,
     InputDatetimeComponent,
-
+    InputCheckboxComponent,
     InlineEditorComponent,
 ];
 

@@ -22,8 +22,13 @@ export interface InlineNumberConfig extends InlineBaseConfig, InputLengthTestabl
 
 export interface InlineTextareaConfig extends InlineBaseConfig, TextareaConfig, InputRegexTestable { }
 
+export interface InlineCheckboxConfig {
+    checkedText?: string;
+    uncheckedText?: string;
+}
+
 export interface InlineConfig extends InlineTextConfig, InlineTextareaConfig,
-    InlineSelectConfig, InlineNumberConfig {
+    InlineSelectConfig, InlineNumberConfig, InlineCheckboxConfig {
     hideButtons: boolean;
     required: boolean;
     disabled: boolean;
