@@ -17,5 +17,12 @@
       "jasmine",
       "node"
     ]
-  }
+  },
+  "include": [
+    "base.spec.ts",
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ]
 }

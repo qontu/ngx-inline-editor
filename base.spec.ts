@@ -4,6 +4,7 @@ import "zone.js/dist/proxy.js";
 import "zone.js/dist/sync-test.js";
 import "zone.js/dist/jasmine-patch.js";
 import "zone.js/dist/async-test.js";
+import "zone.js/dist/fake-async-test.js";
 import { TestBed } from "@angular/core/testing";
 import {
     BrowserDynamicTestingModule,
