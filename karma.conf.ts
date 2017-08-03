@@ -1,5 +1,26 @@
-module.exports = function (config) {
+import { Config, ConfigOptions } from "karma";
+import { KarmaTypescriptConfig } from "karma-typescript/src/api/configuration";
+
+const env = process.env.NODE_ENV || "development";
+
+console.log(`*** Running karma in ${env} mode`);
+
+function isDev(): boolean {
+  return env === "development";
+}
+
+const reporters = isDev()
+  ? ["jasmine-diff", "mocha", "kjhtml", "karma-typescript"]
+  : ["jasmine-diff", "mocha", "karma-typescript"];
+
+const browsers = isDev()
+  ? ["Chrome"]
+  : ["PhantomJS"];
+
+module.exports = function (config: Config) {
   config.set({
+    reporters,
+    browsers,
     frameworks: ["jasmine", "karma-typescript"],
     files: [
       "base.spec.ts",
@@ -8,15 +29,11 @@ module.exports = function (config) {
     preprocessors: {
       "**/*.ts": ["karma-typescript"],
     },
-    customLaunchers: {
-      Chrome_with_debugging: {
-        base: "Chrome",
-        flags: ["--remote-debugging-port=9222"],
-        debug: true,
-      },
-    },
     browserNoActivityTimeout: 100000,
     karmaTypescriptConfig: {
+      coverageOptions: {
+        instrumentation: false,
+      },
       tsconfig: "./tsconfig.spec.json",
       bundlerOptions: {
         entrypoints: /\.spec\.ts$/,
@@ -24,13 +41,10 @@ module.exports = function (config) {
           require("karma-typescript-angular2-transform"),
         ],
       },
-      // compilerOptions: {
-      //  target: "es6",
-      //  outDir: "./tmp/src",
-      //  lib: ["es6", "dom", "es2017.object"],
-      // },
+      compilerDelay: 500,
+    } as KarmaTypescriptConfig,
+    client: {
+      clearContext: false,
     },
-    reporters: ["progress", "karma-typescript"],
-    browsers: ["Chrome"],
-  });
+  } as ConfigOptions);
 };
