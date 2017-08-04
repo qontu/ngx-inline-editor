@@ -12,6 +12,7 @@ import { InputBase } from "./inputs/input-base";
 import { InputTextComponent } from "./inputs/input-text.component";
 import { InputPasswordComponent } from "./inputs/input-password.component";
 import { InputRangeComponent } from "./inputs/input-range.component";
+import { InputCheckboxComponent } from "./inputs/input-checkbox.component";
 import { InputTextareaComponent } from "./inputs/input-textarea.component";
 import { InputSelectComponent } from "./inputs/input-select.component";
 import { InputDateComponent } from "./inputs/input-date.component";
@@ -58,6 +59,8 @@ const defaultConfig: InlineConfig = {
     cancelOnEscape: true,
     hideButtons: false,
     onlyValue: true,
+    checkedText: "Check",
+    uncheckedText: "Uncheck",
 };
 
 @Component({
@@ -78,6 +81,7 @@ const defaultConfig: InlineConfig = {
         InputDateComponent,
         InputTimeComponent,
         InputDatetimeComponent,
+        InputCheckboxComponent,
     ],
 })
 export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestroy, ControlValueAccessor {
@@ -117,6 +121,26 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
     public get empty(): string | undefined {
         return this._empty;
+    }
+
+    private _checkedText?: string;
+    @Input() public set checkedText(checkedText: string | undefined) {
+        this._checkedText = checkedText;
+        this.updateConfig(undefined, "checkedText", checkedText);
+    }
+
+    public get checkedText(): string | undefined {
+        return this._checkedText;
+    }
+
+    private _uncheckedText?: string;
+    @Input() public set uncheckedText(uncheckedText: string | undefined) {
+        this._uncheckedText = uncheckedText;
+        this.updateConfig(undefined, "uncheckedText", uncheckedText);
+    }
+
+    public get uncheckedText(): string | undefined {
+        return this._uncheckedText;
     }
 
     private _saveOnEnter?: boolean;
@@ -315,6 +339,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         date: InputDateComponent,
         time: InputTimeComponent,
         datetime: InputDatetimeComponent,
+        checkbox: InputCheckboxComponent
     };
 
     private refreshNGModel: (_: any) => void;
@@ -589,6 +614,8 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
             editOnClick: this.editOnClick!,
             cancelOnEscape: this.cancelOnEscape!,
             onlyValue: this.onlyValue!,
+            checkedText: this.checkedText!,
+            uncheckedText: this.uncheckedText!,
         };
 
         return {

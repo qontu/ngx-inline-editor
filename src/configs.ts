@@ -5,4 +5,5 @@ export {
     InputNumberConfig,
     InputSelectConfig,
     InputTextareaConfig,
+    InputCheckboxConfig,
 } from "./types/input-configs";
