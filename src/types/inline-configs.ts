@@ -1,6 +1,6 @@
 import { InputLengthTestable, InputRegexTestable, InputSelectable } from "./testable-inputs.interface";
 import { InputType } from "./input-type.type";
-import { InputBaseConfig, TextareaConfig } from "./input-configs";
+import { InputBaseConfig, TextareaConfig, CheckboxConfig } from "./input-configs";
 
 export interface InlineBaseConfig extends InputBaseConfig {
     type: InputType;
@@ -22,10 +22,7 @@ export interface InlineNumberConfig extends InlineBaseConfig, InputLengthTestabl
 
 export interface InlineTextareaConfig extends InlineBaseConfig, TextareaConfig, InputRegexTestable { }
 
-export interface InlineCheckboxConfig {
-    checkedText?: string;
-    uncheckedText?: string;
-}
+export interface InlineCheckboxConfig extends InlineBaseConfig, CheckboxConfig  { }
 
 export interface InlineConfig extends InlineTextConfig, InlineTextareaConfig,
     InlineSelectConfig, InlineNumberConfig, InlineCheckboxConfig {
