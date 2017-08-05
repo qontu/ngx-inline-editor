@@ -343,6 +343,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     };
 
     private refreshNGModel: (_: any) => void;
+    private isEnterKeyPressed = false;
 
     ngOnInit() {
         this.config = this.generateSafeConfig();
@@ -397,12 +398,19 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
         this.subscriptions.onBlurSubscription = this.events.internal.onBlur.subscribe(
             ({ event, state }: InternalEvent) => {
-                if (this.config.saveOnBlur) {
+                // TODO (xxxtonixx): Maybe, this approach is not the best,
+                // because we need to set a class property and it is dangerous.
+                // We should search for one better.
+                const isSavedByEnterKey = this.isEnterKeyPressed && this.config.saveOnEnter;
+
+                if (this.config.saveOnBlur && !isSavedByEnterKey) {
                     this.saveAndClose({
                         event,
                         state: state.getState(),
                     });
                 }
+
+                this.isEnterKeyPressed = false;
 
                 this.emit(this.onBlur, {
                     event,
@@ -427,6 +435,8 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
         this.subscriptions.onEnterSubscription = this.events.internal.onEnter.subscribe(
             ({ event, state }: InternalEvent) => {
+                this.isEnterKeyPressed = true;
+
                 if (this.config.saveOnEnter) {
                     this.save({
                         event,
