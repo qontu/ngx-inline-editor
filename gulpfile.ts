@@ -125,6 +125,9 @@ task("rollup:es2015", () => src(`${buildFolder}/**/*.js`)
 const tsProject = ts.createProject({
     target: "es5",
     module: "es2015",
+    lib: [
+        "es2016",
+    ],
     allowJs: true,
     typescript: require("typescript"),
 });
@@ -152,7 +155,6 @@ task("rollup:umd", () => src(`${tmpBundlesFolder}/${bundleNameES5}`)
         external: ROLLUP_EXTERNAL,
         format: "umd",
         moduleName: libName,
-        moduleId: "",
         separateCaches: rollupUMDCaches,
         onwarn(message) {
             if (message.code === "THIS_IS_UNDEFINED") {

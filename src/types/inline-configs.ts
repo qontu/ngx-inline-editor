@@ -20,9 +20,15 @@ export interface InlineSelectConfig extends InlineBaseConfig, InputSelectable { 
 
 export interface InlineNumberConfig extends InlineBaseConfig, InputLengthTestable { }
 
-export interface InlineTextareaConfig extends InlineBaseConfig, TextareaConfig, InputRegexTestable { }
+export interface InlineTextareaConfig extends InlineBaseConfig, TextareaConfig, InputRegexTestable {
+    rows: number;
+    cols: number;
+}
 
-export interface InlineCheckboxConfig extends InlineBaseConfig, CheckboxConfig  { }
+export interface InlineCheckboxConfig extends InlineBaseConfig, CheckboxConfig {
+    checkedText: string;
+    uncheckedText: string;
+}
 
 export interface InlineConfig extends InlineTextConfig, InlineTextareaConfig,
     InlineSelectConfig, InlineNumberConfig, InlineCheckboxConfig {
