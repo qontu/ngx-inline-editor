@@ -7,7 +7,9 @@
     "removeComments": true,
     "noUnusedLocals": false,
     "noLib": false,
-    "lib": ["es2016"],
+    "lib": [
+      "es2016"
+    ],
     "sourceMap": true,
     "typeRoots": [
       "./node_modules/@types",

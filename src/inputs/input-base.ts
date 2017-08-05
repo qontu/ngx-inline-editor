@@ -146,7 +146,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
     public onKeyPress(event: Event) {
         this.service.events.internal.onKeyPress.emit({
             event,
-            state: this.state,
+            state: this.state.clone(),
         });
     }
 
