@@ -339,7 +339,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         date: InputDateComponent,
         time: InputTimeComponent,
         datetime: InputDatetimeComponent,
-        checkbox: InputCheckboxComponent
+        checkbox: InputCheckboxComponent,
     };
 
     private refreshNGModel: (_: any) => void;
@@ -413,6 +413,13 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
 
         this.subscriptions.onClickSubcription = this.events.internal.onClick.subscribe(
             ({ event, state }: InternalEvent) => this.emit(this.onClick, {
+                event,
+                state: state.getState(),
+            }),
+        );
+
+        this.subscriptions.onFocusSubcription = this.events.internal.onFocus.subscribe(
+            ({ event, state }: InternalEvent) => this.emit(this.onFocus, {
                 event,
                 state: state.getState(),
             }),
