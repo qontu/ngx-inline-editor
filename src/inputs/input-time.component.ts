@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector } from "@angular/core";
+import { Component, OnInit, Injector, ChangeDetectionStrategy } from "@angular/core";
 import { InputBase } from "./input-base";
 import { InlineConfig } from "../types/inline-configs";
 
@@ -10,6 +10,7 @@ import { InlineConfig } from "../types/inline-configs";
                 (keypress)="onKeyPress($event)" [(ngModel)]="value" [required]="config.required"
                 [disabled]="config.disabled" [name]="config.name" [placeholder]="config.placeholder"
                 [size]="config.size" [min]="config.min" [max]="config.max"/>`,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputTimeComponent extends InputBase implements OnInit {
 

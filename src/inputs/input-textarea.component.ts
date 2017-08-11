@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector } from "@angular/core";
+import { Component, OnInit, Injector, ChangeDetectionStrategy } from "@angular/core";
 import { InputBase } from "./input-base";
 import { InlineTextareaConfig } from "../types/inline-configs";
 
@@ -10,6 +10,7 @@ import { InlineTextareaConfig } from "../types/inline-configs";
                 (keypress)="onKeyPress($event)" [(ngModel)]="value" [required]="config.required"
                 [rows]="config.rows" [cols]="config.cols" [disabled]="state.isDisabled()" [name]="config.name"
                 [placeholder]="config.placeholder"></textarea>`,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputTextareaComponent extends InputBase implements OnInit {
 

@@ -1,9 +1,9 @@
 import {
     Component, forwardRef, Input, OnInit, Output,
     EventEmitter, ViewChild,
-    ComponentRef, ComponentFactoryResolver, ViewContainerRef, ReflectiveInjector, OnDestroy, AfterContentInit,
+    ComponentRef, ComponentFactoryResolver, ViewContainerRef, ReflectiveInjector, OnDestroy, AfterContentInit, ChangeDetectionStrategy,
 } from "@angular/core";
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, Validator } from "@angular/forms";
 
 import { InlineEditorService } from "./inline-editor.service";
 import { InlineConfig } from "./types/inline-configs";
@@ -66,11 +66,18 @@ const defaultConfig: InlineConfig = {
 @Component({
     selector: "inline-editor",
     templateUrl: "./inline-editor.component.html",
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => InlineEditorComponent),
-        multi: true,
-    }],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InlineEditorComponent),
+            multi: true,
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => InlineEditorComponent),
+            multi: true,
+        },
+    ],
     entryComponents: [
         InputTextComponent,
         InputNumberComponent,
@@ -83,8 +90,10 @@ const defaultConfig: InlineConfig = {
         InputDatetimeComponent,
         InputCheckboxComponent,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestroy, ControlValueAccessor {
+export class InlineEditorComponent
+    implements OnInit, AfterContentInit, OnDestroy, ControlValueAccessor, Validator {
 
     constructor(protected componentFactoryResolver: ComponentFactoryResolver) { }
 
@@ -349,6 +358,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         this.config = this.generateSafeConfig();
 
         this.state = new InlineEditorState({
+            disabled: this.config.disabled,
             value: "",
         });
 
@@ -472,6 +482,7 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
     }
 
     ngAfterContentInit() {
+        this.service.onUpdateStateOfService.emit(this.state.clone());
         this.generateComponent(this.config.type);
     }
 
@@ -479,6 +490,15 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
         Object.values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
         this.currentComponent.destroy();
         this.service.destroy();
+    }
+
+    validate(): { [key: string]: any; } | null {
+        const errors = this.inputInstance ? this.inputInstance.checkValue() : [];
+        return errors.length === 0 ? null : {
+            InlineEditorError: {
+                valid: false,
+            },
+        };
     }
 
     writeValue(value: any) {
@@ -653,7 +673,9 @@ export class InlineEditorComponent implements OnInit, AfterContentInit, OnDestro
                 config[property] = value;
             }
 
-            this.events.internal.onUpdateConfig.emit({ ...config });
+            this.config = { ...config };
+
+            this.events.internal.onUpdateConfig.emit(this.config);
         }
     }
 

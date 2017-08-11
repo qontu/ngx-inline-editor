@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector } from "@angular/core";
+import { Component, OnInit, Injector, ChangeDetectionStrategy } from "@angular/core";
 import { InputBase } from "./input-base";
 import { InlineNumberConfig } from "../types/inline-configs";
 
@@ -10,6 +10,7 @@ import { InlineNumberConfig } from "../types/inline-configs";
                 (keypress)="onKeyPress($event)" [(ngModel)]="value" [required]="config.required"
                 [disabled]="state.isDisabled()" [name]="config.name" [placeholder]="config.placeholder"
                 [size]="config.size"/>`,
+                changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputNumberComponent extends InputBase implements OnInit {
 
