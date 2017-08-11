@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector } from "@angular/core";
+import { Component, OnInit, Injector, ChangeDetectionStrategy } from "@angular/core";
 import { InputBase } from "./input-base";
 import { InlineSelectConfig, InlineConfig } from "../types/inline-configs";
 import { SelectOptionWithChildren, SelectOption } from "../types/select-options.interface";
@@ -23,6 +23,7 @@ import { OnUpdateConfig } from "../types/lifecycles.interface";
         </ng-template>
     </select>
             `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputSelectComponent extends InputBase implements OnInit, OnUpdateConfig {
 
@@ -47,6 +48,8 @@ export class InputSelectComponent extends InputBase implements OnInit, OnUpdateC
                 value: "value",
                 text: "text",
             } : options;
+
+        this.config = { ...this.config };
     }
 
     public showText(): string {

@@ -2,7 +2,7 @@ import { InlineBaseConfig, InlineConfig } from "../types/inline-configs";
 import {
     Renderer, Component, ViewChild, ElementRef, OnInit,
     Injector, OnChanges, DoCheck, AfterContentInit,
-    AfterViewInit, AfterViewChecked, AfterContentChecked, OnDestroy,
+    AfterViewInit, AfterViewChecked, AfterContentChecked, OnDestroy, ChangeDetectionStrategy,
 } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { InlineEditorError } from "../types/inline-editor-error.interface";
@@ -12,6 +12,7 @@ import { OnUpdateConfig } from "../types/lifecycles.interface";
 import { InputRegexTestable, InputLengthTestable } from "../types/testable-inputs.interface";
 @Component({
     template: " ",
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputBase implements OnInit, OnChanges, DoCheck,
     AfterContentInit, AfterContentChecked, AfterViewInit,
@@ -23,13 +24,8 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
         this.service = injector.get(InlineEditorService);
         this.onUpdateConfig(this.service.getConfig()!);
 
-        this.state = new InlineEditorState({
-            value: "",
-            empty: true,
-            disabled: this.config.disabled,
-        });
-
-        this.service.onUpdateStateOfService.emit(this.state.clone());
+        this.state = this.service.getState().clone();
+        this.value = this.state.getState().value;
 
         this.subscriptions.onUpdateConfigSubcription = this.service.events.internal.onUpdateConfig.subscribe(
             (config: InlineConfig) => this.onUpdateConfig(config),
