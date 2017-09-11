@@ -2,7 +2,8 @@ import { InlineBaseConfig, InlineConfig } from "../types/inline-configs";
 import {
     Renderer, Component, ViewChild, ElementRef, OnInit,
     Injector, OnChanges, DoCheck, AfterContentInit,
-    AfterViewInit, AfterViewChecked, AfterContentChecked, OnDestroy, ChangeDetectionStrategy,
+    AfterViewInit, AfterViewChecked, AfterContentChecked,
+    OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef,
 } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { InlineEditorError } from "../types/inline-editor-error.interface";
@@ -22,10 +23,11 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
     constructor(protected injector: Injector) {
         this.renderer = injector.get(Renderer);
         this.service = injector.get(InlineEditorService);
+        this.cd = injector.get(ChangeDetectorRef);
+
         this.onUpdateConfig(this.service.getConfig()!);
 
         this.state = this.service.getState().clone();
-        this.value = this.state.getState().value;
 
         this.subscriptions.onUpdateConfigSubcription = this.service.events.internal.onUpdateConfig.subscribe(
             (config: InlineConfig) => this.onUpdateConfig(config),
@@ -72,6 +74,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
     public isRegexTestable = false;
     public isLengthTestable = false;
     protected renderer: Renderer;
+    protected cd: ChangeDetectorRef;
     protected subscriptions: { [key: string]: Subscription } = {};
 
 
@@ -206,6 +209,8 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
         }
 
         this.state = newState;
+
+        this.cd.markForCheck();
 
         this.service.onUpdateStateOfService.emit(this.state.clone());
     }
