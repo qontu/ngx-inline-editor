@@ -1,6 +1,6 @@
 {
   "name": "@qontu/ngx-inline-editor",
-  "version": "0.2.0-alpha.10",
+  "version": "0.2.0-alpha.11",
   "author": {
     "name": "Carlos Caballero",
     "email": "caballerog.carlos@gmail.com"
@@ -54,12 +54,12 @@
     "@angular/forms": "^4.0.0"
   },
   "devDependencies": {
-    "@angular/common": "^4.2.3",
-    "@angular/compiler": "^4.2.3",
-    "@angular/core": "^4.2.3",
-    "@angular/forms": "^4.2.3",
-    "@angular/platform-browser": "^4.2.3",
-    "@angular/platform-browser-dynamic": "^4.2.3",
+    "@angular/common": "^4.3.6",
+    "@angular/compiler": "^4.3.6",
+    "@angular/core": "^4.3.6",
+    "@angular/forms": "^4.3.6",
+    "@angular/platform-browser": "^4.3.6",
+    "@angular/platform-browser-dynamic": "^4.3.6",
     "@types/del": "^2.2.32",
     "@types/gulp": "4.0.3",
     "@types/gulp-changed": "^0.0.31",
@@ -69,10 +69,10 @@
     "@types/merge2": "^0.3.30",
     "@types/node": "~7.0.13",
     "@types/run-sequence": "^0.0.28",
-    "codelyzer": "^3.0.0",
+    "codelyzer": "^3.1.2",
     "commitizen": "^2.9.6",
     "conventional-changelog-lint": "^1.1.9",
-    "core-js": "^2.4.1",
+    "core-js": "^2.5.1",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-changed": "^3.1.0",
@@ -80,7 +80,7 @@
     "gulp-ngc": "^0.3.2",
     "gulp-rename": "^1.2.2",
     "gulp-rollup": "^2.14.0",
-    "gulp-typescript": "^3.2.1",
+    "gulp-typescript": "^3.2.2",
     "jasmine-core": "^2.6.4",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "~2.2.0",
@@ -99,14 +99,13 @@
     "phantomjs-prebuilt": "~2.1.14",
     "protractor": "~5.1.0",
     "reflect-metadata": "~0.1.10",
-    "rollup": "^0.45.2",
+    "rollup": "^0.47.2",
     "run-sequence": "^1.2.2",
-    "rxjs": "^5.3.0",
-    "ts-loader": "^2.0.3",
-    "ts-node": "~2.0.0",
-    "tslint": "^5.1.0",
-    "typescript": "~2.3.4",
-    "zone.js": "^0.8.5"
+    "rxjs": "^5.4.3",
+    "ts-node": "~3.3.0",
+    "tslint": "^5.7.0",
+    "typescript": "~2.4.2",
+    "zone.js": "^0.8.17"
   },
   "engines": {
     "node": ">=6.0.0"
