@@ -79,7 +79,7 @@
     "gulp-inline-ng2-template": "^4.0.0",
     "gulp-ngc": "^0.3.2",
     "gulp-rename": "^1.2.2",
-    "gulp-rollup": "^2.14.0",
+    "gulp-rollup": "2.14.0",
     "gulp-typescript": "^3.2.2",
     "jasmine-core": "^2.6.4",
     "karma": "^1.7.0",
