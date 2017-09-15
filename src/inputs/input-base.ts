@@ -162,7 +162,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
         const { value } = this.state.getState();
 
         if (this.canTestRegex(this.config)) {
-            if (!new RegExp(this.config.pattern as string).test(value)) {
+            if (!new RegExp(this.config.pattern as string).test((value !== null && value !== false) ? value : ''))  {
                 errs.push({
                     type: "PATTERN_ERROR",
                     message: "Test pattern has failed",
@@ -172,7 +172,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
 
         if (this.canTestLength(this.config)) {
             const { min, max } = this.config;
-            const length = this.isNumeric ? Number(value) : value.length;
+            const length = value ? (this.isNumeric ? Number(value) : value.length) : 0;
 
             if (length < min || length > max) {
                 errs.push({
