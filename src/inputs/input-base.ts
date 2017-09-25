@@ -162,7 +162,7 @@ export class InputBase implements OnInit, OnChanges, DoCheck,
         const { value } = this.state.getState();
 
         if (this.canTestRegex(this.config)) {
-            if (!new RegExp(this.config.pattern as string).test((value !== null && value !== false) ? value : ''))  {
+            if (!new RegExp(this.config.pattern as string).test(value != null && value !== false ? value : ''))  {
                 errs.push({
                     type: "PATTERN_ERROR",
                     message: "Test pattern has failed",
