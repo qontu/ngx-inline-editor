@@ -1,7 +1,5 @@
 # Native UI Inline-editor Angular (version 4+) component ([demo](demos))
 
-## Updated WIP documentation <a href="https://xxxtonixxx.github.io/ngx-inline-editor/en/" target="_black"> here </a>.
-
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
 
 ngx-inline-editor is a library of Angular (version 4+) that allows you to create editable elements.
