@@ -1,5 +1,6 @@
 # Native UI Inline-editor Angular (version 4+) component ([demo](demos))
 
+## Updated WIP documentation <a href="https://xxxtonixxx.github.io/ngx-inline-editor/en/" target="_black"> here </a>.
 
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
 
@@ -137,7 +138,7 @@ export class MyComponent {
         min="1"
         max="8"
         pattern="^[a-zA-Z]{1,3}"
-        (onError)="myHandleError"></inline-editor>
+        (onError)="myHandleError()"></inline-editor>
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
