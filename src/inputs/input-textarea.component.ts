@@ -24,10 +24,13 @@ export class InputTextareaComponent extends InputBase implements OnInit {
 
     public onKeyPress(event: KeyboardEvent) {
         super.onKeyPress(event);
-        if ((this.config.saveOnEnter && event.charCode === 13 && !event.shiftKey) ||
-            (!this.config.saveOnEnter && event.charCode === 13 && event.shiftKey)) {
+        if (event.charCode === 13 && this.isSaving(event)) {
             this.save();
             this.onEscape(event);
         }
+    }
+
+    private isSaving(event: KeyboardEvent): boolean {
+        return (this.config.saveOnEnter && !event.shiftKey) || (!this.config.saveOnEnter && event.shiftKey);
     }
 }
