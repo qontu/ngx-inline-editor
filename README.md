@@ -1,6 +1,5 @@
 # Native UI Inline-editor Angular (version 4+) component ([demo](demos))
 
-
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
 
 ngx-inline-editor is a library of Angular (version 4+) that allows you to create editable elements.
@@ -137,7 +136,7 @@ export class MyComponent {
         min="1"
         max="8"
         pattern="^[a-zA-Z]{1,3}"
-        (onError)="myHandleError"></inline-editor>
+        (onError)="myHandleError()"></inline-editor>
 ```
 
 * **`type`** [`string`] Specifies the type `<input>` element to display.
