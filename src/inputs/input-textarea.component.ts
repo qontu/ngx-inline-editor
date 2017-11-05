@@ -22,17 +22,12 @@ export class InputTextareaComponent extends InputBase implements OnInit {
 
     public config: InlineTextareaConfig;
 
-    public onKeyPress(event) {
-        if (this.config.saveOnEnter) {
-            if (event.charCode === 13 && !event.shiftKey) {
-                this.save();
-                this.onEscape(event);
-            }
-        } else {
-            if (event.charCode === 13 && event.shiftKey) {
-                this.save();
-                this.onEscape(event);
-            }
+    public onKeyPress(event: KeyboardEvent) {
+        super.onKeyPress(event);
+        if ((this.config.saveOnEnter && event.charCode === 13 && !event.shiftKey) ||
+            (!this.config.saveOnEnter && event.charCode === 13 && event.shiftKey)) {
+            this.save();
+            this.onEscape(event);
         }
     }
 }
