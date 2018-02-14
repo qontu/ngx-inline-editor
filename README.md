@@ -180,7 +180,7 @@ The `$event` argument will be the value return of the input send.
 
 ```HTML
  <inline-editor
-        type="textArea"
+        type="textarea"
         [(ngModel)]="editableTextArea"
         (onSave)="saveEditable($event)"
         name="editableTextArea"
