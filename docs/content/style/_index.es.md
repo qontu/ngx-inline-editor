@@ -1,0 +1,63 @@
+---
+title: Estilos/temas
+type: page
+weight: 600
+---
+
+
+Este componente tiene las siguientes reglas básicas en `dist/themes/bootstrap.css`:
+
+``` CSS
+a.c-inline-editor {
+  text-decoration: none;
+  color: #428bca;
+  border-bottom: dashed 1px #428bca;
+  cursor: pointer;
+  line-height: 2;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.c-inline-editor.editable-empty,
+.c-inline-editor.editable-empty:hover,
+.c-inline-editor.editable-empty:focus,
+.c-inline-editor.a.editable-empty,
+.c-inline-editor.a.editable-empty:hover,
+.c-inline-editor.a.editable-empty:focus {
+  font-style: italic;
+  color: #DD1144;
+  text-decoration: none;
+}
+
+.c-inline-editor.inlineEditForm {
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0;
+}
+
+#inlineEditWrapper {
+  display: inline-block;
+}
+
+.c-inline-editor.inlineEditForm input,
+.c-inline-editor.select {
+  width: auto;
+  display: inline;
+}
+
+.c-inline-editor.inline-editor-button-group {
+  display: inline-block;
+}
+
+.c-inline-editor.editInvalid {
+  color: #a94442;
+  margin-bottom: 0;
+}
+
+.c-inline-editor.error {
+  border-color: #a94442;
+}
+
+[hidden].c-inline-editor {
+  display: none;
+}
+```
