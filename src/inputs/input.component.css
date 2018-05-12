@@ -31,7 +31,9 @@ a.editable-empty:focus {
 #inlineEditWrapper {
     display: inline-block;
 }
-
+#inlineEditWrapper a {
+    white-space: pre;
+}
 .inlineEditForm input,
 select {
     width: auto;
