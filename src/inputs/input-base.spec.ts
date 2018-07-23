@@ -1,5 +1,5 @@
 import { TestBed, fakeAsync, tick } from "@angular/core/testing";
-import { Renderer, Injector } from "@angular/core";
+import { Renderer, Injector, ChangeDetectorRef } from "@angular/core";
 
 import { InputBase } from "./input-base";
 import { inject } from "@angular/core/testing";
@@ -20,7 +20,11 @@ function inlineEditorSpyFactory(): InlineEditorService {
 
   const spy = {
     getConfig: jasmine.createSpy("getConfig").and.returnValue({ disabled: false }),
-    getState: jasmine.createSpy("getState"),
+    getState: jasmine.createSpy("getState").and.returnValue(new InlineEditorState({
+      value: "",
+      empty: true,
+      disabled: false,
+    })),
     events: {
       internal: {
         onUpdateConfig: createObservableSpy(),
@@ -75,6 +79,7 @@ describe("InputBaseComponent", () => {
           provide: Renderer,
           useFactory: rendererSpyFactory,
         },
+        ChangeDetectorRef,
       ],
     });
   });
