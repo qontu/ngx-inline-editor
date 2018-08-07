@@ -5,7 +5,7 @@ import {
     AfterViewInit, AfterViewChecked, AfterContentChecked,
     OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef,
 } from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 import { InlineEditorError } from "../types/inline-editor-error.interface";
 import { InlineEditorState } from "../types/inline-editor-state.class";
 import { InlineEditorService } from "../inline-editor.service";
