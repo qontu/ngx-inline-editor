@@ -1,28 +1,22 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "declaration": false,
-    "removeComments": true,
-    "noUnusedLocals": false,
-    "noLib": false,
-    "lib": [
-      "es2016"
-    ],
+    "module": "es2015",
+    "target": "es5",
+    "noImplicitAny": false,
+    "moduleResolution": "node",
     "sourceMap": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules"
-    ],
-    "types": [
-      "node"
-    ]
-  },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src"
-  ],
-  "compileOnSave": false
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "baseUrl": ".",
+    "importHelpers": true,
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["dom", "es2015", "es2017"],
+    "esModuleInterop": true,
+    "paths": {
+      "@qontu/ngx-inline-editor": ["./src/index"],
+      "@qontu/ngx-inline-editor/inputs": ["./src/inputs/src/"],
+      "@inputs/*": ["./src/inputs/src/*"]
+    }
+  }
 }

@@ -1,0 +1,18 @@
+<div>
+  <a [hidden]="input?.isShowing()" (click)="onEdit($event)">{{ input?.getPresentation() }}</a>
+  <div [hidden]="!input?.isShowing()">
+    <div #inlineEditor></div>
+
+    <div *ngIf="input?.showButtons()" class="buttons" [ngTemplateOutlet]="input?.hasButtonsTemplate() ? input.getButtonsTemplate() : presentation">
+
+    </div>
+  </div>
+</div>
+
+<ng-template #presentation>
+  <button (mousedown)="onSubmit($event)" id="inline-editor-button-save" class="btn btn-xs btn-primary c-inline-editor">
+    <span class="fa fa-check">Ok</span>
+  </button>
+  <button (mousedown)="onCancel($event)" class="btn btn-xs btn-danger c-inline-editor"><span class="fa fa-remove">Cancel</span>
+  </button>
+</ng-template>

@@ -3,11 +3,11 @@
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
 
 ngx-inline-editor is a library of Angular (version 4+) that allows you to create editable elements.
-Such technique is also known as *click-to-edit* or *edit-in-place*.
+Such technique is also known as _click-to-edit_ or _edit-in-place_.
 It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is developed in AngularJS.
 
-
 ![Version 0.1.0](https://github.com/qontu/ngx-inline-editor/raw/master/demos/basic/0.1.0.gif)
+
 ## Dependencies
 
 Basically it does not depend on any libraries except Angular4 itself.
@@ -16,36 +16,35 @@ For themes you may need to include Twitter Bootstrap CSS.
 ### Angular 4+ Version
 
 Angular 4 is now stable. Therefore, if encountering errors using this
-lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular4 **^4.0.0**.
+lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular4 **^6.0.0**.
 
 ## Controls & Features
 
-* [x] text
-* [x] textarea
-* [x] select
-* [ ] checkbox
-* [ ] radio
-* [ ] date
-* [ ] time
-* [x] datetime
-* [ ] html5 inputs
-  * [x] pattern
-  * [x] number
-  * [x] range
-* [ ] typeahead
-* [ ] ui-select
-* [ ] complex form
-* [ ] editable row
-* [ ] editable column
-* [ ] editable table
-* [x] themes
-
+- [x] text
+- [x] textarea
+- [x] select
+- [ ] checkbox
+- [ ] radio
+- [ ] date
+- [ ] time
+- [x] datetime
+- [ ] html5 inputs
+  - [x] pattern
+  - [x] number
+  - [x] range
+- [ ] typeahead
+- [ ] ui-select
+- [ ] complex form
+- [ ] editable row
+- [ ] editable column
+- [ ] editable table
+- [x] themes
 
 ## Quick start
 
-1. A recommended way to install ***ngx-inline-editor*** is through [npm](https://www.npmjs.com/search?q=ngx-inline-editor) package manager using the following command:
+1. A recommended way to install **_ngx-inline-editor_** is through [npm](https://www.npmjs.com/search?q=ngx-inline-editor) package manager using the following command:
 
-  `npm i @qontu/ngx-inline-editor --save`
+`npm i @qontu/ngx-inline-editor --save`
 
 2. Include the basic theme or configure your own styles which are in the following path:
 
@@ -53,15 +52,13 @@ lib, ensure your version of Angular is compatible. The current version used to d
 
 3. Include [Twitter Bootstrap](http://v4-alpha.getbootstrap.com/) and [FontAwesome](http://fontawesome.io/) in your project.
 
-
-Usage
------
+## Usage
 
 ## Angular (4+) and later
 
 Import `InlineEditorModule` into your app's modules:
 
-``` typescript
+```typescript
 import {InlineEditorModule} from '@qontu/ngx-inline-editor';
 
 @NgModule({
@@ -73,10 +70,10 @@ import {InlineEditorModule} from '@qontu/ngx-inline-editor';
 
 This makes all the `@qontu/ngx-inline-editor` components available for use in your app components.
 
-
 ## Simple Example
 
 You can find a complete example [here](demos/basic)
+
 ```TypeScript
 import {Component} from '@angular/core';
 
@@ -117,13 +114,11 @@ export class MyComponent {
   }
 ```
 
-
 ## API
 
 ### InlineEditorDirectives
 
 ##### Text
-
 
 ```HTML
  <inline-editor
@@ -139,16 +134,15 @@ export class MyComponent {
         (onError)="myHandleError()"></inline-editor>
 ```
 
-* **`type`** [`string`] Specifies the type `<input>` element to display.
-* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
-The `$event` argument will be the value return of the input send.
-* **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
-* **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
-* **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
-* **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
-* **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
-* **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-
+- **`type`** [`string`] Specifies the type `<input>` element to display.
+- **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
+  The `$event` argument will be the value return of the input send.
+- **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
+- **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
+- **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
+- **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
+- **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
+- **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
 
 ##### Password
 
@@ -165,16 +159,15 @@ The `$event` argument will be the value return of the input send.
         (onError)="myHandleError"></inline-editor>
 ```
 
-* **`type`** [`string`] Specifies the type `<input>` element to display.
-* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
-The `$event` argument will be the value return of the input send.
-* **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
-* **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
-* **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
-* **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
-* **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
-* **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-
+- **`type`** [`string`] Specifies the type `<input>` element to display.
+- **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
+  The `$event` argument will be the value return of the input send.
+- **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
+- **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
+- **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
+- **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
+- **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
+- **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
 
 ##### TextArea
 
@@ -191,21 +184,19 @@ The `$event` argument will be the value return of the input send.
         min="1"
         max="8"
         (onError)="myHandleError"></inline-editor>
-
 ```
 
-* **`type`** [`string`] Specifies the type `<input>` element to display.
-* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
-The `$event` argument will be the value return of the input send.
-* **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
-* **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
-* **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
-* **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
-* **`cols`** [`number`] Specifies the visible width of a text area. Default is `50`.
-* **`rows`** [`number`] Specifies the visible height of a text area. Default is `4`.
-* **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
-* **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
-
+- **`type`** [`string`] Specifies the type `<input>` element to display.
+- **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
+  The `$event` argument will be the value return of the input send.
+- **`onError`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button and an error is provoked (example: the value is not between min and max).
+- **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
+- **`size`** [`number`] Defines the width, in characters, of an `<input>` element. Default is `8`.
+- **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
+- **`cols`** [`number`] Specifies the visible width of a text area. Default is `50`.
+- **`rows`** [`number`] Specifies the visible height of a text area. Default is `4`.
+- **`min`** [`number`] the min attribute specifies the minimum value for an `<input>` element. Default is `1`.
+- **`max`** [`number`] the max attribute specifies the maximum value for an `<input>` element. Default is `Infinity`.
 
 ##### Select
 
@@ -221,15 +212,16 @@ The `$event` argument will be the value return of the input send.
         [options]="editableSelectOptions"></inline-editor>
 ```
 
-* **`type`** [`string`] Specifies the type `<input>` element to display.
-* **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
-The `$event` argument will be the value return of the input send.
-* **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
-* **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
-* **`options`** [`Array<optionItem> | Object:{ data: Array<optionItem, value:string, text: string }`] Array of items from which to select. Should be an array of objects with `value` and `text` properties.
-Is possible to configure key-value parameters using an object that specifies these fields and data.
+- **`type`** [`string`] Specifies the type `<input>` element to display.
+- **`onSave`** [`event handler`] The expression specified will be invoked whenever the form is save via a click on save button.
+  The `$event` argument will be the value return of the input send.
+- **`name`** [`string`] Defines the name of an `<input>` element. Default is `undefined`.
+- **`disabled`** [`boolean`] If set to `true`, a disabled input element is unusable and un-clickable. Default is `false`.
+- **`options`** [`Array<optionItem> | Object:{ data: Array<optionItem, value:string, text: string }`] Array of items from which to select. Should be an array of objects with `value` and `text` properties.
+  Is possible to configure key-value parameters using an object that specifies these fields and data.
 
 Typescript code:
+
 ```TypeScript
   editableSelect = 2;
   editableSelectOptions =[
@@ -248,11 +240,12 @@ Typescript code:
 
 ##### Parameter's configuration example
 
-* **`editableSelect`** [`number`] Specifies the default's value of the select.
-* **`editableSelectOptions`** [`Array<optionItem> | Object: { data: Array<optionItem, value:string, text: string }`] Specifies the array of items from which to select. Should be an array of objects with `value` and `text` properties.
-Is possible to configure key-value parameters using an object that specifies these fields and data.
+- **`editableSelect`** [`number`] Specifies the default's value of the select.
+- **`editableSelectOptions`** [`Array<optionItem> | Object: { data: Array<optionItem, value:string, text: string }`] Specifies the array of items from which to select. Should be an array of objects with `value` and `text` properties.
+  Is possible to configure key-value parameters using an object that specifies these fields and data.
 
 Typescript code:
+
 ```TypeScript
   editableSelect = 2;
   editableSelectOptionsConfiguration = {
@@ -278,6 +271,7 @@ Typescript code:
 Is possible to configure sublevels/children to generate the select using an array of objects called `children`.
 
 Typescript code:
+
 ```TypeScript
  editableSelectOptionsTwoLevelsDefault = 1;
   editableSelectOptionsTwoLevelsConfiguration = {
@@ -301,12 +295,9 @@ Typescript code:
   }
 ```
 
-
 ![Version 0.1.0-optGroup](https://github.com/qontu/ngx-inline-editor/raw/master/demos/basic/0.1.0-optGroup.gif)
 
 #### Empty components
-
-
 
 ```HTML
   <inline-editor
@@ -326,10 +317,8 @@ Typescript code:
                 [options]="editableSelectOptionsConfiguration"></inline-editor>
 ```
 
-* **`empty`** [`string`] Specifies the default message to display if there are not ngModel for the component.
-If the type is `select` then the default selected element is the first element of the `options` array.
-
-
+- **`empty`** [`string`] Specifies the default message to display if there are not ngModel for the component.
+  If the type is `select` then the default selected element is the first element of the `options` array.
 
 # Style/Theme
 
@@ -390,13 +379,12 @@ a.c-inline-editor {
 }
 ```
 
-
 # Integration with other ngx-libraries
 
 ## ngx-data-table
+
 Example using [angular2-data-table](https://github.com/swimlane/angular2-data-table) ([demo](demos))
 ![Version 0.1.0-angular2-data-table](demos/angular2-data-table/0.1.0.gif)
-
 
 # Troubleshooting
 
@@ -411,17 +399,18 @@ Thanks for understanding!
 
 1. To generate all `*.js`, `*.js.map` and `*.d.ts` files:
 
-    `npm run build`
+   `npm run build`
 
 2. To debug :
 
-    `npm run build:watch`
+   `npm run build:watch`
 
 ## Authors
+
 Carlos Caballero - [https://github.com/caballerog](hhttps://github.com/caballerog)
 
 Antonio Villena - [https://github.com/xxxtonixxx](https://github.com/xxxtonixxx)
+
 ## License
 
-The MIT License (See the [LICENSE](https://github.com/qontu/ngx-inline-editor/blob/master/LICENSE.MD) file for the full text) - 
-
+The MIT License (See the [LICENSE](https://github.com/qontu/ngx-inline-editor/blob/master/LICENSE.MD) file for the full text) -
