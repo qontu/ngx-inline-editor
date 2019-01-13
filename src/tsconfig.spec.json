@@ -4,11 +4,12 @@
     "baseUrl": "./",
     "outDir": "../out-tsc/spec",
     "module": "commonjs",
+    "target": "esnext",
     "types": ["jest", "jsdom", "node"],
     "paths": {
-      "@qontu/ngx-inline-editor": ["./index"],
-      "@qontu/ngx-inline-editor/inputs": ["./inputs/src/"],
-      "@inputs/*": ["./inputs/src/*"]
+      "@qontu/ngx-inline-editor": ["<rootDir>/index"],
+      "@qontu/ngx-inline-editor/inputs": ["<rootDir>/inputs/src/"],
+      "@inputs/*": ["<rootDir>/inputs/src/*"]
     }
   },
   "include": ["**/*.spec.ts", "**/*.d.ts"]

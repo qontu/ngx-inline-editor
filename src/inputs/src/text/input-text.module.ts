@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   declarations: [InputTextComponent],
-  entryComponents: [InputTextComponent]
+  entryComponents: [InputTextComponent],
 })
 export class InputTextModule {
   public static forRoot(): ModuleWithProviders {
@@ -17,9 +17,9 @@ export class InputTextModule {
         {
           provide: INLINE_EDITOR_INPUTS,
           useValue: InputTextComponent,
-          multi: true
-        }
-      ]
+          multi: true,
+        },
+      ],
     };
   }
 }

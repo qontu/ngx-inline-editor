@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   declarations: [InputPasswordComponent],
-  entryComponents: [InputPasswordComponent]
+  entryComponents: [InputPasswordComponent],
 })
 export class InputPasswordModule {
   public static forRoot(): ModuleWithProviders {
@@ -17,9 +17,9 @@ export class InputPasswordModule {
         {
           provide: INLINE_EDITOR_INPUTS,
           useValue: InputPasswordComponent,
-          multi: true
-        }
-      ]
+          multi: true,
+        },
+      ],
     };
   }
 }

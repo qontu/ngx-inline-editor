@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import {
   InputPasswordModule,
-  InputTextModule
+  InputTextModule,
 } from '@qontu/ngx-inline-editor/inputs';
 
 @NgModule({
@@ -18,9 +18,9 @@ import {
     InlineEditorModule,
     InlineEditorModule.forRoot(),
     InputPasswordModule.forRoot(),
-    InputTextModule.forRoot()
+    InputTextModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

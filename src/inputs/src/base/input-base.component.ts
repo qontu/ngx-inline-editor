@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import {
@@ -7,7 +7,7 @@ import {
   Enable,
   CommitValue,
   Editing,
-  PreventCommit
+  PreventCommit,
 } from './store/actions/config.actions';
 import { Store } from '@qontu/component-store';
 import * as fromConfig from './store/index';
@@ -26,7 +26,7 @@ const defaultConfig: InputBaseConfig = {
   empty: 'Empty',
   hideButtons: false,
   name: Date.now().toString(),
-  placeholder: ''
+  placeholder: '',
 };
 
 export class InputBaseComponent<InputConfig extends InputBaseConfig>
@@ -36,11 +36,16 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   value$: Observable<string>;
   isDisabled$: Observable<boolean>;
 
+  @ViewChild('input')
+  private _input: ElementRef<HTMLInputElement>;
+  get input() {
+    return this._input.nativeElement;
+  }
   constructor(
     protected store$: Store<fromConfig.State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
-    public config: Partial<InputConfig> = {}
+    public config: Partial<InputConfig> = {},
   ) {
     super(ngControl);
     this.value$ = this.store$.select(({ value }) => value);
@@ -88,7 +93,7 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   ngOnInit() {
     this.config = {
       ...defaultConfig,
-      ...(this.config as any)
+      ...(this.config as any),
     };
     this.value$.subscribe(this.events.onSave);
   }
@@ -103,6 +108,10 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
 
   onFocus(event: Event) {
     this.events.onFocus.emit(this.prepareToEmit(event));
+  }
+
+  onClick(event: Event) {
+    this.events.onClick.emit(this.prepareToEmit(event));
   }
 
   onKeyPress(event: Event) {
@@ -150,7 +159,7 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   isValid(value?: string): boolean {
     return new FormControl(
       value ? value : this.control.valid,
-      this.control.validator
+      this.control.validator,
     ).valid;
   }
 
@@ -159,7 +168,7 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
     return {
       event,
       input: this,
-      state: this.getState()
+      state: this.getState(),
     };
   }
 }

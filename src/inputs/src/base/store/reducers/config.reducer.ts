@@ -1,4 +1,11 @@
-import { Disable, Enable, UpdateDirtyValue, CommitValue, PreventCommit, Editing } from '../actions/config.actions';
+import {
+  Disable,
+  Enable,
+  UpdateDirtyValue,
+  CommitValue,
+  PreventCommit,
+  Editing,
+} from '../actions/config.actions';
 import { Store, Action } from '@qontu/component-store/actions';
 
 export interface Config {
@@ -14,14 +21,14 @@ export interface Config {
   dirty: '',
   isDisabled: false,
   isEditing: false,
-  isCanceled: false
+  isCanceled: false,
 })
 export class TextConfigStore {
   @Action(Disable)
   disable(state: Config, action: Disable): Config {
     return {
       ...state,
-      isDisabled: true
+      isDisabled: true,
     };
   }
 
@@ -29,15 +36,18 @@ export class TextConfigStore {
   enable(state: Config, action: Enable): Config {
     return {
       ...state,
-      isDisabled: false
+      isDisabled: false,
     };
   }
 
   @Action(UpdateDirtyValue)
-  updateDirtyValue(state: Config, { payload: { value } }: UpdateDirtyValue): Config {
+  updateDirtyValue(
+    state: Config,
+    { payload: { value } }: UpdateDirtyValue,
+  ): Config {
     return {
       ...state,
-      dirty: value
+      dirty: value,
     };
   }
 
@@ -46,7 +56,7 @@ export class TextConfigStore {
     return {
       ...state,
       dirty: value,
-      value
+      value,
     };
   }
 
@@ -54,7 +64,7 @@ export class TextConfigStore {
   preventCommit(state: Config): Config {
     return {
       ...state,
-      isCanceled: true
+      isCanceled: true,
     };
   }
 
@@ -63,7 +73,7 @@ export class TextConfigStore {
     return {
       ...state,
       isEditing,
-      isCanceled: isEditing ? false : state.isCanceled
+      isCanceled: isEditing ? false : state.isCanceled,
     };
   }
 }
