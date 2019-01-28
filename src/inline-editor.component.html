@@ -6,9 +6,9 @@
       <span *ngIf="!config.hideButtons" class="c-inline-editor inline-editor-button-group">
       <button id="inline-editor-button-save" class="btn btn-xs btn-primary c-inline-editor"
           (click)="saveAndClose({ event: $event, state: service.getState() })">
-          <span class="fa fa-check"></span>
+          <fa-icon container="body" icon="check"></fa-icon>
       </button>
-      <button class="btn btn-xs btn-danger c-inline-editor" (click)="cancel({ event: $event, state: service.getState() })"><span class="fa fa-remove"></span> </button>
+      <button class="btn btn-xs btn-danger c-inline-editor" (click)="cancel({ event: $event, state: service.getState() })"><fa-icon container="body" icon="times"></fa-icon> </button>
       </span>
 
     </div>

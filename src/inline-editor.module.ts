@@ -1,6 +1,10 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+library.add(faCheck, faTimes);
 
 import { InlineEditorComponent } from "./inline-editor.component";
 import {
@@ -36,6 +40,7 @@ const EXPORTS = [
     InputDatetimeComponent,
     InputCheckboxComponent,
     InlineEditorComponent,
+    FontAwesomeModule
 ];
 
 @NgModule({
