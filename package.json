@@ -9,10 +9,8 @@
     "test": "jest -c jest.config.js",
     "test:watch": "jest -c jest.config.js --watchAll",
     "github-pages": "push-dir --dir=playground/dist --branch=gh-pages --overwrite-local",
-    "precommit": "lint-staged",
     "commit": "git-cz",
-    "commitmsg": "commitlint -e $GIT_PARAMS",
-    "demo": "cd playground && npm start",
+    "playground": "cd playground && npm start",
     "semantic-release": "semantic-release",
     "setup": "semantic-release-cli setup",
     "contributors:add": "all-contributors add",
@@ -59,6 +57,7 @@
     "angular4",
     "angular5",
     "angular6",
+    "angular7",
     "inline-editor"
   ],
   "ngPackage": {
@@ -77,51 +76,51 @@
     "@qontu/component-store": "^0.1.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.12.1",
-    "@angular/animations": "^7.2.0",
-    "@angular/cli": "~7.2.1",
-    "@angular/common": "7.2.0",
-    "@angular/compiler": "7.2.0",
-    "@angular/compiler-cli": "7.2.0",
-    "@angular/core": "7.2.0",
-    "@angular/forms": "7.2.0",
-    "@angular/http": "^7.2.0",
-    "@angular/language-service": "^7.2.0",
-    "@angular/platform-browser": "^7.2.0",
-    "@angular/platform-browser-dynamic": "^7.2.0",
-    "@angular/router": "^7.2.0",
+    "@angular-devkit/build-angular": "~0.12.3",
+    "@angular/animations": "^7.2.2",
+    "@angular/cli": "~7.2.3",
+    "@angular/common": "7.2.2",
+    "@angular/compiler": "7.2.2",
+    "@angular/compiler-cli": "7.2.2",
+    "@angular/core": "7.2.2",
+    "@angular/forms": "7.2.2",
+    "@angular/http": "^7.2.2",
+    "@angular/language-service": "^7.2.2",
+    "@angular/platform-browser": "^7.2.2",
+    "@angular/platform-browser-dynamic": "^7.2.2",
+    "@angular/router": "^7.2.2",
     "@commitlint/cli": "^7.3.1",
     "@commitlint/config-angular": "^7.3.1",
     "@commitlint/config-conventional": "^7.3.1",
-    "@netbasal/spectator": "3.1.3",
+    "@netbasal/spectator": "3.2.1",
     "ng-mocks": "^7.4.0",
     "@semantic-release/changelog": "^3.0.1",
     "@semantic-release/git": "^7.0.6",
     "@semantic-release/npm": "^5.1.2",
-    "@types/jest": "^23.3.12",
+    "@types/jest": "^23.3.13",
     "@types/jsdom": "^12.2.1",
     "@types/node": "~10.12.18",
-    "all-contributors-cli": "^5.4.1",
+    "all-contributors-cli": "^5.11.0",
     "commitizen": "^3.0.5",
-    "core-js": "^2.6.2",
+    "core-js": "^2.6.3",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^1.3.1",
-    "jest": "^23.6.0",
+    "jest": "^24.0.0",
     "jest-preset-angular": "^6.0.2",
     "lint-staged": "^7.3.0",
-    "ng-packagr": "^4.5.0",
-    "prettier": "^1.15.3",
+    "ng-packagr": "^4.7.0",
+    "prettier": "^1.16.1",
     "push-dir": "^0.4.1",
     "rxjs": "^6.3.3",
     "semantic-release": "^15.13.1",
     "semantic-release-cli": "^4.1.0",
     "ts-jest": "^23.10.5",
-    "ts-node": "~7.0.1",
+    "ts-node": "~8.0.2",
     "tslib": "^1.9.3",
     "tslint": "^5.12.1",
-    "typescript": "~3.2.2",
+    "typescript": "~3.2.4",
     "tsickle": "^0.34.0",
-    "zone.js": "~0.8.27"
+    "zone.js": "~0.8.29"
   },
   "release": {
     "verifyConditions": [
@@ -144,5 +143,11 @@
       }
     ]
   },
-  "license": "MIT"
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  }
 }

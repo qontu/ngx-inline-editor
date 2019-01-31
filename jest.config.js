@@ -8,7 +8,7 @@ module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: 'src',
   bail: true,
-  setupTestFrameworkScriptFile: '../jest.setup.ts',
+  setupFilesAfterEnv: ['../jest.setup.ts'],
   // testRegex: '/src/.*\\.(test|spec).(ts|tsx|js)$',
   moduleDirectories: ['node_modules', 'src'], // So important, whithout this, custom paths don't work
   transform: {

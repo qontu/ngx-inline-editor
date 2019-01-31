@@ -1,3 +1,10 @@
 {
-  "ngPackage": {}
+  "ngPackage": {
+    "lib": {
+      "umdModuleIds": {
+        "@qontu/component-store": "componentStore",
+        "@qontu/component-store/actions": "componentStoreActions"
+      }
+    }
+  }
 }
