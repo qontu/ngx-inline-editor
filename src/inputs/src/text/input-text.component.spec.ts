@@ -9,9 +9,10 @@ import {
 } from '@qontu/ngx-inline-editor';
 import { FormsModule, NgControl, NgModel } from '@angular/forms';
 import { Config } from '@inputs/base/store/reducers/config.reducer';
+import { InputTextConfig } from './input-text.config';
 
 describe('InputTextComponent', () => {
-  const createHost = createHostComponentFactory({
+  const hostConfig = {
     component: InputTextComponent,
     imports: [FormsModule],
     providers: [
@@ -22,10 +23,15 @@ describe('InputTextComponent', () => {
       },
       {
         provide: INLINE_EDITOR_CONFIG,
-        useValue: {},
+        useValue: {
+          max: 10,
+          min: 5,
+        },
       },
     ],
-  });
+  };
+
+  const createHost = createHostComponentFactory(hostConfig);
 
   let host: SpectatorWithHost<InputTextComponent>;
 
@@ -79,13 +85,13 @@ describe('InputTextComponent', () => {
       host.patchElementFocus(host.component.input);
     });
 
-    // ${'focus'}     | ${'onFocus'} | ${1}
-    // ${'blur'}      | ${'onBlur'}  | ${1}
-    // ${'mouseup'}   | ${'onClick'} | ${0}
-    // ${'mousedown'} | ${'onClick'} | ${0}
     it.each`
-      event      | fn           | times
-      ${'click'} | ${'onClick'} | ${1}
+      event          | fn           | times
+      ${'focus'}     | ${'onFocus'} | ${1}
+      ${'blur'}      | ${'onBlur'}  | ${1}
+      ${'mouseup'}   | ${'onClick'} | ${0}
+      ${'mousedown'} | ${'onClick'} | ${0}
+      ${'click'}     | ${'onClick'} | ${1}
     `(
       '($event) should call $fn function $times times',
       ({ event, fn, times }) => {
@@ -115,5 +121,15 @@ describe('InputTextComponent', () => {
 
     expect(host.component.getState().isDisabled).toBeTruthy();
     expect(host.component.input.disabled).toBeTruthy();
+  });
+
+  it('should override the default config if one is provided', () => {
+    const config: InputTextConfig = {
+      max: 10,
+      min: 5,
+    };
+
+    expect(host.component.config.max).toBe(config.max);
+    expect(host.component.config.min).toBe(config.min);
   });
 });

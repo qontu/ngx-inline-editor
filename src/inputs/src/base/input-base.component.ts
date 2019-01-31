@@ -148,7 +148,6 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
 
   changeValue(value: any): void {
     this.store$.dispatch(new UpdateDirtyValue({ value }));
-    // this.store$.dispatch(new UpdateDirtyValue({ value, isValid }));
   }
 
   commitValue(value: string): void {

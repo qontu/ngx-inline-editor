@@ -14,14 +14,14 @@ import {
   Injector,
   EventEmitter,
   Output,
-  Input
+  Input,
   // ReflectiveInjector,
   // Injector,
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
-  NgControl
+  NgControl,
 } from '@angular/forms';
 import { INLINE_EDITOR_INPUTS, InlineEditorEvents } from './common/index';
 import { InputBase, InputWithControls } from './inputs/src/input-base';
@@ -33,10 +33,10 @@ import { InputBase, InputWithControls } from './inputs/src/input-base';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InlineEditorComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InlineEditorComponent
   implements OnInit, AfterViewInit, AfterContentInit, ControlValueAccessor {
@@ -77,7 +77,7 @@ export class InlineEditorComponent
     protected cd: ChangeDetectorRef,
     protected componentFactoryResolver: ComponentFactoryResolver,
     private injector: Injector,
-    @Inject(INLINE_EDITOR_INPUTS) protected inputs: Type<InputBase>[]
+    @Inject(INLINE_EDITOR_INPUTS) protected inputs: Type<InputBase>[],
   ) {}
 
   onSubmit(event: any) {}
@@ -119,9 +119,8 @@ export class InlineEditorComponent
   ngAfterContentInit(): void {}
 
   private getComponentType(typeName: string = 'text'): Type<InputBase> | never {
-    const input = this.inputs.find(
-      ({ type }) =>
-        Array.isArray(type) ? type.includes(typeName) : type === typeName
+    const input = this.inputs.find(({ type }) =>
+      Array.isArray(type) ? type.includes(typeName) : type === typeName,
     );
 
     if (!input) {
@@ -135,13 +134,13 @@ export class InlineEditorComponent
     const componentType = this.getComponentType(type);
     this.input = this.createInputInstance(componentType);
 
-    if (isInput(this.input)) {
-      this.registerInput(this.input);
-    } else {
+    if (!isInput(this.input)) {
       throw new Error(
-        'The input must implement the ControlValueAccessor interface'
+        'The input must implement the ControlValueAccessor interface',
       );
     }
+
+    this.registerInput(this.input);
 
     if (hasControl(this.input)) {
       this.registerControls(this.input);
@@ -164,18 +163,18 @@ export class InlineEditorComponent
         [
           {
             provide: InlineEditorEvents,
-            useValue: this.events
+            useValue: this.events,
           },
           {
             provide: 'INLINE_EDITOR_CONFIG',
             useValue: {
               type: this.type,
-              ...this.config
-            }
-          }
+              ...this.config,
+            },
+          },
         ],
-        this.injector
-      )
+        this.injector,
+      ),
     );
     // this.componentRef = this.container.createComponent(factory , 0, refInjector);
 
