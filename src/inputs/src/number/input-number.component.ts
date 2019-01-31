@@ -47,7 +47,6 @@ const defaultConfig: InputNumberConfig = {
     {
       provide: Store,
       useFactory: fromConfig.createStore,
-      deps: [[new Optional(), Boolean]],
     },
   ],
 })
@@ -65,8 +64,8 @@ export class InputNumberComponent extends InputBaseComponent<InputNumberConfig>
   ) {
     super(store$, ngControl, events, config);
     this.config = {
-      ...this.config,
       ...defaultConfig,
+      ...config,
     };
   }
 }

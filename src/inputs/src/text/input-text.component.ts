@@ -49,7 +49,6 @@ const defaultConfig: InputTextConfig = {
     {
       provide: Store,
       useFactory: fromConfig.createStore,
-      deps: [[new Optional(), Boolean]],
     },
   ],
 })
@@ -70,8 +69,8 @@ export class InputTextComponent extends InputBaseComponent<InputTextConfig>
   ) {
     super(store$, ngControl, events, config);
     this.config = {
-      ...config,
       ...defaultConfig,
+      ...config,
     };
   }
 }
