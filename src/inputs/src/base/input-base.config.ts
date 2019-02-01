@@ -4,6 +4,7 @@ export interface InlineActionsOnEvents {
   saveOnEnter?: boolean;
   cancelOnEscape?: boolean;
   editOnClick?: boolean;
+  focusOnClick?: boolean;
 }
 
 export interface InputBaseConfig extends InlineActionsOnEvents {

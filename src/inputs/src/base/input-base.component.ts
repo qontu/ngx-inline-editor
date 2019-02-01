@@ -1,4 +1,4 @@
-import { OnInit, ViewChild, ElementRef } from '@angular/core';
+import { OnInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
 import { FormControl, NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import {
@@ -8,6 +8,7 @@ import {
   CommitValue,
   Editing,
   PreventCommit,
+  InvalidValue,
 } from './store/actions/config.actions';
 import { Store } from '@qontu/component-store';
 import * as fromConfig from './store/index';
@@ -23,6 +24,7 @@ const defaultConfig: InputBaseConfig = {
   cancelOnEscape: true,
   disabled: false,
   editOnClick: true,
+  focusOnClick: true,
   empty: 'Empty',
   hideButtons: false,
   name: Date.now().toString(),
@@ -33,14 +35,25 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   extends InputBase<any, InputConfig>
   implements OnInit, InputWithControls {
   static type = 'base';
-  value$: Observable<string>;
+  value$: Observable<any>;
   isDisabled$: Observable<boolean>;
 
   @ViewChild('input')
   private _input: ElementRef<HTMLInputElement>;
-  get input() {
+
+  @ViewChild('valueTmpl')
+  private valueTmpl: TemplateRef<any>;
+
+  @ViewChild('emptyTmpl')
+  private emptyTmpl: TemplateRef<any>;
+
+  @ViewChild('buttonsTmpl')
+  private buttonsTmpl: TemplateRef<any>;
+
+  get input(): HTMLInputElement {
     return this._input.nativeElement;
   }
+
   constructor(
     protected store$: Store<fromConfig.State>,
     ngControl: NgControl,
@@ -49,6 +62,9 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   ) {
     super(ngControl);
     this.value$ = this.store$.select(({ value }) => value);
+    // TODO(Toni): should it unsubscribe?
+    this.store$.select(({ value }) => value === '').subscribe(this.empty$);
+    this.store$.select(({ isInvalid }) => isInvalid).subscribe(this.invalid$);
     this.isDisabled$ = this.store$.select(({ isDisabled }) => isDisabled);
   }
 
@@ -59,10 +75,15 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   onSubmit(event: Event): void {
     const { dirty: value } = this.getState();
 
-    if (this.isValid(value)) {
-      this.hide();
-      this.commitValue(value);
+    if (!this.isValid(value)) {
+      this.events.onError.emit(this.prepareToEmit(event));
+      this.store$.dispatch(new InvalidValue());
+      return;
     }
+
+    this.hide();
+    this.commitValue(value);
+    this.events.onSave.emit(this.prepareToEmit(event));
   }
 
   onCancel(event: Event): void {
@@ -73,6 +94,11 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
 
   onEdit(event: Event): void {
     this.show();
+
+    if (this.config.focusOnClick) {
+      setTimeout(() => this.input.focus());
+    }
+
     this.events.onEdit.emit(this.prepareToEmit(event));
   }
 
@@ -142,8 +168,36 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
     this.store$.dispatch(isDisabled ? new Disable() : new Enable());
   }
 
-  getPresentation() {
-    return this.control.value || this.config.empty;
+  hasValueTemplate(): boolean {
+    return this.valueTmpl != null;
+  }
+
+  hasEmptyTemplate(): boolean {
+    return this.emptyTmpl != null;
+  }
+
+  hasButtonsTemplate(): boolean {
+    return this.buttonsTmpl != null;
+  }
+
+  getValueTemplate(): TemplateRef<any> {
+    return this.valueTmpl;
+  }
+
+  getEmptyTemplate(): TemplateRef<any> {
+    return this.emptyTmpl;
+  }
+
+  getButtonsTemplate(): TemplateRef<any> {
+    return this.buttonsTmpl;
+  }
+
+  getValueRepresentation(): string {
+    return this.control.value;
+  }
+
+  getEmptyRepresentation(): string {
+    return this.config.empty;
   }
 
   changeValue(value: any): void {

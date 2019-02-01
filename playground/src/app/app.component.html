@@ -1,2 +1,10 @@
-<inline-editor type="password" [(ngModel)]="title"></inline-editor>
-<inline-editor type="text" [(ngModel)]="title"></inline-editor>
+<inline-editor
+  type="password"
+  [config]="{ saveOnBlur: true, focusOnClick: true }"
+  [(ngModel)]="title"
+></inline-editor>
+<inline-editor type="text" [(ngModel)]="title" disabled></inline-editor>
+
+<inline-editor [formControl]="reactiveTest"></inline-editor>
+
+<button (click)="toggle()">Toggle!</button>

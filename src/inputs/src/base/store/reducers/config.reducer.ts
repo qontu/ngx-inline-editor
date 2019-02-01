@@ -5,6 +5,7 @@ import {
   CommitValue,
   PreventCommit,
   Editing,
+  InvalidValue,
 } from '../actions/config.actions';
 import { Store, Action } from '@qontu/component-store/actions';
 
@@ -14,6 +15,8 @@ export interface Config {
   isDisabled: boolean;
   isEditing: boolean;
   isCanceled: boolean;
+  hasChanged: boolean;
+  isInvalid: boolean;
 }
 
 @Store<Config>({
@@ -22,8 +25,10 @@ export interface Config {
   isDisabled: false,
   isEditing: false,
   isCanceled: false,
+  hasChanged: false,
+  isInvalid: false,
 })
-export class TextConfigStore {
+export class BaseConfigStore {
   @Action(Disable)
   disable(state: Config, action: Disable): Config {
     return {
@@ -48,6 +53,7 @@ export class TextConfigStore {
     return {
       ...state,
       dirty: value,
+      hasChanged: true,
     };
   }
 
@@ -57,6 +63,8 @@ export class TextConfigStore {
       ...state,
       dirty: value,
       value,
+      hasChanged: false,
+      isInvalid: false,
     };
   }
 
@@ -65,6 +73,16 @@ export class TextConfigStore {
     return {
       ...state,
       isCanceled: true,
+      hasChanged: false,
+      isInvalid: false,
+    };
+  }
+
+  @Action(InvalidValue)
+  invalidValue(state: Config): Config {
+    return {
+      ...state,
+      isInvalid: true,
     };
   }
 

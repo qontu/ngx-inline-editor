@@ -1,0 +1,9 @@
+.inline-editor-input {
+  display: var(--inline-editor-input-display, inline);
+}
+
+.inline-editor-input-invalid {
+  border-color: #a94442;
+  color: #a94442;
+  margin-bottom: 0;
+}

@@ -15,20 +15,23 @@ import {
   EventEmitter,
   Output,
   Input,
-  // ReflectiveInjector,
-  // Injector,
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   NgControl,
 } from '@angular/forms';
-import { INLINE_EDITOR_INPUTS, InlineEditorEvents } from './common/index';
+import {
+  INLINE_EDITOR_INPUTS,
+  InlineEditorEvents,
+  INLINE_EDITOR_CONFIG,
+} from './common/index';
 import { InputBase, InputWithControls } from './inputs/src/input-base';
 
 @Component({
   selector: 'inline-editor',
   templateUrl: './ngx-inline-editor.component.html',
+  styleUrls: ['./ngx-inline-editor.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -166,7 +169,7 @@ export class InlineEditorComponent
             useValue: this.events,
           },
           {
-            provide: 'INLINE_EDITOR_CONFIG',
+            provide: INLINE_EDITOR_CONFIG,
             useValue: {
               type: this.type,
               ...this.config,
@@ -219,13 +222,9 @@ interface InitialValues {
 }
 
 export function isInput(input: any): input is InputBase {
-  return !!(
-    input.registerOnChange &&
-    input.registerOnTouched &&
-    input.writeValue
-  );
+  return input.registerOnChange && input.registerOnTouched && input.writeValue;
 }
 
 export function hasControl(input: any): input is InputWithControls {
-  return !!(input.onSubmit && input.onCancel);
+  return input.onSubmit && input.onCancel;
 }

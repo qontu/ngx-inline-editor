@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   Inject,
-  Optional,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -28,9 +27,12 @@ const defaultConfig: InputTextConfig = {
     <input
       #input
       type="text"
+      id="inlineEditorText"
+      class="inline-editor-input"
+      [ngClass]="{ 'inline-editor-input-invalid': this.invalid$ | async }"
       [ngModel]="value$ | async"
       (ngModelChange)="changeValue($event)"
-      [attr.disabled]="isDisabled$ | async"
+      [disabled]="isDisabled$ | async"
       (click)="onClick($event)"
       (blur)="onBlur($event)"
       (focus)="onFocus($event)"
@@ -44,6 +46,7 @@ const defaultConfig: InputTextConfig = {
       [minlength]="config.min"
     />
   `,
+  styleUrls: ['../base/input-base.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -55,10 +58,7 @@ const defaultConfig: InputTextConfig = {
 export class InputTextComponent extends InputBaseComponent<InputTextConfig>
   implements OnInit {
   static type = 'text';
-  value$: Observable<string>;
-  isDisabled$: Observable<boolean>;
   config: Partial<InputTextConfig>;
-  input: HTMLInputElement;
   constructor(
     protected store$: Store<fromConfig.State>,
     ngControl: NgControl,

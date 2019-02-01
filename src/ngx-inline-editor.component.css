@@ -1,0 +1,35 @@
+/* :root {
+  --inline-editor-cursor: pointer;
+  --inline-editor-display: inline-block;
+} */
+
+.inline-editor {
+  display: var(--inline-editor-display, inline-block);
+}
+
+.inline-editor > a {
+  text-decoration: none;
+  color: var(--inline-editor-color-value, #428bca);
+  border-bottom: var(--inline-editor-border-bottom, dashed 1px #428bca);
+  cursor: var(--inline-editor-cursor, progress);
+  line-height: 2;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.inline-editor-buttons {
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.inline-editor-empty,
+.inline-editor-empty:hover,
+.inline-editor-empty:focus,
+.inline-editor-empty > a,
+.inline-editor-empty > a:hover,
+.inline-editor-empty > a:focus {
+  font-style: var(--inline-editor-style-empty, italic);
+  color: var(--inline-editor-color-empty, #dd1144);
+  text-decoration: none;
+}

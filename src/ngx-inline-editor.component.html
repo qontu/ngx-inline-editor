@@ -1,18 +1,57 @@
-<div>
-  <a [hidden]="input?.isShowing()" (click)="onEdit($event)">{{ input?.getPresentation() }}</a>
+<div
+  class="inline-editor"
+  [ngClass]="{
+    'inline-editor-empty': input?.empty$ | async,
+    'inline-editor-invalid': input?.invalid$ | async
+  }"
+>
+  <a [hidden]="input?.isShowing()" (click)="onEdit($event)">
+    <ng-container
+      [ngTemplateOutlet]="
+        input?.isEmpty()
+          ? input?.getEmptyTemplate() || defaultEmptyRepresentation
+          : input?.getValueTemplate() || defaultValueRepresentation
+      "
+    ></ng-container>
+  </a>
+
   <div [hidden]="!input?.isShowing()">
     <div #inlineEditor></div>
 
-    <div *ngIf="input?.showButtons()" class="buttons" [ngTemplateOutlet]="input?.hasButtonsTemplate() ? input.getButtonsTemplate() : presentation">
-
-    </div>
+    <div
+      *ngIf="input?.showButtons()"
+      class="inline-editor-buttons"
+      [ngTemplateOutlet]="
+        input?.hasButtonsTemplate()
+          ? input?.getButtonsTemplate()
+          : defaultButtons
+      "
+    ></div>
   </div>
 </div>
 
-<ng-template #presentation>
-  <button (mousedown)="onSubmit($event)" id="inline-editor-button-save" class="btn btn-xs btn-primary c-inline-editor">
-    <span class="fa fa-check">Ok</span>
+<ng-template #defaultValueRepresentation>
+  {{ input?.getValueRepresentation() }}
+</ng-template>
+
+<ng-template #defaultEmptyRepresentation>
+  {{ input?.getEmptyRepresentation() }}
+</ng-template>
+
+<ng-template #defaultButtons>
+  <button
+    (mousedown)="onSubmit($event)"
+    id="inline-editor-button-save"
+    class="btn btn-sm btn-primary inline-editor-btn-submit"
+  >
+    <!-- <span class="fa fa-check">Ok</span> -->
+    <fa-icon container="body" icon="check"></fa-icon>
   </button>
-  <button (mousedown)="onCancel($event)" class="btn btn-xs btn-danger c-inline-editor"><span class="fa fa-remove">Cancel</span>
+  <button
+    (mousedown)="onCancel($event)"
+    class="btn btn-sm btn-danger inline-editor-btn-cancel"
+  >
+    <!-- <span class="fa fa-remove">Cancel</span> -->
+    <fa-icon container="body" icon="times"></fa-icon>
   </button>
 </ng-template>

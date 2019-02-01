@@ -10,7 +10,9 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
   static type: string | string[] = 'base';
 
   value$: Observable<ValueType>;
+  empty$: BehaviorSubject<boolean>;
   show$: BehaviorSubject<boolean>;
+  invalid$: BehaviorSubject<boolean>;
   control: FormControl;
   config: Config | Partial<Config>;
   protected onChange: (_: any) => void;
@@ -21,6 +23,8 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     this.control = this.ngControl.control as FormControl;
     this.value$ = this.control.valueChanges;
     this.show$ = new BehaviorSubject(false);
+    this.empty$ = new BehaviorSubject(false);
+    this.invalid$ = new BehaviorSubject(false);
   }
 
   writeValue(value: ValueType): void {
@@ -31,8 +35,24 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     throw new Error('Method not implemented.');
   }
 
+  hasValueTemplate(): boolean {
+    return false;
+  }
+
+  hasEmptyTemplate(): boolean {
+    return false;
+  }
+
   hasButtonsTemplate(): boolean {
     return false;
+  }
+
+  getValueTemplate(): TemplateRef<any> {
+    return null;
+  }
+
+  getEmptyTemplate(): TemplateRef<any> {
+    return null;
   }
 
   getButtonsTemplate(): TemplateRef<any> {
@@ -58,7 +78,11 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     return this.config;
   }
 
-  getPresentation(): string {
+  getValueRepresentation(): string {
+    return '';
+  }
+
+  getEmptyRepresentation(): string {
     return '';
   }
 
@@ -81,6 +105,14 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
   showButtons(): boolean {
     return true;
   }
+
+  isEmpty(): boolean {
+    return this.empty$.value;
+  }
+
+  isInvalid(): boolean {
+    return this.invalid$.value;
+  }
 }
 
 export interface InputWithControls {
@@ -97,13 +129,19 @@ export interface InputWithEvents {
 
 export interface InlineEditorInput<State = any, Config = any> extends Input {
   config: Config;
-  getPresentation(): string;
+  getValueRepresentation(): string;
+  getEmptyRepresentation(): string;
+  hasValueTemplate(): boolean;
+  hasEmptyTemplate(): boolean;
   hasButtonsTemplate(): boolean;
+  getValueTemplate(): TemplateRef<any>;
+  getEmptyTemplate(): TemplateRef<any>;
   getButtonsTemplate(): TemplateRef<any>;
   getConfig(): Config;
   setConfig(config: Config): void;
   getState(): State;
   setState(): State;
   isShowing(): boolean;
+  isEmpty(): boolean;
   showButtons(): boolean;
 }

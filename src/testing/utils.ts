@@ -5,9 +5,7 @@ export function mockClass<T extends { new (...args: any[]): InstanceType<T> }>(
 
   Object.keys(instance)
     .filter(prop => typeof instance[prop] === 'function')
-    .forEach(prop => {
-      instance[prop] = jest.fn();
-    });
+    .forEach(prop => (instance[prop] = jest.fn()));
 
   return instance;
 }

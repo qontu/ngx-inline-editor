@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   Inject,
-  Optional,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -26,7 +25,10 @@ const defaultConfig: InputPasswordConfig = {
   selector: 'inline-editor-password',
   template: `
     <input
+      #input
       type="password"
+      class="inline-editor-input"
+      id="inlineEditorPassword"
       [ngModel]="value$ | async"
       (ngModelChange)="changeValue($event)"
       [disabled]="isDisabled$ | async"
@@ -42,6 +44,7 @@ const defaultConfig: InputPasswordConfig = {
       [minlength]="config.min"
     />
   `,
+  styleUrls: ['../base/input-base.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -70,7 +73,7 @@ export class InputPasswordComponent
     };
   }
 
-  getPresentation(): string {
+  getValueRepresentation(): string {
     const { value } = this.getState();
     return !value ? this.config.empty : '*'.repeat(value.length);
   }

@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   Inject,
-  Optional,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -26,7 +25,10 @@ const defaultConfig: InputNumberConfig = {
   selector: 'inline-editor-number',
   template: `
     <input
+      #input
       type="number"
+      class="inline-editor-input"
+      id="inlineEditorNumber"
       [ngModel]="value$ | async"
       (ngModelChange)="changeValue($event)"
       [disabled]="isDisabled$ | async"
@@ -42,6 +44,7 @@ const defaultConfig: InputNumberConfig = {
       [min]="config.min"
     />
   `,
+  styleUrls: ['../base/input-base.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -53,8 +56,6 @@ const defaultConfig: InputNumberConfig = {
 export class InputNumberComponent extends InputBaseComponent<InputNumberConfig>
   implements OnInit {
   static type = 'number';
-  value$: Observable<string>;
-  isDisabled$: Observable<boolean>;
   config: Partial<InputNumberConfig>;
   constructor(
     protected store$: Store<fromConfig.State>,

@@ -18,5 +18,6 @@
       "@qontu/ngx-inline-editor/inputs": ["./src/inputs/src/"],
       "@inputs/*": ["./src/inputs/src/*"]
     }
-  }
+  },
+  "exclude": ["dist"]
 }
