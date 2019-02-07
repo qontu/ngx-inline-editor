@@ -15,6 +15,7 @@ import {
   EventEmitter,
   Output,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
@@ -24,9 +25,10 @@ import {
 import {
   INLINE_EDITOR_INPUTS,
   InlineEditorEvents,
-  INLINE_EDITOR_CONFIG,
+  INLINE_EDITOR_TEMPLATE_CONFIG,
 } from './common/index';
 import { InputBase, InputWithControls } from './inputs/src/input-base';
+import { InlineEditorService } from './ngx-inline-editor.service';
 
 @Component({
   selector: 'inline-editor',
@@ -42,7 +44,12 @@ import { InputBase, InputWithControls } from './inputs/src/input-base';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InlineEditorComponent
-  implements OnInit, AfterViewInit, AfterContentInit, ControlValueAccessor {
+  implements
+    OnInit,
+    OnDestroy,
+    AfterViewInit,
+    AfterContentInit,
+    ControlValueAccessor {
   input: InputBase;
   private componentRef: ComponentRef<InputBase>;
   @ViewChild('inlineEditor', { read: ViewContainerRef })
@@ -52,8 +59,8 @@ export class InlineEditorComponent
   events = new InlineEditorEvents();
   @Input()
   type: string;
-  @Input()
-  config: any;
+  @Input('config')
+  templateConfig: any = {};
 
   @Output()
   save: EventEmitter<any> = this.events.onSave;
@@ -80,6 +87,7 @@ export class InlineEditorComponent
     protected cd: ChangeDetectorRef,
     protected componentFactoryResolver: ComponentFactoryResolver,
     private injector: Injector,
+    private inlineEditorService: InlineEditorService,
     @Inject(INLINE_EDITOR_INPUTS) protected inputs: Type<InputBase>[],
   ) {}
 
@@ -113,6 +121,11 @@ export class InlineEditorComponent
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.inlineEditorService.unregisterInput(this.input.getID());
+    this.componentRef.destroy();
+  }
 
   ngAfterViewInit(): void {
     this.generateComponent(this.type);
@@ -148,6 +161,8 @@ export class InlineEditorComponent
     if (hasControl(this.input)) {
       this.registerControls(this.input);
     }
+
+    this.inlineEditorService.registerInput(this.input);
   }
 
   private createInputInstance(componentType: Type<InputBase>): InputBase {
@@ -169,11 +184,8 @@ export class InlineEditorComponent
             useValue: this.events,
           },
           {
-            provide: INLINE_EDITOR_CONFIG,
-            useValue: {
-              type: this.type,
-              ...this.config,
-            },
+            provide: INLINE_EDITOR_TEMPLATE_CONFIG,
+            useValue: this.templateConfig,
           },
         ],
         this.injector,

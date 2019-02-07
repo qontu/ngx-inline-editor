@@ -18,7 +18,7 @@ import {
     InlineEditorModule,
     InlineEditorModule.forRoot(),
     InputPasswordModule.forRoot(),
-    InputTextModule.forRoot(),
+    InputTextModule.forRoot({ empty: 'eeempttyyyyy' }),
   ],
   providers: [],
   bootstrap: [AppComponent],
