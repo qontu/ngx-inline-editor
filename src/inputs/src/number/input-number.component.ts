@@ -12,6 +12,7 @@ import { InputBaseComponent } from '../base/input-base.component';
 import {
   InlineEditorEvents,
   INLINE_EDITOR_TEMPLATE_CONFIG,
+  INLINE_EDITOR_GLOBAL_CONFIG,
 } from '@qontu/ngx-inline-editor';
 
 @Component({
@@ -54,7 +55,7 @@ export class InputNumberComponent extends InputBaseComponent<InputNumberConfig>
     protected store$: Store<fromConfig.State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
-    @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) globalConfig: any = {},
+    @Inject(INLINE_EDITOR_GLOBAL_CONFIG) globalConfig: any = {},
     @Inject(INPUT_NUMBER_CONFIG) inputConfig: InputNumberConfig,
     @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) templateConfig: InputNumberConfig,
   ) {

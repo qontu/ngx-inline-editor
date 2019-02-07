@@ -10,6 +10,7 @@ import * as fromConfig from '../base/store/index';
 import {
   InlineEditorEvents,
   INLINE_EDITOR_TEMPLATE_CONFIG,
+  INLINE_EDITOR_GLOBAL_CONFIG,
 } from '@qontu/ngx-inline-editor';
 import { InputTextConfig, INPUT_TEXT_CONFIG } from './input-text.config';
 import { InputBaseComponent } from '../base/input-base.component';
@@ -57,7 +58,7 @@ export class InputTextComponent extends InputBaseComponent<InputTextConfig>
     ngControl: NgControl,
     protected events: InlineEditorEvents,
     // TODO(Toni): https://github.com/angular/angular/issues/23395
-    @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) globalConfig: any = {},
+    @Inject(INLINE_EDITOR_GLOBAL_CONFIG) globalConfig: any = {},
     @Inject(INPUT_TEXT_CONFIG) inputConfig: InputTextConfig,
     @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) templateConfig: InputTextConfig,
   ) {
