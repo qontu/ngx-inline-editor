@@ -57,8 +57,6 @@ export class InputPasswordComponent
   extends InputBaseComponent<InputPasswordConfig>
   implements OnInit {
   static type = 'password';
-  value$: Observable<string>;
-  isDisabled$: Observable<boolean>;
   config: Partial<InputPasswordConfig>;
   constructor(
     protected store$: Store<fromConfig.State>,

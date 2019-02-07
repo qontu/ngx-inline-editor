@@ -30,68 +30,43 @@ export interface Config {
 })
 export class BaseConfigStore {
   @Action(Disable)
-  disable(state: Config, action: Disable): Config {
-    return {
-      ...state,
-      isDisabled: true,
-    };
+  disable(state: Config) {
+    state.isDisabled = true;
   }
 
   @Action(Enable)
-  enable(state: Config, action: Enable): Config {
-    return {
-      ...state,
-      isDisabled: false,
-    };
+  enable(state: Config) {
+    state.isDisabled = false;
   }
 
   @Action(UpdateDirtyValue)
-  updateDirtyValue(
-    state: Config,
-    { payload: { value } }: UpdateDirtyValue,
-  ): Config {
-    return {
-      ...state,
-      dirty: value,
-      hasChanged: true,
-    };
+  updateDirtyValue(state: Config, { payload: { value } }: UpdateDirtyValue) {
+    state.dirty = value;
+    state.hasChanged = true;
   }
 
   @Action(CommitValue)
-  commitValue(state: Config, { payload: { value } }: CommitValue): Config {
-    return {
-      ...state,
-      dirty: value,
-      value,
-      hasChanged: false,
-      isInvalid: false,
-    };
+  commitValue(state: Config, { payload: { value } }: CommitValue) {
+    state.value = state.dirty = value;
+    state.hasChanged = false;
+    state.isInvalid = false;
   }
 
   @Action(PreventCommit)
-  preventCommit(state: Config): Config {
-    return {
-      ...state,
-      isCanceled: true,
-      hasChanged: false,
-      isInvalid: false,
-    };
+  preventCommit(state: Config) {
+    state.isCanceled = true;
+    state.isInvalid = false;
+    state.hasChanged = false;
   }
 
   @Action(InvalidValue)
-  invalidValue(state: Config): Config {
-    return {
-      ...state,
-      isInvalid: true,
-    };
+  invalidValue(state: Config) {
+    state.isInvalid = true;
   }
 
   @Action(Editing)
-  editing(state: Config, { isEditing }: Editing): Config {
-    return {
-      ...state,
-      isEditing,
-      isCanceled: isEditing ? false : state.isCanceled,
-    };
+  editing(state: Config, { isEditing }: Editing) {
+    state.isEditing = isEditing;
+    state.isCanceled = isEditing ? false : state.isCanceled;
   }
 }

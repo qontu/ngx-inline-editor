@@ -1,3 +1,3 @@
-export { InputTextModule } from './text/index';
-export { InputPasswordModule } from './password/index';
-export { InputNumberModule } from './number/index';
+export * from './text/index';
+export * from './password/index';
+export * from './number/index';

@@ -5,7 +5,6 @@ import {
   Inject,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { Store } from '@qontu/component-store';
 import * as fromConfig from '../base/store/index';
 import {
