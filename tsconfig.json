@@ -14,9 +14,11 @@
     "lib": ["dom", "es2015", "es2017"],
     "esModuleInterop": true,
     "paths": {
-      "@qontu/ngx-inline-editor": ["./src/index"],
-      "@qontu/ngx-inline-editor/inputs": ["./src/inputs/src/"],
-      "@inputs/*": ["./src/inputs/src/*"]
+      "@qontu/ngx-inline-editor": ["src/index"],
+      "@qontu/ngx-inline-editor/inputs": ["src/inputs/src/"],
+      "@inputs/*": ["src/inputs/src/*"],
+      "@xqontu/ngx-inline-editor": ["dist/"],
+      "@xqontu/ngx-inline-editor/*": ["dist/*"]
     }
   },
   "exclude": ["dist"]

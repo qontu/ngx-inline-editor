@@ -50,6 +50,8 @@ describe('InputTextComponent', () => {
       isCanceled: false,
       isDisabled: false,
       isEditing: false,
+      isInvalid: false,
+      hasChanged: false,
       value: '',
     };
 

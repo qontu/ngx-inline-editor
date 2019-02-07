@@ -2,25 +2,21 @@
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 // In the following statement, replace `./tsconfig` with the path to your `tsconfig` file
 // which contains the path mapping (ie the `compilerOptions.paths` option):
-const { compilerOptions } = require('./src/tsconfig.spec');
+const {
+  compilerOptions: { paths: tsPaths },
+} = require('./tsconfig');
+
+const jestPaths = Object.keys(tsPaths).reduce((paths, key) => {
+  paths[key] = tsPaths[key].map(path => `<rootDir>/${path}`);
+
+  return paths;
+}, {});
 
 module.exports = {
-  moduleFileExtensions: ['js', 'json', 'ts'],
-  rootDir: 'src',
   bail: true,
-  setupFilesAfterEnv: ['../jest.setup.ts'],
-  // testRegex: '/src/.*\\.(test|spec).(ts|tsx|js)$',
+  setupFilesAfterEnv: ['./jest.setup.ts'],
   moduleDirectories: ['node_modules', 'src'], // So important, whithout this, custom paths don't work
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },
-  globals: {
-    'ts-jest': {
-      tsConfig: 'src/tsconfig.spec.json',
-      diagnostics: false,
-    },
-  },
-  coverageDirectory: '../coverage',
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
-  preset: 'ts-jest',
+  coverageDirectory: './coverage',
+  moduleNameMapper: pathsToModuleNameMapper(jestPaths),
+  preset: 'jest-preset-angular',
 };
