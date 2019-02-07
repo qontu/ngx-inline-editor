@@ -9,16 +9,10 @@ import { Store } from '@qontu/component-store';
 import * as fromConfig from '../base/store/index';
 import {
   InlineEditorEvents,
-  INLINE_EDITOR_CONFIG,
+  INLINE_EDITOR_TEMPLATE_CONFIG,
 } from '@qontu/ngx-inline-editor';
-import { InputTextConfig } from './input-text.config';
+import { InputTextConfig, INPUT_TEXT_CONFIG } from './input-text.config';
 import { InputBaseComponent } from '../base/input-base.component';
-
-const defaultConfig: InputTextConfig = {
-  type: 'text',
-  max: Infinity,
-  min: 0,
-};
 
 @Component({
   selector: 'inline-editor-text',
@@ -26,8 +20,7 @@ const defaultConfig: InputTextConfig = {
     <input
       #input
       type="text"
-      id="inlineEditorText"
-      class="inline-editor-input"
+      class="inline-editor-input inline-editor-text"
       [ngClass]="{ 'inline-editor-input-invalid': this.invalid$ | async }"
       [ngModel]="value$ | async"
       (ngModelChange)="changeValue($event)"
@@ -57,19 +50,22 @@ const defaultConfig: InputTextConfig = {
 export class InputTextComponent extends InputBaseComponent<InputTextConfig>
   implements OnInit {
   static type = 'text';
+  type = InputTextComponent.type;
   config: Partial<InputTextConfig>;
   constructor(
     protected store$: Store<fromConfig.State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
     // TODO(Toni): https://github.com/angular/angular/issues/23395
-
-    @Inject(INLINE_EDITOR_CONFIG) config: any = {},
+    @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) globalConfig: any = {},
+    @Inject(INPUT_TEXT_CONFIG) inputConfig: InputTextConfig,
+    @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) templateConfig: InputTextConfig,
   ) {
-    super(store$, ngControl, events, config);
+    super(store$, ngControl, events);
     this.config = {
-      ...defaultConfig,
-      ...config,
+      ...globalConfig,
+      ...inputConfig,
+      ...templateConfig,
     };
   }
 }

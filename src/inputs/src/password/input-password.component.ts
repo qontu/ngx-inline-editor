@@ -5,21 +5,17 @@ import {
   Inject,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { Store } from '@qontu/component-store';
 import * as fromConfig from '../base/store/index';
-import { InputPasswordConfig } from './input-password.config';
+import {
+  InputPasswordConfig,
+  INPUT_PASSWORD_CONFIG,
+} from './input-password.config';
 import { InputBaseComponent } from '../base/input-base.component';
 import {
   InlineEditorEvents,
-  INLINE_EDITOR_CONFIG,
+  INLINE_EDITOR_TEMPLATE_CONFIG,
 } from '@qontu/ngx-inline-editor';
-
-const defaultConfig: InputPasswordConfig = {
-  type: 'password',
-  max: Infinity,
-  min: 0,
-};
 
 @Component({
   selector: 'inline-editor-password',
@@ -27,8 +23,7 @@ const defaultConfig: InputPasswordConfig = {
     <input
       #input
       type="password"
-      class="inline-editor-input"
-      id="inlineEditorPassword"
+      class="inline-editor-input inline-editor-password"
       [ngModel]="value$ | async"
       (ngModelChange)="changeValue($event)"
       [disabled]="isDisabled$ | async"
@@ -57,17 +52,21 @@ export class InputPasswordComponent
   extends InputBaseComponent<InputPasswordConfig>
   implements OnInit {
   static type = 'password';
+  type = InputPasswordComponent.type;
   config: Partial<InputPasswordConfig>;
   constructor(
     protected store$: Store<fromConfig.State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
-    @Inject(INLINE_EDITOR_CONFIG) config: any = {},
+    @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) globalConfig: any = {},
+    @Inject(INPUT_PASSWORD_CONFIG) inputConfig: InputPasswordConfig,
+    @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) templateConfig: InputPasswordConfig,
   ) {
-    super(store$, ngControl, events, config);
+    super(store$, ngControl, events);
     this.config = {
-      ...defaultConfig,
-      ...config,
+      ...globalConfig,
+      ...inputConfig,
+      ...templateConfig,
     };
   }
 

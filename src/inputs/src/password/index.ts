@@ -1,1 +1,1 @@
-export { InputPasswordModule } from './input-password.module';
+export * from './input-password.module';

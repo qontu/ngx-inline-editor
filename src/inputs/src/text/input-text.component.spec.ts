@@ -5,7 +5,7 @@ import {
 } from '@netbasal/spectator';
 import {
   InlineEditorEvents,
-  INLINE_EDITOR_CONFIG,
+  INLINE_EDITOR_TEMPLATE_CONFIG,
 } from '@qontu/ngx-inline-editor';
 import { FormsModule, NgControl, NgModel } from '@angular/forms';
 import { Config } from '@inputs/base/store/reducers/config.reducer';
@@ -22,7 +22,7 @@ describe('InputTextComponent', () => {
         useClass: NgModel,
       },
       {
-        provide: INLINE_EDITOR_CONFIG,
+        provide: INLINE_EDITOR_TEMPLATE_CONFIG,
         useValue: {
           max: 10,
           min: 5,

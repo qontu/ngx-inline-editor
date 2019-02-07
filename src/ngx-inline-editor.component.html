@@ -5,17 +5,17 @@
     'inline-editor-invalid': input?.invalid$ | async
   }"
 >
-  <a [hidden]="input?.isShowing()" (click)="onEdit($event)">
+  <a [hidden]="input?.show$ | async" (click)="onEdit($event)">
     <ng-container
       [ngTemplateOutlet]="
-        input?.isEmpty()
+        (input?.empty$ | async)
           ? input?.getEmptyTemplate() || defaultEmptyRepresentation
           : input?.getValueTemplate() || defaultValueRepresentation
       "
     ></ng-container>
   </a>
 
-  <div [hidden]="!input?.isShowing()">
+  <div [hidden]="!(input?.show$ | async)">
     <div #inlineEditor></div>
 
     <div

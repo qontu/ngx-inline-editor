@@ -8,23 +8,34 @@ export type Input = ControlValueAccessor;
 export abstract class InputBase<ValueType = any, Config extends {} = {}>
   implements InlineEditorInput {
   static type: string | string[] = 'base';
+  type: string;
 
+  id: string = Date.now().toString();
   value$: Observable<ValueType>;
+  config$: BehaviorSubject<Config | Partial<Config>>;
   empty$: BehaviorSubject<boolean>;
   show$: BehaviorSubject<boolean>;
   invalid$: BehaviorSubject<boolean>;
   control: FormControl;
-  config: Config | Partial<Config>;
   protected onChange: (_: any) => void;
   protected onTouched: (_: any) => void;
   protected onValidatorChange: (_: any) => void;
 
   constructor(protected ngControl: NgControl) {
     this.control = this.ngControl.control as FormControl;
+    this.config$ = new BehaviorSubject({});
     this.value$ = this.control.valueChanges;
     this.show$ = new BehaviorSubject(false);
     this.empty$ = new BehaviorSubject(false);
     this.invalid$ = new BehaviorSubject(false);
+  }
+
+  getType(): string {
+    return this.type;
+  }
+
+  getID(): string {
+    return this.id;
   }
 
   writeValue(value: ValueType): void {
@@ -71,11 +82,11 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
   setState(): void {}
 
   setConfig(config: Config): void {
-    this.config = config;
+    this.config$.next(config);
   }
 
   getConfig(): Partial<Config> {
-    return this.config;
+    return this.config$.value;
   }
 
   getValueRepresentation(): string {
@@ -128,7 +139,6 @@ export interface InputWithEvents {
 }
 
 export interface InlineEditorInput<State = any, Config = any> extends Input {
-  config: Config;
   getValueRepresentation(): string;
   getEmptyRepresentation(): string;
   hasValueTemplate(): boolean;

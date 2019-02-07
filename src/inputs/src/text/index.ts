@@ -1,1 +1,1 @@
-export { InputTextModule } from './input-text.module';
+export * from './input-text.module';

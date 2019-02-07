@@ -5,21 +5,14 @@ import {
   Inject,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { Store } from '@qontu/component-store';
 import * as fromConfig from '../base/store/index';
-import { InputNumberConfig } from './input-number.config';
+import { InputNumberConfig, INPUT_NUMBER_CONFIG } from './input-number.config';
 import { InputBaseComponent } from '../base/input-base.component';
 import {
   InlineEditorEvents,
-  INLINE_EDITOR_CONFIG,
+  INLINE_EDITOR_TEMPLATE_CONFIG,
 } from '@qontu/ngx-inline-editor';
-
-const defaultConfig: InputNumberConfig = {
-  type: 'number',
-  max: Infinity,
-  min: 0,
-};
 
 @Component({
   selector: 'inline-editor-number',
@@ -27,8 +20,7 @@ const defaultConfig: InputNumberConfig = {
     <input
       #input
       type="number"
-      class="inline-editor-input"
-      id="inlineEditorNumber"
+      class="inline-editor-input inline-editor-number"
       [ngModel]="value$ | async"
       (ngModelChange)="changeValue($event)"
       [disabled]="isDisabled$ | async"
@@ -56,17 +48,21 @@ const defaultConfig: InputNumberConfig = {
 export class InputNumberComponent extends InputBaseComponent<InputNumberConfig>
   implements OnInit {
   static type = 'number';
+  type = InputNumberComponent.type;
   config: Partial<InputNumberConfig>;
   constructor(
     protected store$: Store<fromConfig.State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
-    @Inject(INLINE_EDITOR_CONFIG) config: any = {},
+    @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) globalConfig: any = {},
+    @Inject(INPUT_NUMBER_CONFIG) inputConfig: InputNumberConfig,
+    @Inject(INLINE_EDITOR_TEMPLATE_CONFIG) templateConfig: InputNumberConfig,
   ) {
-    super(store$, ngControl, events, config);
+    super(store$, ngControl, events);
     this.config = {
-      ...defaultConfig,
-      ...config,
+      ...globalConfig,
+      ...inputConfig,
+      ...templateConfig,
     };
   }
 }

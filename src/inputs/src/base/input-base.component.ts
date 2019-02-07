@@ -18,7 +18,6 @@ import { InputBaseConfig } from './input-base.config';
 import { Config } from './store/reducers/config.reducer';
 
 const defaultConfig: InputBaseConfig = {
-  id: Date.now().toString(),
   saveOnBlur: false,
   saveOnEnter: true,
   cancelOnEscape: true,
@@ -27,7 +26,6 @@ const defaultConfig: InputBaseConfig = {
   focusOnClick: true,
   empty: 'Empty',
   hideButtons: false,
-  name: Date.now().toString(),
   placeholder: '',
 };
 
@@ -37,6 +35,7 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   static type = 'base';
   value$: Observable<any>;
   isDisabled$: Observable<boolean>;
+  config: Partial<InputConfig>;
 
   @ViewChild('input')
   private _input: ElementRef<HTMLInputElement>;
@@ -58,7 +57,6 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
     protected store$: Store<fromConfig.State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
-    public config: Partial<InputConfig> = {},
   ) {
     super(ngControl);
     this.value$ = this.store$.select(({ value }) => value);
@@ -117,10 +115,16 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   }
 
   ngOnInit() {
+    // TODO(Toni): is it okay?
     this.config = {
+      id: this.getID(),
+      name: this.getID(),
       ...defaultConfig,
-      ...(this.config as any),
+      ...this.config,
     };
+
+    this.config$.next(this.config);
+
     this.value$.subscribe(this.events.onSave);
   }
 
