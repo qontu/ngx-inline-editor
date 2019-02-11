@@ -1,28 +1,30 @@
 {
-  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "declaration": false,
-    "removeComments": true,
-    "noUnusedLocals": false,
-    "noLib": false,
-    "lib": [
-      "es2016"
-    ],
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
     "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules"
+      "node_modules/@types"
     ],
-    "types": [
-      "node"
-    ]
-  },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src"
-  ],
-  "compileOnSave": false
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "inline-editor": [
+        "dist/inline-editor"
+      ],
+      "inline-editor/*": [
+        "dist/inline-editor/*"
+      ]
+    }
+  }
 }

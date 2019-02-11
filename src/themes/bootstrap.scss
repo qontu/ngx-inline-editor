@@ -1,0 +1,59 @@
+:not([class='is-editing']) {
+  a.c-inline-editor {
+    text-decoration: none;
+    color: #428bca;
+    border-bottom: dashed 1px #428bca;
+    cursor: pointer;
+    line-height: 2;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+.btn {
+  margin-left:5px;
+}
+.c-inline-editor {
+  &.editable-empty,
+  &.editable-empty:hover,
+  &.editable-empty:focus,
+  &.a.editable-empty,
+  &.a.editable-empty:hover,
+  &.a.editable-empty:focus {
+    font-style: italic;
+    color: #DD1144;
+    text-decoration: none;
+  }
+
+  &.inlineEditForm {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  &.inlineEditForm input,
+  &.select {
+    width: auto;
+    display: inline;
+  }
+
+  &.inline-editor-button-group {
+    display: inline-block;
+  }
+
+  &.editInvalid {
+    color: #a94442;
+    margin-bottom: 0;
+  }
+
+  &.error {
+    border-color: #a94442;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+#inlineEditWrapper {
+  display: inline-block;
+}

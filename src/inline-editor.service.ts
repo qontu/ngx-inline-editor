@@ -1,7 +1,7 @@
 import { InlineConfig } from "./types/inline-configs";
 import { Subscription } from "rxjs/Subscription";
 import { Events } from "./types/inline-editor-events.class";
-import { InlineEditorState } from "./types/inline-editor-state.class";
+import { InlineEditorState, InlineEditorStateOptions } from "./types/inline-editor-state.class";
 import { EventEmitter } from "@angular/core";
 
 export class InlineEditorService {
@@ -30,6 +30,10 @@ export class InlineEditorService {
 
     public getState(): InlineEditorState {
         return this.state.clone();
+    }
+
+    public getOptions(): InlineEditorStateOptions {
+        return this.state.clone().getState();
     }
 
     public destroy() {

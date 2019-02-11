@@ -1,8 +1,8 @@
-# Native UI Inline-editor Angular (version 4+) component ([demo](demos))
+# Native UI Inline-editor Angular (version 7+) component ([demo](demos))
 
 Follow me [![twitter](https://img.shields.io/twitter/follow/carlillo.svg?style=social&label=%20carlillo)](https://twitter.com/carlillo) to be notified about new releases.
 
-ngx-inline-editor is a library of Angular (version 4+) that allows you to create editable elements.
+ngx-inline-editor is a library of Angular (version 7+) that allows you to create editable elements.
 Such technique is also known as *click-to-edit* or *edit-in-place*.
 It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-xeditable) which is developed in AngularJS.
 
@@ -10,13 +10,13 @@ It is based on ideas of [angular-xeditable](https://github.com/vitalets/angular-
 ![Version 0.1.0](https://github.com/qontu/ngx-inline-editor/raw/master/demos/basic/0.1.0.gif)
 ## Dependencies
 
-Basically it does not depend on any libraries except Angular4 itself.
+It depends on Font awesome v4.7.0 to show the icons.
 For themes you may need to include Twitter Bootstrap CSS.
 
-### Angular 4+ Version
+### Angular 7+ Version
 
-Angular 4 is now stable. Therefore, if encountering errors using this
-lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular4 **^4.0.0**.
+Angular 7 is now stable. Therefore, if encountering errors using this
+lib, ensure your version of Angular is compatible. The current version used to develop this lib is angular4 **^7.2.0**.
 
 ## Controls & Features
 
@@ -336,7 +336,7 @@ If the type is `select` then the default selected element is the first element o
 The `inline-editor` has the following basic theme which you can find in `dist/themes/bootstrap.css`:
 
 ```CSS
-a.c-inline-editor {
+:not([class='is-editing']) a.c-inline-editor {
   text-decoration: none;
   color: #428bca;
   border-bottom: dashed 1px #428bca;
@@ -344,6 +344,9 @@ a.c-inline-editor {
   line-height: 2;
   margin-right: 5px;
   margin-left: 5px;
+}
+.btn {
+  margin-left:5px;
 }
 .c-inline-editor.editable-empty,
 .c-inline-editor.editable-empty:hover,
@@ -411,11 +414,7 @@ Thanks for understanding!
 
 1. To generate all `*.js`, `*.js.map` and `*.d.ts` files:
 
-    `npm run build`
-
-2. To debug :
-
-    `npm run build:watch`
+    `yarn build`
 
 ## Authors
 Carlos Caballero - [https://github.com/caballerog](hhttps://github.com/caballerog)

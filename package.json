@@ -1,113 +1,98 @@
 {
-  "name": "@qontu/ngx-inline-editor",
-  "version": "0.2.0-alpha.11",
-  "author": {
-    "name": "Carlos Caballero",
-    "email": "caballerog.carlos@gmail.com"
-  },
-  "maintainers": [
-    {
-      "name": "Carlos Caballero",
-      "email": "caballerog.carlos@gmail.com"
+    "name": "@qontu/ngx-inline-editor",
+    "version": "0.2.0-alpha.12",
+    "author": {
+        "name": "Carlos Caballero",
+        "email": "caballerog.carlos@gmail.com"
     },
-    {
-      "name": "Toni Villena",
-      "email": "tonivj5@gmail.com"
+    "maintainers": [
+        {
+            "name": "Carlos Caballero",
+            "email": "caballerog.carlos@gmail.com"
+        },
+        {
+            "name": "Toni Villena",
+            "email": "tonivj5@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/qontu/ngx-inline-editor"
+    },
+    "bugs": {
+        "url": "https://github.com/qontu/ngx-inline-editor/issues"
+    },
+    "keywords": [
+        "angular",
+        "angular7"
+    ],
+    "main": "ngx-inline-editor.umd.js",
+    "module": "ngx-inline-editor.es5.js",
+    "es2015": "ngx-inline-editor.es2015.js",
+    "typings": "ngx-inline-editor.d.ts",
+    "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build && yarn run css:build",
+        "test": "ng test",
+        "lint": "ng lint",
+        "e2e": "ng e2e",
+        "css:build": "scss-bundle -e ./src/themes/bootstrap.scss -d ./dist/themes/bootstrap.scss"
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-conventional-changelog"
+        }
+    },
+    "dependencies": {
+    },
+    "peerDependencies": {
+        "@angular/common": "^7.2.0",
+        "@angular/core": "^7.2.0",
+        "font-awesome": "^4.7.0"
+    },
+    "devDependencies": {
+        "@angular/animations": "~7.2.0",
+        "@angular/common": "~7.2.0",
+        "@angular/compiler": "~7.2.0",
+        "@angular/core": "~7.2.0",
+        "@angular/forms": "~7.2.0",
+        "@angular/platform-browser": "~7.2.0",
+        "@angular/platform-browser-dynamic": "~7.2.0",
+        "@angular/router": "~7.2.0",
+        "bootstrap": "^4.2.1",
+        "core-js": "^2.5.4",
+        "font-awesome": "^4.7.0",
+        "rxjs": "~6.3.3",
+        "rxjs-compat": "6.1.0",
+        "scss-bundle": "^2.4.0",
+        "zone.js": "~0.8.26",
+        "@angular-devkit/build-angular": "~0.12.0",
+        "@angular-devkit/build-ng-packagr": "~0.12.0",
+        "@angular/cli": "~7.2.2",
+        "@angular/compiler-cli": "~7.2.0",
+        "@angular/language-service": "~7.2.0",
+        "@types/node": "~8.9.4",
+        "@types/jasmine": "~2.8.8",
+        "@types/jasminewd2": "~2.0.3",
+        "codelyzer": "~4.5.0",
+        "jasmine-core": "~2.99.1",
+        "jasmine-spec-reporter": "~4.2.1",
+        "karma": "~3.1.1",
+        "karma-chrome-launcher": "~2.2.0",
+        "karma-coverage-istanbul-reporter": "~2.0.1",
+        "karma-jasmine": "~1.1.2",
+        "karma-jasmine-html-reporter": "^0.2.2",
+        "ng-packagr": "^4.2.0",
+        "protractor": "~5.4.0",
+        "ts-node": "~7.0.0",
+        "tsickle": ">=0.34.0",
+        "tslib": "^1.9.0",
+        "tslint": "~5.11.0",
+        "typescript": "~3.2.2"
+    },
+    "engines": {
+        "node": ">=6.0.0"
     }
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/qontu/ngx-inline-editor"
-  },
-  "bugs": {
-    "url": "https://github.com/qontu/ngx-inline-editor/issues"
-  },
-  "keywords": [
-    "angular",
-    "angular4"
-  ],
-  "main": "ngx-inline-editor.umd.js",
-  "module": "ngx-inline-editor.es5.js",
-  "es2015": "ngx-inline-editor.es2015.js",
-  "typings": "ngx-inline-editor.d.ts",
-  "scripts": {
-    "gulp": "node_modules/.bin/gulp",
-    "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
-    "build:watch": "node_modules/.bin/gulp",
-    "debug": "node_modules/.bin/gulp watch:debug",
-    "clean": "node_modules/.bin/gulp clean",
-    "commit": "node_modules/.bin/git-cz",
-    "lint": "tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
-    "publish": "cd dist && npm publish",
-    "test": "karma start"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    }
-  },
-  "dependencies": {},
-  "peerDependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0"
-  },
-  "devDependencies": {
-    "@angular/common": "^4.3.6",
-    "@angular/compiler": "^4.3.6",
-    "@angular/core": "^4.3.6",
-    "@angular/forms": "^4.3.6",
-    "@angular/platform-browser": "^4.3.6",
-    "@angular/platform-browser-dynamic": "^4.3.6",
-    "@types/del": "^2.2.32",
-    "@types/gulp": "4.0.3",
-    "@types/gulp-changed": "^0.0.31",
-    "@types/gulp-rename": "^0.0.32",
-    "@types/jasmine": "^2.5.47",
-    "@types/karma": "^0.13.36",
-    "@types/merge2": "^0.3.30",
-    "@types/node": "~7.0.13",
-    "@types/run-sequence": "^0.0.28",
-    "codelyzer": "^3.1.2",
-    "commitizen": "^2.9.6",
-    "conventional-changelog-lint": "^1.1.9",
-    "core-js": "^2.5.1",
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-changed": "^3.1.0",
-    "gulp-inline-ng2-template": "^4.0.0",
-    "gulp-ngc": "^0.3.2",
-    "gulp-rename": "^1.2.2",
-    "gulp-rollup": "2.14.0",
-    "gulp-typescript": "^3.2.2",
-    "jasmine-core": "^2.6.4",
-    "karma": "^1.7.0",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
-    "karma-jasmine": "^1.1.0",
-    "karma-jasmine-diff-reporter": "^1.1.0",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-mocha-reporter": "^2.2.3",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-typescript": "^3.0.4",
-    "karma-typescript-angular2-transform": "^1.0.0",
-    "merge2": "^1.0.3",
-    "node-watch": "^0.5.2",
-    "phantomjs-prebuilt": "~2.1.14",
-    "protractor": "~5.1.0",
-    "reflect-metadata": "~0.1.10",
-    "rollup": "^0.47.2",
-    "run-sequence": "^1.2.2",
-    "rxjs": "^5.4.3",
-    "ts-node": "~3.3.0",
-    "tslint": "^5.7.0",
-    "typescript": "~2.4.2",
-    "zone.js": "^0.8.17"
-  },
-  "engines": {
-    "node": ">=6.0.0"
-  }
 }
