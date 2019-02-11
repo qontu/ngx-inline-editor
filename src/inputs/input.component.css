@@ -1,13 +1,16 @@
-a {
-    text-decoration: none;
-    color: #428bca;
-    border-bottom: dashed 1px #428bca;
-    cursor: pointer;
-    line-height: 2;
-    margin-right: 5px;
-    margin-left: 5px;
+:not([class='is-editing']) a.c-inline-editor {
+  text-decoration: none;
+  color: #428bca;
+  border-bottom: dashed 1px #428bca;
+  cursor: pointer;
+  line-height: 2;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
+.btn {
+  margin-left:5px;
+}
 
 /* editable-empty */
 
