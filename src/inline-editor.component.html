@@ -19,7 +19,7 @@
     <div #inlineEditor></div>
 
     <div
-      *ngIf="input?.showButtons()"
+      *ngIf="input?.shouldShowButtons()"
       class="inline-editor-buttons"
       [ngTemplateOutlet]="
         input?.hasButtonsTemplate()

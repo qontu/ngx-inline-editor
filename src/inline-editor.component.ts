@@ -28,12 +28,12 @@ import {
   INLINE_EDITOR_TEMPLATE_CONFIG,
 } from './common/index';
 import { InputBase, InputWithControls } from './inputs/src/input-base';
-import { InlineEditorService } from './ngx-inline-editor.service';
+import { InlineEditorService } from './inline-editor.service';
 
 @Component({
   selector: 'inline-editor',
-  templateUrl: './ngx-inline-editor.component.html',
-  styleUrls: ['./ngx-inline-editor.component.css'],
+  templateUrl: './inline-editor.component.html',
+  styleUrls: ['./inline-editor.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -158,7 +158,7 @@ export class InlineEditorComponent
 
     this.registerInput(this.input);
 
-    if (hasControl(this.input)) {
+    if (hasControls(this.input)) {
       this.registerControls(this.input);
     }
 
@@ -237,6 +237,6 @@ export function isInput(input: any): input is InputBase {
   return input.registerOnChange && input.registerOnTouched && input.writeValue;
 }
 
-export function hasControl(input: any): input is InputWithControls {
+export function hasControls(input: any): input is InputWithControls {
   return input.onSubmit && input.onCancel;
 }
