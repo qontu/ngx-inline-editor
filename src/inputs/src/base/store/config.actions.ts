@@ -1,3 +1,5 @@
+import { State } from './config.state';
+
 export class Disable {
   readonly type = '[INLINE_EDITOR_BASE] Disable';
   constructor() {}
@@ -31,4 +33,9 @@ export class InvalidValue {
 export class Editing {
   readonly type = '[INLINE_EDITOR_BASE] Editing state';
   constructor(public isEditing: boolean) {}
+}
+
+export class Override {
+  readonly type = '[INLINE_EDITOR_BASE] Override state';
+  constructor(public payload: Partial<State>) {}
 }
