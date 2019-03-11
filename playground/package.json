@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "playground-dist": "ng serve playground-dist",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

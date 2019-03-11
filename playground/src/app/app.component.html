@@ -1,15 +1,26 @@
-<!-- <inline-editor
-  type="password"
-  [config]="{ saveOnBlur: true, focusOnClick: true }"
-  [(ngModel)]="title"
-></inline-editor> -->
 <inline-editor
+  #pass
+  type="password"
+  [config]="{ saveOnBlur: false, focusOnClick: true }"
+  [(ngModel)]="title"
+></inline-editor>
+
+<!-- <inline-editor
+  #inline
   type="text"
   [config]="{ empty: 'eeemptyyy' }"
   [(ngModel)]="title"
-  disabled
+></inline-editor> -->
+
+<inline-editor
+  #inline
+  [formControl]="reactiveTest"
+  [config]="{ saveOnChange: false, focusOnClick: true }"
 ></inline-editor>
-<!--
-<inline-editor [formControl]="reactiveTest"></inline-editor>
- -->
+
 <button (click)="toggle()">Toggle!</button>
+<button (click)="updateValue()">save!</button>
+<div>
+  {{ inline?.input?.getState() | json }}<br />
+  {{ pass?.input?.getState() | json }}
+</div>

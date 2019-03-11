@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "types": [],
+    "paths": {
+      "@qontu/ngx-inline-editor": ["dist"],
+      "@qontu/ngx-inline-editor/inputs": ["dist/src/inputs"]
+    }
+  },
+  "exclude": ["test.ts", "**/*.spec.ts"]
+}
