@@ -1,4 +1,4 @@
-export { InlineEditorComponent } from './ngx-inline-editor.component';
-export { InlineEditorModule } from './ngx-inline-editor.module';
+export { InlineEditorComponent } from './inline-editor.component';
+export { InlineEditorModule } from './inline-editor.module';
+export { InlineEditorService } from './inline-editor.service';
 export * from './common/index';
-export { InlineEditorService } from './ngx-inline-editor.service';
