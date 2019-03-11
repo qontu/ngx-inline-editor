@@ -1,21 +1,24 @@
 import { OnInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
 import { FormControl, NgControl } from '@angular/forms';
+import { InlineEditorEvents } from '@qontu/ngx-inline-editor';
+import { Store } from '@qontu/component-store';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+// import * as fromConfig from './store/index';
+import { InputBase, InputWithControls } from '../input-base';
+import { InputBaseConfig } from './input-base.config';
+import { InputBaseApi } from './input-base.api';
+import { State } from './store/config.state';
 import {
-  UpdateDirtyValue,
+  Override,
+  PreventCommit,
+  Editing,
+  InvalidValue,
+  CommitValue,
   Disable,
   Enable,
-  CommitValue,
-  Editing,
-  PreventCommit,
-  InvalidValue,
-} from './store/actions/config.actions';
-import { Store } from '@qontu/component-store';
-import * as fromConfig from './store/index';
-import { InputBase, InputWithControls } from '../input-base';
-import { InlineEditorEvents } from '@qontu/ngx-inline-editor';
-import { InputBaseConfig } from './input-base.config';
-import { Config } from './store/reducers/config.reducer';
+  UpdateDirtyValue,
+} from './store/config.actions';
 
 const defaultConfig: InputBaseConfig = {
   saveOnBlur: false,
@@ -35,7 +38,7 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   static type = 'base';
   value$: Observable<any>;
   isDisabled$: Observable<boolean>;
-  config: Partial<InputConfig>;
+  config: InputConfig;
 
   @ViewChild('input')
   private _input: ElementRef<HTMLInputElement>;
@@ -54,50 +57,44 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   }
 
   constructor(
-    protected store$: Store<fromConfig.State>,
+    protected store$: Store<State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
   ) {
     super(ngControl);
-    this.value$ = this.store$.select(({ value }) => value);
+    this.value$ = this.store$.select(({ dirty }) => dirty);
+    this.isDisabled$ = this.store$.select(({ isDisabled }) => isDisabled);
     // TODO(Toni): should it unsubscribe?
     this.store$.select(({ value }) => value === '').subscribe(this.empty$);
-    this.store$.select(({ isInvalid }) => isInvalid).subscribe(this.invalid$);
-    this.isDisabled$ = this.store$.select(({ isDisabled }) => isDisabled);
+    this.store$.select(({ isValid }) => isValid).subscribe(this.valid$);
+    this.valid$.pipe(map(isValid => !isValid)).subscribe(this.invalid$);
   }
 
-  getState(): fromConfig.State {
+  getState(): State {
     return { ...this.store$.getState() };
   }
 
-  onSubmit(event: Event): void {
-    const { dirty: value } = this.getState();
+  setState(state: Partial<State>) {
+    this.store$.dispatch(new Override(state));
+  }
 
-    if (!this.isValid(value)) {
-      this.events.onError.emit(this.prepareToEmit(event));
-      this.store$.dispatch(new InvalidValue());
-      return;
-    }
+  getApi() {
+    return new InputBaseApi(this);
+  }
 
+  cancel() {
+    this.store$.dispatch(new PreventCommit());
     this.hide();
+  }
+
+  save(value: any = this.getState().dirty) {
     this.commitValue(value);
     this.events.onSave.emit(this.prepareToEmit(event));
   }
 
-  onCancel(event: Event): void {
-    this.store$.dispatch(new PreventCommit());
+  saveAndClose(value: any = this.getState().dirty) {
+    this.save(value);
     this.hide();
-    this.events.onCancel.emit(this.prepareToEmit(event));
-  }
-
-  onEdit(event: Event): void {
-    this.show();
-
-    if (this.config.focusOnClick) {
-      setTimeout(() => this.input.focus());
-    }
-
-    this.events.onEdit.emit(this.prepareToEmit(event));
   }
 
   hide() {
@@ -110,7 +107,11 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
     super.show();
   }
 
-  showButtons(): boolean {
+  focus() {
+    setTimeout(() => this.input.focus());
+  }
+
+  shouldShowButtons(): boolean {
     return !this.config.hideButtons;
   }
 
@@ -123,9 +124,36 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
       ...this.config,
     };
 
-    this.config$.next(this.config);
+    this.setConfig(this.config);
 
     this.value$.subscribe(this.events.onSave);
+  }
+
+  onSubmit(event: Event): void {
+    const { dirty: value } = this.getState();
+
+    if (!this.isValid(value)) {
+      this.events.onError.emit(this.prepareToEmit(event));
+      this.store$.dispatch(new InvalidValue());
+      return;
+    }
+
+    this.saveAndClose(value);
+  }
+
+  onCancel(event: Event): void {
+    this.cancel();
+    this.events.onCancel.emit(this.prepareToEmit(event));
+  }
+
+  onEdit(event: Event): void {
+    this.show();
+
+    if (this.config.focusOnClick) {
+      this.focus();
+    }
+
+    this.events.onEdit.emit(this.prepareToEmit(event));
   }
 
   onBlur(event: Event) {
@@ -146,6 +174,20 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
 
   onKeyPress(event: Event) {
     this.events.onKeyPress.emit(this.prepareToEmit(event));
+
+    if (!this.config.saveOnChange) {
+      return;
+    }
+
+    const value = this.getState().dirty;
+
+    if (!this.isValid(value)) {
+      this.events.onError.emit(this.prepareToEmit(event));
+      this.store$.dispatch(new InvalidValue());
+      return;
+    }
+
+    this.commitValue(value);
   }
 
   onEscape(event: Event) {
@@ -221,7 +263,7 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
   }
 
   // TODO: Improve return typing
-  prepareToEmit(event?: Event): { event: Event; input: any; state: Config } {
+  prepareToEmit(event?: Event): { event: Event; input: any; state: State } {
     return {
       event,
       input: this,

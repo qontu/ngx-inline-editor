@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Store } from '@qontu/component-store';
-import * as fromConfig from '../base/store/index';
+// import * as fromConfig from '../base/store/index';
 import {
   InlineEditorEvents,
   INLINE_EDITOR_TEMPLATE_CONFIG,
@@ -14,6 +14,8 @@ import {
 } from '@qontu/ngx-inline-editor';
 import { InputTextConfig, INPUT_TEXT_CONFIG } from './input-text.config';
 import { InputBaseComponent } from '../base/input-base.component';
+import { State } from '../base/store/config.state';
+import { createStore } from '../base/store/config.factory';
 
 @Component({
   selector: 'inline-editor-text',
@@ -44,7 +46,7 @@ import { InputBaseComponent } from '../base/input-base.component';
   providers: [
     {
       provide: Store,
-      useFactory: fromConfig.createStore,
+      useFactory: createStore,
     },
   ],
 })
@@ -54,7 +56,7 @@ export class InputTextComponent extends InputBaseComponent<InputTextConfig>
   type = InputTextComponent.type;
   config: Partial<InputTextConfig>;
   constructor(
-    protected store$: Store<fromConfig.State>,
+    protected store$: Store<State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
     // TODO(Toni): https://github.com/angular/angular/issues/23395

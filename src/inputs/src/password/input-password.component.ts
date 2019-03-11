@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Store } from '@qontu/component-store';
-import * as fromConfig from '../base/store/index';
 import {
   InputPasswordConfig,
   INPUT_PASSWORD_CONFIG,
@@ -17,6 +16,8 @@ import {
   INLINE_EDITOR_TEMPLATE_CONFIG,
   INLINE_EDITOR_GLOBAL_CONFIG,
 } from '@qontu/ngx-inline-editor';
+import { State } from '../base/store/config.state';
+import { createStore } from '../base/store/config.factory';
 
 @Component({
   selector: 'inline-editor-password',
@@ -45,7 +46,7 @@ import {
   providers: [
     {
       provide: Store,
-      useFactory: fromConfig.createStore,
+      useFactory: createStore,
     },
   ],
 })
@@ -56,7 +57,7 @@ export class InputPasswordComponent
   type = InputPasswordComponent.type;
   config: Partial<InputPasswordConfig>;
   constructor(
-    protected store$: Store<fromConfig.State>,
+    protected store$: Store<State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
     @Inject(INLINE_EDITOR_GLOBAL_CONFIG) globalConfig: any = {},

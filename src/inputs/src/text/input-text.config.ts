@@ -13,3 +13,15 @@ export interface InputTextConfig extends InputTextConfigWhitoutType {
 export const INPUT_TEXT_CONFIG = new InjectionToken<InputTextConfigWhitoutType>(
   'INLINE_EDITOR_TEXT_CONFIG',
 );
+
+export const INPUT_TEXT_FOR_ROOT_CONFIG = new InjectionToken<
+  InputTextConfigWhitoutType
+>('INLINE_EDITOR_TEXT_FOR_ROOT_CONFIG');
+
+export const INPUT_TEXT_CONFIG_REGISTRY = <T = InputTextConfigWhitoutType>(
+  parentConfig: T,
+  forRootConfig: T,
+) => ({
+  ...forRootConfig,
+  ...(parentConfig || {}),
+});

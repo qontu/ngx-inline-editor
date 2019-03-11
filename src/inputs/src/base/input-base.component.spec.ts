@@ -3,7 +3,7 @@ import { InputTextComponent } from '../text/input-text.component';
 import { FormsModule, NgControl, NgModel } from '@angular/forms';
 import {
   InlineEditorEvents,
-  INLINE_EDITOR_CONFIG,
+  INLINE_EDITOR_GLOBAL_CONFIG,
 } from '@qontu/ngx-inline-editor';
 
 describe('base', () => {
@@ -18,7 +18,7 @@ describe('base', () => {
           useClass: NgModel,
         },
         {
-          provide: INLINE_EDITOR_CONFIG,
+          provide: INLINE_EDITOR_GLOBAL_CONFIG,
           useValue: {
             max: 10,
             min: 5,

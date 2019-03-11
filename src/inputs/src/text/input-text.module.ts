@@ -12,12 +12,15 @@ import {
   InputTextConfig,
   InputTextConfigWhitoutType,
   INPUT_TEXT_CONFIG,
+  INPUT_TEXT_FOR_ROOT_CONFIG,
+  INPUT_TEXT_CONFIG_REGISTRY,
 } from './input-text.config';
 
 export {
   InputTextConfig,
   InputTextConfigWhitoutType,
   INPUT_TEXT_CONFIG,
+  INPUT_TEXT_CONFIG_REGISTRY,
 } from './input-text.config';
 
 const defaultConfig: InputTextConfig = {
@@ -45,12 +48,16 @@ export class InputTextModule {
           multi: true,
         },
         {
+          provide: INPUT_TEXT_FOR_ROOT_CONFIG,
+          useValue: config,
+        },
+        {
           provide: INPUT_TEXT_CONFIG,
-          deps: [[new Optional(), new SkipSelf(), INPUT_TEXT_CONFIG]],
-          useFactory: (parentConfig: InputTextConfigWhitoutType) => ({
-            ...config,
-            ...(parentConfig || {}),
-          }),
+          useFactory: INPUT_TEXT_CONFIG_REGISTRY,
+          deps: [
+            [new Optional(), new SkipSelf(), INPUT_TEXT_CONFIG],
+            INPUT_TEXT_FOR_ROOT_CONFIG,
+          ],
         },
       ],
     };

@@ -13,3 +13,17 @@ export interface InputPasswordConfig extends InputPasswordConfigWhitoutType {
 export const INPUT_PASSWORD_CONFIG = new InjectionToken<
   InputPasswordConfigWhitoutType
 >('INLINE_EDITOR_PASSWORD_CONFIG');
+
+export const INPUT_PASSWORD_FOR_ROOT_CONFIG = new InjectionToken<
+  InputPasswordConfigWhitoutType
+>('INLINE_EDITOR_PASSWORD_FOR_ROOT_CONFIG');
+
+export const INPUT_PASSWORD_CONFIG_REGISTRY = <
+  T = InputPasswordConfigWhitoutType
+>(
+  parentConfig: T,
+  forRootConfig: T,
+) => ({
+  ...forRootConfig,
+  ...(parentConfig || {}),
+});

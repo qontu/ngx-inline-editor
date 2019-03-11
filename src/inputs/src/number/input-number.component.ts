@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Store } from '@qontu/component-store';
-import * as fromConfig from '../base/store/index';
 import { InputNumberConfig, INPUT_NUMBER_CONFIG } from './input-number.config';
 import { InputBaseComponent } from '../base/input-base.component';
 import {
@@ -14,6 +13,8 @@ import {
   INLINE_EDITOR_TEMPLATE_CONFIG,
   INLINE_EDITOR_GLOBAL_CONFIG,
 } from '@qontu/ngx-inline-editor';
+import { createStore } from '../base/store/config.factory';
+import { State } from '../base/store/config.state';
 
 @Component({
   selector: 'inline-editor-number',
@@ -42,7 +43,7 @@ import {
   providers: [
     {
       provide: Store,
-      useFactory: fromConfig.createStore,
+      useFactory: createStore,
     },
   ],
 })
@@ -52,7 +53,7 @@ export class InputNumberComponent extends InputBaseComponent<InputNumberConfig>
   type = InputNumberComponent.type;
   config: Partial<InputNumberConfig>;
   constructor(
-    protected store$: Store<fromConfig.State>,
+    protected store$: Store<State>,
     ngControl: NgControl,
     protected events: InlineEditorEvents,
     @Inject(INLINE_EDITOR_GLOBAL_CONFIG) globalConfig: any = {},

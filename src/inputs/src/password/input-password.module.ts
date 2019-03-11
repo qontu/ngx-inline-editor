@@ -12,12 +12,15 @@ import {
   INPUT_PASSWORD_CONFIG,
   InputPasswordConfigWhitoutType,
   InputPasswordConfig,
+  INPUT_PASSWORD_FOR_ROOT_CONFIG,
+  INPUT_PASSWORD_CONFIG_REGISTRY,
 } from './input-password.config';
 
 export {
   INPUT_PASSWORD_CONFIG,
   InputPasswordConfigWhitoutType,
   InputPasswordConfig,
+  INPUT_PASSWORD_CONFIG_REGISTRY,
 } from './input-password.config';
 
 const defaultConfig: InputPasswordConfig = {
@@ -44,12 +47,16 @@ export class InputPasswordModule {
           multi: true,
         },
         {
+          provide: INPUT_PASSWORD_FOR_ROOT_CONFIG,
+          useValue: config,
+        },
+        {
           provide: INPUT_PASSWORD_CONFIG,
-          deps: [[new Optional(), new SkipSelf(), INPUT_PASSWORD_CONFIG]],
-          useFactory: (parentConfig: InputPasswordConfigWhitoutType) => ({
-            ...config,
-            ...(parentConfig || {}),
-          }),
+          deps: [
+            [new Optional(), new SkipSelf(), INPUT_PASSWORD_CONFIG],
+            INPUT_PASSWORD_FOR_ROOT_CONFIG,
+          ],
+          useFactory: INPUT_PASSWORD_CONFIG_REGISTRY,
         },
       ],
     };

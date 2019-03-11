@@ -8,13 +8,14 @@ export type Input = ControlValueAccessor;
 export abstract class InputBase<ValueType = any, Config extends {} = {}>
   implements InlineEditorInput {
   static type: string | string[] = 'base';
-  type: string;
-
+  type: (typeof InputBase)['type'];
+  // TODO(Toni): maybe should we use https://github.com/kelektiv/node-uuid instead of?
   id: string = Date.now().toString();
   value$: Observable<ValueType>;
   config$: BehaviorSubject<Config | Partial<Config>>;
   empty$: BehaviorSubject<boolean>;
   show$: BehaviorSubject<boolean>;
+  valid$: BehaviorSubject<boolean>;
   invalid$: BehaviorSubject<boolean>;
   control: FormControl;
   protected onChange: (_: any) => void;
@@ -27,16 +28,19 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     this.value$ = this.control.valueChanges;
     this.show$ = new BehaviorSubject(false);
     this.empty$ = new BehaviorSubject(false);
+    this.valid$ = new BehaviorSubject(true);
     this.invalid$ = new BehaviorSubject(false);
   }
 
-  getType(): string {
+  getType(): InputBase['type'] {
     return this.type;
   }
 
   getID(): string {
     return this.id;
   }
+
+  abstract getApi(): any;
 
   writeValue(value: ValueType): void {
     throw new Error('Method not implemented.');
@@ -79,7 +83,7 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
   }
 
   getState(): any {}
-  setState(): void {}
+  setState(state: any): void {}
 
   setConfig(config: Config): void {
     this.config$.next(config);
@@ -113,7 +117,7 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     return this.show$.value;
   }
 
-  showButtons(): boolean {
+  shouldShowButtons(): boolean {
     return true;
   }
 
@@ -121,8 +125,8 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     return this.empty$.value;
   }
 
-  isInvalid(): boolean {
-    return this.invalid$.value;
+  isValid(): boolean {
+    return this.valid$.value;
   }
 }
 
@@ -150,8 +154,9 @@ export interface InlineEditorInput<State = any, Config = any> extends Input {
   getConfig(): Config;
   setConfig(config: Config): void;
   getState(): State;
-  setState(): State;
+  setState(state: any): State;
   isShowing(): boolean;
   isEmpty(): boolean;
-  showButtons(): boolean;
+  shouldShowButtons(): boolean;
+  getApi(): any;
 }

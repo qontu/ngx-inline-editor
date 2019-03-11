@@ -12,12 +12,15 @@ import {
   INPUT_NUMBER_CONFIG,
   InputNumberConfig,
   InputNumberConfigWhitoutType,
+  INPUT_NUMBER_FOR_ROOT_CONFIG,
+  INPUT_NUMBER_CONFIG_REGISTRY,
 } from './input-number.config';
 
 export {
   INPUT_NUMBER_CONFIG,
   InputNumberConfig,
   InputNumberConfigWhitoutType,
+  INPUT_NUMBER_CONFIG_REGISTRY,
 } from './input-number.config';
 
 const defaultConfig: InputNumberConfig = {
@@ -44,12 +47,16 @@ export class InputNumberModule {
           multi: true,
         },
         {
+          provide: INPUT_NUMBER_FOR_ROOT_CONFIG,
+          useValue: config,
+        },
+        {
           provide: INPUT_NUMBER_CONFIG,
-          deps: [[new Optional(), new SkipSelf(), INPUT_NUMBER_CONFIG]],
-          useFactory: (parentConfig: InputNumberConfigWhitoutType) => ({
-            ...config,
-            ...(parentConfig || {}),
-          }),
+          deps: [
+            [new Optional(), new SkipSelf(), INPUT_NUMBER_CONFIG],
+            INPUT_NUMBER_FOR_ROOT_CONFIG,
+          ],
+          useFactory: INPUT_NUMBER_CONFIG_REGISTRY,
         },
       ],
     };

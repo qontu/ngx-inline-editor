@@ -13,3 +13,15 @@ export interface InputNumberConfig extends InputNumberConfigWhitoutType {
 export const INPUT_NUMBER_CONFIG = new InjectionToken<
   InputNumberConfigWhitoutType
 >('INLINE_EDITOR_NUMBER_CONFIG');
+
+export const INPUT_NUMBER_FOR_ROOT_CONFIG = new InjectionToken<
+  InputNumberConfigWhitoutType
+>('INLINE_EDITOR_NUMBER_FOR_ROOT_CONFIG');
+
+export const INPUT_NUMBER_CONFIG_REGISTRY = <T = InputNumberConfigWhitoutType>(
+  parentConfig: T,
+  forRootConfig: T,
+) => ({
+  ...forRootConfig,
+  ...(parentConfig || {}),
+});

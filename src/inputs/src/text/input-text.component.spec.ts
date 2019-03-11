@@ -8,7 +8,7 @@ import {
   INLINE_EDITOR_TEMPLATE_CONFIG,
 } from '@qontu/ngx-inline-editor';
 import { FormsModule, NgControl, NgModel } from '@angular/forms';
-import { Config } from '@inputs/base/store/reducers/config.reducer';
+import { State } from '../base/store/config.state';
 import { InputTextConfig } from './input-text.config';
 
 describe('InputTextComponent', () => {
@@ -45,12 +45,12 @@ describe('InputTextComponent', () => {
   });
 
   describe(`when it's initialized`, () => {
-    const initState: Config = {
+    const initState: State = {
       dirty: '',
       isCanceled: false,
       isDisabled: false,
       isEditing: false,
-      isInvalid: false,
+      isValid: true,
       hasChanged: false,
       value: '',
     };
