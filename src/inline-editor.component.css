@@ -18,7 +18,7 @@
 }
 
 .inline-editor-buttons {
-  display: inline-block;
+  display: var(--inline-editor-buttons-display, unset);
   white-space: nowrap;
   margin: 0;
 }

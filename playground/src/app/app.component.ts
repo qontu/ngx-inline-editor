@@ -16,6 +16,7 @@ export class AppComponent {
     window['itext'] = InputTextComponent;
   }
   title = 'playground';
+  txt = 'playground '.repeat(3);
   reactiveTest = new FormControl({ value: 'hi!', disabled: true }, [
     Validators.email,
   ]);
@@ -27,7 +28,7 @@ export class AppComponent {
 
     const [input] = this.inlineEditorService
       .getInputsOfType(InputPasswordComponent)
-      .map(input => input.getApi());
+      .map(input => input.getAPI());
 
     input.toggle({ focus: true });
   }
@@ -35,7 +36,7 @@ export class AppComponent {
   updateValue() {
     const [input] = this.inlineEditorService
       .getInputsOfType(InputPasswordComponent)
-      .map(input => input.getApi());
+      .map(input => input.getAPI());
 
     // input.setState({ value: input.getState().value + ' hi' });
 

@@ -24,3 +24,10 @@
   {{ inline?.input?.getState() | json }}<br />
   {{ pass?.input?.getState() | json }}
 </div>
+
+<inline-editor
+  #textarea
+  type="custom"
+  [(ngModel)]="txt"
+  [config]="{ saveOnChange: false, focusOnClick: true, color: 'accent' }"
+></inline-editor>
