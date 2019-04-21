@@ -22,6 +22,7 @@ import {
   ControlValueAccessor,
   NgControl,
 } from '@angular/forms';
+
 import {
   INLINE_EDITOR_INPUTS,
   InlineEditorEvents,
@@ -156,7 +157,7 @@ export class InlineEditorComponent
       );
     }
 
-    this.registerInput(this.input);
+    this.registerInput(this.input as any);
 
     if (hasControls(this.input)) {
       this.registerControls(this.input);
@@ -196,7 +197,7 @@ export class InlineEditorComponent
     return this.componentRef.instance;
   }
 
-  private registerInput(input: InputBase) {
+  private registerInput(input: ControlValueAccessor) {
     // Bind methods
     this.registerOnChange = input.registerOnChange.bind(input);
     this.registerOnTouched = input.registerOnTouched.bind(input);
