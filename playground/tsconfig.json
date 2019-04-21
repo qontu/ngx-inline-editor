@@ -15,6 +15,7 @@
     "paths": {
       "@qontu/ngx-inline-editor": ["src"],
       "@qontu/ngx-inline-editor/inputs": ["src/inputs/src"],
+      "@qontu/ngx-inline-editor/inputs/*": ["src/inputs/src/*"],
       "@qontu/ngx-inline-editor/common": ["src/common/src/"]
     }
   }
