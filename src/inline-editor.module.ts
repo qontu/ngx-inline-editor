@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, Type } from '@angular/core';
 import { InlineEditorComponent } from './inline-editor.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -35,6 +35,19 @@ export class InlineEditorModule {
         {
           provide: INLINE_EDITOR_GLOBAL_CONFIG,
           useValue: config,
+        },
+      ],
+    };
+  }
+
+  static withInput(input: Type<any>): ModuleWithProviders {
+    return {
+      ngModule: InlineEditorModule,
+      providers: [
+        {
+          provide: INLINE_EDITOR_INPUTS,
+          useValue: input,
+          multi: true,
         },
       ],
     };
