@@ -3,8 +3,7 @@ import { FormControl, NgControl } from '@angular/forms';
 import { InlineEditorEvents } from '@qontu/ngx-inline-editor';
 import { Store } from '@qontu/component-store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-// import * as fromConfig from './store/index';
+
 import { InputBase, InputWithControls } from '../input-base';
 import { InputBaseConfig } from './input-base.config';
 import { InputBaseApi } from './input-base.api';
@@ -65,9 +64,12 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
     this.value$ = this.store$.select(({ dirty }) => dirty);
     this.isDisabled$ = this.store$.select(({ isDisabled }) => isDisabled);
     // TODO(Toni): should it unsubscribe?
-    this.store$.select(({ value }) => value === '').subscribe(this.empty$);
+    this.store$
+      .select(({ value }) =>
+        typeof value === 'string' ? value.trim() === '' : Boolean(value),
+      )
+      .subscribe(this.empty$);
     this.store$.select(({ isValid }) => isValid).subscribe(this.valid$);
-    this.valid$.pipe(map(isValid => !isValid)).subscribe(this.invalid$);
   }
 
   getState(): State {
@@ -78,7 +80,7 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
     this.store$.dispatch(new Override(state));
   }
 
-  getApi() {
+  getAPI() {
     return new InputBaseApi(this);
   }
 
@@ -212,18 +214,6 @@ export class InputBaseComponent<InputConfig extends InputBaseConfig>
 
   setDisabledState(isDisabled: boolean): void {
     this.store$.dispatch(isDisabled ? new Disable() : new Enable());
-  }
-
-  hasValueTemplate(): boolean {
-    return this.valueTmpl != null;
-  }
-
-  hasEmptyTemplate(): boolean {
-    return this.emptyTmpl != null;
-  }
-
-  hasButtonsTemplate(): boolean {
-    return this.buttonsTmpl != null;
   }
 
   getValueTemplate(): TemplateRef<any> {

@@ -1,7 +1,8 @@
 import { TemplateRef } from '@angular/core';
-import { NgControl, FormControl } from '@angular/forms';
+import { NgControl, AbstractControl } from '@angular/forms';
 import { ControlValueAccessor } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export type Input = ControlValueAccessor;
 
@@ -16,20 +17,20 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
   empty$: BehaviorSubject<boolean>;
   show$: BehaviorSubject<boolean>;
   valid$: BehaviorSubject<boolean>;
-  invalid$: BehaviorSubject<boolean>;
-  control: FormControl;
+  invalid$: Observable<boolean>;
+  control: AbstractControl;
   protected onChange: (_: any) => void;
   protected onTouched: (_: any) => void;
   protected onValidatorChange: (_: any) => void;
 
   constructor(protected ngControl: NgControl) {
-    this.control = this.ngControl.control as FormControl;
+    this.control = this.ngControl.control;
     this.config$ = new BehaviorSubject({});
     this.value$ = this.control.valueChanges;
     this.show$ = new BehaviorSubject(false);
     this.empty$ = new BehaviorSubject(false);
     this.valid$ = new BehaviorSubject(true);
-    this.invalid$ = new BehaviorSubject(false);
+    this.invalid$ = this.valid$.pipe(map(isValid => !isValid));
   }
 
   getType(): InputBase['type'] {
@@ -40,26 +41,17 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     return this.id;
   }
 
-  abstract getApi(): any;
+  abstract getAPI(): any;
 
-  writeValue(value: ValueType): void {
-    throw new Error('Method not implemented.');
+  abstract writeValue(value: ValueType): void;
+
+  abstract setDisabledState(isDisabled: boolean): void;
+  protected registerOnChange(fn: any): void {
+    this.onChange = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
-  }
-
-  hasValueTemplate(): boolean {
-    return false;
-  }
-
-  hasEmptyTemplate(): boolean {
-    return false;
-  }
-
-  hasButtonsTemplate(): boolean {
-    return false;
+  protected registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
 
   getValueTemplate(): TemplateRef<any> {
@@ -74,17 +66,6 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     return null;
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  getState(): any {}
-  setState(state: any): void {}
-
   setConfig(config: Config): void {
     this.config$.next(config);
   }
@@ -93,13 +74,9 @@ export abstract class InputBase<ValueType = any, Config extends {} = {}>
     return this.config$.value;
   }
 
-  getValueRepresentation(): string {
-    return '';
-  }
+  abstract getValueRepresentation(): string;
 
-  getEmptyRepresentation(): string {
-    return '';
-  }
+  abstract getEmptyRepresentation(): string;
 
   show(): void {
     this.show$.next(true);
@@ -137,26 +114,21 @@ export interface InputWithControls {
 }
 
 export interface InputWithEvents {
-  onBlur(event: any): void;
-  onFocus(event: any): void;
-  onEnter(event: any): void;
+  onBlur?(event: any): void;
+  onFocus?(event: any): void;
+  onEnter?(event: any): void;
 }
 
-export interface InlineEditorInput<State = any, Config = any> extends Input {
+export interface InlineEditorInput<Config = any, API = any> {
   getValueRepresentation(): string;
   getEmptyRepresentation(): string;
-  hasValueTemplate(): boolean;
-  hasEmptyTemplate(): boolean;
-  hasButtonsTemplate(): boolean;
   getValueTemplate(): TemplateRef<any>;
   getEmptyTemplate(): TemplateRef<any>;
   getButtonsTemplate(): TemplateRef<any>;
   getConfig(): Config;
   setConfig(config: Config): void;
-  getState(): State;
-  setState(state: any): State;
   isShowing(): boolean;
   isEmpty(): boolean;
   shouldShowButtons(): boolean;
-  getApi(): any;
+  getAPI(): API;
 }

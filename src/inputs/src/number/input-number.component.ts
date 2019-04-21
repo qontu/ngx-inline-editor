@@ -1,20 +1,17 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnInit,
-  Inject,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Store } from '@qontu/component-store';
-import { InputNumberConfig, INPUT_NUMBER_CONFIG } from './input-number.config';
-import { InputBaseComponent } from '../base/input-base.component';
+
 import {
   InlineEditorEvents,
   INLINE_EDITOR_TEMPLATE_CONFIG,
   INLINE_EDITOR_GLOBAL_CONFIG,
 } from '@qontu/ngx-inline-editor';
-import { createStore } from '../base/store/config.factory';
+
+import { InputNumberConfig, INPUT_NUMBER_CONFIG } from './input-number.config';
+import { InputBaseComponent } from '../base/input-base.component';
 import { State } from '../base/store/config.state';
+import { createStore } from '../base/store/config.factory';
 
 @Component({
   selector: 'inline-editor-number',
@@ -47,8 +44,9 @@ import { State } from '../base/store/config.state';
     },
   ],
 })
-export class InputNumberComponent extends InputBaseComponent<InputNumberConfig>
-  implements OnInit {
+export class InputNumberComponent extends InputBaseComponent<
+  InputNumberConfig
+> {
   static type = 'number';
   type = InputNumberComponent.type;
   config: Partial<InputNumberConfig>;

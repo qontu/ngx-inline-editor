@@ -1,12 +1,6 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnInit,
-  Inject,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Store } from '@qontu/component-store';
-// import * as fromConfig from '../base/store/index';
 import {
   InlineEditorEvents,
   INLINE_EDITOR_TEMPLATE_CONFIG,
@@ -50,11 +44,11 @@ import { createStore } from '../base/store/config.factory';
     },
   ],
 })
-export class InputTextComponent extends InputBaseComponent<InputTextConfig>
-  implements OnInit {
+export class InputTextComponent extends InputBaseComponent<InputTextConfig> {
   static type = 'text';
   type = InputTextComponent.type;
   config: Partial<InputTextConfig>;
+
   constructor(
     protected store$: Store<State>,
     ngControl: NgControl,

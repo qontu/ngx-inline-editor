@@ -1,21 +1,18 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnInit,
-  Inject,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Store } from '@qontu/component-store';
-import {
-  InputPasswordConfig,
-  INPUT_PASSWORD_CONFIG,
-} from './input-password.config';
-import { InputBaseComponent } from '../base/input-base.component';
+
 import {
   InlineEditorEvents,
   INLINE_EDITOR_TEMPLATE_CONFIG,
   INLINE_EDITOR_GLOBAL_CONFIG,
 } from '@qontu/ngx-inline-editor';
+
+import {
+  InputPasswordConfig,
+  INPUT_PASSWORD_CONFIG,
+} from './input-password.config';
+import { InputBaseComponent } from '../base/input-base.component';
 import { State } from '../base/store/config.state';
 import { createStore } from '../base/store/config.factory';
 
@@ -50,9 +47,9 @@ import { createStore } from '../base/store/config.factory';
     },
   ],
 })
-export class InputPasswordComponent
-  extends InputBaseComponent<InputPasswordConfig>
-  implements OnInit {
+export class InputPasswordComponent extends InputBaseComponent<
+  InputPasswordConfig
+> {
   static type = 'password';
   type = InputPasswordComponent.type;
   config: Partial<InputPasswordConfig>;
