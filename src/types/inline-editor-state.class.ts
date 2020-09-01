@@ -19,10 +19,10 @@ export class InlineEditorState {
         this.empty = empty;
     }
 
-    private empty: boolean;
+    empty: boolean;
     value: any;
-    private disabled: boolean;
-    private editing: boolean;
+    disabled: boolean;
+    editing: boolean;
 
     public newState(state: InlineEditorState | InlineEditorStateOptions) {
         return new InlineEditorState(state instanceof InlineEditorState ?
