@@ -20,7 +20,7 @@ export class InlineEditorState {
     }
 
     private empty: boolean;
-    private value: any;
+    value: any;
     private disabled: boolean;
     private editing: boolean;
 
