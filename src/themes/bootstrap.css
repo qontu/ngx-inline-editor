@@ -1,3 +1,7 @@
+input {
+    background: white !important;
+}
+
 a.c-inline-editor {
   text-decoration: none;
   color: #428bca;
