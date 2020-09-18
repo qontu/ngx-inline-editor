@@ -18,7 +18,7 @@ import { InputSelectComponent } from "./inputs/input-select.component";
 import { InputDateComponent } from "./inputs/input-date.component";
 import { InputTimeComponent } from "./inputs/input-time.component";
 import { InputDatetimeComponent } from "./inputs/input-datetime.component";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 import { SelectOptions } from "./types/select-options.interface";
 import { InlineEditorError } from "./types/inline-editor-error.interface";
 import {
