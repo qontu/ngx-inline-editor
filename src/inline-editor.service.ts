@@ -1,5 +1,5 @@
 import { InlineConfig } from "./types/inline-configs";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 import { Events } from "./types/inline-editor-events.class";
 import { InlineEditorState } from "./types/inline-editor-state.class";
 import { EventEmitter } from "@angular/core";

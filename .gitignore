@@ -40,3 +40,4 @@ build
 
 # Debug chrome
 out/chrome
+/.vs

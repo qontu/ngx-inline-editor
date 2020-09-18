@@ -1,113 +1,120 @@
 {
-  "name": "@qontu/ngx-inline-editor",
-  "version": "0.2.0-alpha.11",
-  "author": {
-    "name": "Carlos Caballero",
-    "email": "caballerog.carlos@gmail.com"
-  },
-  "maintainers": [
-    {
-      "name": "Carlos Caballero",
-      "email": "caballerog.carlos@gmail.com"
+    "name": "@qontu/ngx-inline-editor",
+    "version": "0.09.0-alpha.01",
+    "author": {
+        "name": "Carlos Caballero",
+        "email": "caballerog.carlos@gmail.com"
     },
-    {
-      "name": "Toni Villena",
-      "email": "tonivj5@gmail.com"
+    "maintainers": [
+        {
+            "name": "Carlos Caballero",
+            "email": "caballerog.carlos@gmail.com"
+        },
+        {
+            "name": "Toni Villena",
+            "email": "tonivj5@gmail.com"
+        },
+        {
+            "name": "Simon Ward",
+            "email": "simon@wardandpartners.co.za"
+        }
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wardandpartners/ngx-inline-editor.git"
+    },
+    "bugs": {
+        "url": "https://github.com/qontu/ngx-inline-editor/issues"
+    },
+    "keywords": [
+        "angular",
+        "angular4",
+        "angular9"
+    ],
+    "main": "ngx-inline-editor.umd.js",
+    "module": "ngx-inline-editor.es5.js",
+    "es2015": "ngx-inline-editor.es2015.js",
+    "typings": "ngx-inline-editor.d.ts",
+    "scripts": {
+        "gulp": "node_modules/.bin/gulp",
+        "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
+        "build:watch": "node_modules/.bin/gulp",
+        "debug": "node_modules/.bin/gulp watch:debug",
+        "clean": "node_modules/.bin/gulp clean",
+        "commit": "node_modules/.bin/git-cz",
+        "lint": "tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
+        "publish": "cd dist && npm publish",
+        "test": "karma start"
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-conventional-changelog"
+        }
+    },
+    "dependencies": {
+        "@angular/cli": "^9.0.0"
+    },
+    "peerDependencies": {
+        "@angular/common": "^9.0.0",
+        "@angular/core": "^9.0.0",
+        "@angular/forms": "^9.0.0"
+    },
+    "devDependencies": {
+        "@angular/common": "^9.0.0",
+        "@angular/compiler": "^9.0.0",
+        "@angular/core": "^9.0.0",
+        "@angular/forms": "^9.0.0",
+        "@angular/platform-browser": "^9.0.0",
+        "@angular/platform-browser-dynamic": "^9.0.0",
+        "@types/del": "^2.2.32",
+        "@types/gulp": "4.0.3",
+        "@types/gulp-changed": "^0.0.31",
+        "@types/gulp-rename": "^0.0.32",
+        "@types/jasmine": "^2.5.47",
+        "@types/karma": "^0.13.36",
+        "@types/merge2": "^0.3.30",
+        "@types/node": "~7.0.13",
+        "@types/run-sequence": "^0.0.28",
+        "codelyzer": "^5.0.0",
+        "commitizen": "^2.9.6",
+        "conventional-changelog-lint": "^1.1.9",
+        "core-js": "^2.5.1",
+        "del": "^2.2.2",
+        "gulp": "^3.9.1",
+        "gulp-changed": "^3.1.0",
+        "gulp-inline-ng2-template": "^4.0.0",
+        "gulp-ngc": "^0.3.2",
+        "gulp-rename": "^1.2.2",
+        "gulp-rollup": "2.14.0",
+        "gulp-typescript": "^3.2.2",
+        "jasmine-core": "^2.6.4",
+        "karma": "^1.7.0",
+        "karma-chrome-launcher": "~2.2.0",
+        "karma-cli": "~1.0.1",
+        "karma-coverage-istanbul-reporter": "^0.2.0",
+        "karma-jasmine": "^1.1.0",
+        "karma-jasmine-diff-reporter": "^1.1.0",
+        "karma-jasmine-html-reporter": "^0.2.2",
+        "karma-mocha-reporter": "^2.2.3",
+        "karma-phantomjs-launcher": "^1.0.4",
+        "karma-sourcemap-loader": "^0.3.7",
+        "karma-typescript": "^3.0.4",
+        "karma-typescript-angular2-transform": "^1.0.0",
+        "merge2": "^1.0.3",
+        "node-watch": "^0.5.2",
+        "phantomjs-prebuilt": "~2.1.14",
+        "protractor": "~5.1.0",
+        "reflect-metadata": "~0.1.10",
+        "rollup": "^0.47.2",
+        "run-sequence": "^1.2.2",
+        "rxjs": "^6.5.4",
+        "ts-node": "~3.3.0",
+        "tslint": "^5.7.0",
+        "typescript": "^4.0.2",
+        "zone.js": "^0.8.17"
+    },
+    "engines": {
+        "node": ">=9.0.0"
     }
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/qontu/ngx-inline-editor"
-  },
-  "bugs": {
-    "url": "https://github.com/qontu/ngx-inline-editor/issues"
-  },
-  "keywords": [
-    "angular",
-    "angular4"
-  ],
-  "main": "ngx-inline-editor.umd.js",
-  "module": "ngx-inline-editor.es5.js",
-  "es2015": "ngx-inline-editor.es2015.js",
-  "typings": "ngx-inline-editor.d.ts",
-  "scripts": {
-    "gulp": "node_modules/.bin/gulp",
-    "build": "node_modules/.bin/gulp build && echo 'To publish a new version of library, please use npm run publish'",
-    "build:watch": "node_modules/.bin/gulp",
-    "debug": "node_modules/.bin/gulp watch:debug",
-    "clean": "node_modules/.bin/gulp clean",
-    "commit": "node_modules/.bin/git-cz",
-    "lint": "tslint --type-check --project ./src/tsconfig.json src/**/*.ts",
-    "publish": "cd dist && npm publish",
-    "test": "karma start"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    }
-  },
-  "dependencies": {},
-  "peerDependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0"
-  },
-  "devDependencies": {
-    "@angular/common": "^4.3.6",
-    "@angular/compiler": "^4.3.6",
-    "@angular/core": "^4.3.6",
-    "@angular/forms": "^4.3.6",
-    "@angular/platform-browser": "^4.3.6",
-    "@angular/platform-browser-dynamic": "^4.3.6",
-    "@types/del": "^2.2.32",
-    "@types/gulp": "4.0.3",
-    "@types/gulp-changed": "^0.0.31",
-    "@types/gulp-rename": "^0.0.32",
-    "@types/jasmine": "^2.5.47",
-    "@types/karma": "^0.13.36",
-    "@types/merge2": "^0.3.30",
-    "@types/node": "~7.0.13",
-    "@types/run-sequence": "^0.0.28",
-    "codelyzer": "^3.1.2",
-    "commitizen": "^2.9.6",
-    "conventional-changelog-lint": "^1.1.9",
-    "core-js": "^2.5.1",
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-changed": "^3.1.0",
-    "gulp-inline-ng2-template": "^4.0.0",
-    "gulp-ngc": "^0.3.2",
-    "gulp-rename": "^1.2.2",
-    "gulp-rollup": "2.14.0",
-    "gulp-typescript": "^3.2.2",
-    "jasmine-core": "^2.6.4",
-    "karma": "^1.7.0",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
-    "karma-jasmine": "^1.1.0",
-    "karma-jasmine-diff-reporter": "^1.1.0",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-mocha-reporter": "^2.2.3",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-typescript": "^3.0.4",
-    "karma-typescript-angular2-transform": "^1.0.0",
-    "merge2": "^1.0.3",
-    "node-watch": "^0.5.2",
-    "phantomjs-prebuilt": "~2.1.14",
-    "protractor": "~5.1.0",
-    "reflect-metadata": "~0.1.10",
-    "rollup": "^0.47.2",
-    "run-sequence": "^1.2.2",
-    "rxjs": "^5.4.3",
-    "ts-node": "~3.3.0",
-    "tslint": "^5.7.0",
-    "typescript": "~2.4.2",
-    "zone.js": "^0.8.17"
-  },
-  "engines": {
-    "node": ">=6.0.0"
-  }
 }
